@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Rails Internationalization (I18n) API — Ruby on Rails 指南</title>
+<title>Rails 国际化 API — Ruby on Rails 指南</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -164,24 +164,24 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Rails Internationalization (I18n) API</h2><p>The Ruby I18n (shorthand for <em>internationalization</em>) gem which is shipped with Ruby on Rails (starting from Rails 2.2) provides an easy-to-use and extensible framework for <strong>translating your application to a single custom language</strong> other than English or for <strong>providing multi-language support</strong> in your application.</p><p>The process of &quot;internationalization&quot; usually means to abstract all strings and other locale specific bits (such as date or currency formats) out of your application. The process of &quot;localization&quot; means to provide translations and localized formats for these bits.<sup class="footnote" id="footnote-1-ref"><a href="#footnote-1">1</a></sup></p><p>So, in the process of <em>internationalizing</em> your Rails application you have to:</p>
+      <h2>Rails 国际化 API</h2><p>Rails 内建支持 Ruby I18n（internationalization 的简写）。Ruby I18n 这个 gem 用法简单，是个扩展性强的框架，可以把程序翻译成英语之外的其他语言，或者为程序提供多种语言支持。</p><p>“国际化”是指把程序中的字符串或者其他需要本地化的内容（例如，日期和货币的格式）提取出来的过程。“本地化”是指把提取出来的内容翻译成本地语言或者本地所用格式的过程。</p><p>所以在 Rails 程序国际化的过程中要做这些事情：</p>
 <ul>
-<li>Ensure you have support for i18n.</li>
-<li>Tell Rails where to find locale dictionaries.</li>
-<li>Tell Rails how to set, preserve and switch locales.</li>
+<li>确保程序支持 i18n；</li>
+<li>告诉 Rails 在哪里寻找本地语言包；</li>
+<li>告诉 Rails 怎么设置、保存和切换本地语言包；</li>
 </ul>
-<p>In the process of <em>localizing</em> your application you&#39;ll probably want to do the following three things:</p>
+<p>在本地化程序的过程中或许要做以下三件事：</p>
 <ul>
-<li>Replace or supplement Rails&#39; default locale - e.g. date and time formats, month names, Active Record model names, etc.</li>
-<li>Abstract strings in your application into keyed dictionaries - e.g. flash messages, static text in your views, etc.</li>
-<li>Store the resulting dictionaries somewhere.</li>
+<li>修改或提供 Rails 默认使用的本地语言包，例如，日期和时间的格式、月份名、Active Record 模型名等；</li>
+<li>把程序中的字符串提取出来，保存到键值对中，例如 Flash 消息、视图中的纯文本等；</li>
+<li>在某个地方保存语言包；</li>
 </ul>
-<p>This guide will walk you through the I18n API and contains a tutorial on how to internationalize a Rails application from the start.</p><p>After reading this guide, you will know:</p>
+<p>本文会详细介绍 I18n API，并提供一个教程，演示如何从头开始国际化一个 Rails 程序。</p><p>读完本文，你将学到：</p>
 <ul>
-<li>How I18n works in Ruby on Rails</li>
-<li>How to correctly use I18n into a RESTful application in various ways</li>
-<li>How to use I18n to translate ActiveRecord errors or ActionMailer E-mail subjects</li>
-<li>Some other tools to go further with the translation process of your application</li>
+<li>Ruby on Rails 是如何处理 i18n 的；</li>
+<li>如何在 REST 架构的程序中正确使用 i18n；</li>
+<li>如何使用 i18n 翻译 ActiveRecord 错误和 ActionMailer E-mail；</li>
+<li>协助翻译程序的工具；</li>
 </ul>
 
 
@@ -189,22 +189,22 @@
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li>
-<a href="#how-i18n-in-ruby-on-rails-works">How I18n in Ruby on Rails Works</a>
+<a href="#ruby-on-rails-%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86-i18n-%E7%9A%84">Ruby on Rails 是如何处理 i18n 的</a>
 
 <ul>
-<li><a href="#the-overall-architecture-of-the-library">The Overall Architecture of the Library</a></li>
-<li><a href="#the-public-i18n-api">The Public I18n API</a></li>
+<li><a href="#ruby-i18n-%E7%9A%84%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84">Ruby I18n 的整体架构</a></li>
+<li><a href="#%E5%85%AC%E5%BC%80-api">公开 API</a></li>
 </ul>
 </li>
 <li>
-<a href="#setup-the-rails-application-for-internationalization">Setup the Rails Application for Internationalization</a>
+<a href="#%E4%B8%BA%E5%9B%BD%E9%99%85%E5%8C%96%E5%81%9A%E5%87%86%E5%A4%87">为国际化做准备</a>
 
 <ul>
-<li><a href="#configure-the-i18n-module">Configure the I18n Module</a></li>
-<li><a href="#optional:-custom-i18n-configuration-setup">Optional: Custom I18n Configuration Setup</a></li>
-<li><a href="#setting-and-passing-the-locale">Setting and Passing the Locale</a></li>
-<li><a href="#setting-the-locale-from-the-domain-name">Setting the Locale from the Domain Name</a></li>
-<li><a href="#setting-the-locale-from-the-url-params">Setting the Locale from the URL Params</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE-i18n-%E6%A8%A1%E5%9D%97">配置 I18n 模块</a></li>
+<li><a href="#%EF%BC%88%E9%80%89%E5%81%9A%EF%BC%89%E6%9B%B4%E6%94%B9-i18n-%E5%BA%93%E7%9A%84%E8%AE%BE%E7%BD%AE">（选做）更改 I18n 库的设置</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%B9%B6%E4%BC%A0%E5%85%A5%E6%89%80%E7%94%A8%E8%AF%AD%E8%A8%80">设置并传入所用语言</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E5%9F%9F%E5%90%8D%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%90%8C%E7%9A%84%E8%AF%AD%E8%A8%80">使用不同的域名加载不同的语言</a></li>
+<li><a href="#%E5%9C%A8-url-%E5%8F%82%E6%95%B0%E4%B8%AD%E8%AE%BE%E7%BD%AE%E6%89%80%E7%94%A8%E8%AF%AD%E8%A8%80">在 URL 参数中设置所用语言</a></li>
 <li><a href="#setting-the-locale-from-the-client-supplied-information">Setting the Locale from the Client Supplied Information</a></li>
 </ul>
 </li>
@@ -229,12 +229,17 @@
 <li><a href="#pluralization">Pluralization</a></li>
 <li><a href="#setting-and-passing-a-locale">Setting and Passing a Locale</a></li>
 <li><a href="#using-safe-html-translations">Using Safe HTML Translations</a></li>
+</ul>
+</li>
+<li>
+<a href="#how-to-store-your-custom-translations">How to Store your Custom Translations</a>
+
+<ul>
 <li><a href="#translations-for-active-record-models">Translations for Active Record Models</a></li>
 <li><a href="#translations-for-action-mailer-e-mail-subjects">Translations for Action Mailer E-Mail Subjects</a></li>
 <li><a href="#overview-of-other-built-in-methods-that-provide-i18n-support">Overview of Other Built-In Methods that Provide I18n Support</a></li>
 </ul>
 </li>
-<li><a href="#how-to-store-your-custom-translations">How to Store your Custom Translations</a></li>
 <li>
 <a href="#customize-your-i18n-setup">Customize your I18n Setup</a>
 
@@ -258,31 +263,31 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <div class="note"><p>The Ruby I18n framework provides you with all necessary means for internationalization/localization of your Rails application. You may, however, use any of various plugins and extensions available, which add additional functionality or features. See the Ruby <a href="http://ruby-i18n.org/wiki">I18n Wiki</a> for more information.</p></div><h3 id="how-i18n-in-ruby-on-rails-works">1 How I18n in Ruby on Rails Works</h3><p>Internationalization is a complex problem. Natural languages differ in so many ways (e.g. in pluralization rules) that it is hard to provide tools for solving all problems at once. For that reason the Rails I18n API focuses on:</p>
+        <div class="note"><p>Ruby I18n 框架提供了 Rails 程序国际化和本地化所需的各种功能。不过，还可以使用各种插件和扩展，添加额外的功能。详情参见 <a href="http://ruby-i18n.org/wiki">Ruby I18n 的维基</a>。</p></div><h3 id="ruby-on-rails-是如何处理-i18n-的">1 Ruby on Rails 是如何处理 i18n 的</h3><p>国际化是个很复杂的问题。自然语言千差万别（例如复数变形规则），很难提供一种工具解决所有问题。因此，Rails I18n API 只关注：</p>
 <ul>
-<li>providing support for English and similar languages out of the box</li>
-<li>making it easy to customize and extend everything for other languages</li>
+<li>默认支持和英语类似的语言；</li>
+<li>让支持其他语言变得简单；</li>
 </ul>
-<p>As part of this solution, <strong>every static string in the Rails framework</strong> - e.g. Active Record validation messages, time and date formats - <strong>has been internationalized</strong>, so <em>localization</em> of a Rails application means "over-riding" these defaults.</p><h4 id="the-overall-architecture-of-the-library">1.1 The Overall Architecture of the Library</h4><p>Thus, the Ruby I18n gem is split into two parts:</p>
+<p>Rails 框架中的每个静态字符串（例如，Active Record 数据验证消息，日期和时间的格式）都支持国际化，因此本地化时只要重写默认值即可。</p><h4 id="ruby-i18n-的整体架构">1.1 Ruby I18n 的整体架构</h4><p>Ruby I18n 分成两部分：</p>
 <ul>
-<li>The public API of the i18n framework - a Ruby module with public methods that define how the library works</li>
-<li>A default backend (which is intentionally named <em>Simple</em> backend) that implements these methods</li>
+<li>公开的 API：这是一个 Ruby 模块，定义了库中可用的公开方法；</li>
+<li>一个默认的后台（特意取名为“Simple”），实现这些方法；</li>
 </ul>
-<p>As a user you should always only access the public methods on the I18n module, but it is useful to know about the capabilities of the backend.</p><div class="note"><p>It is possible (or even desirable) to swap the shipped Simple backend with a more powerful one, which would store translation data in a relational database, GetText dictionary, or similar. See section <a href="#using-different-backends">Using different backends</a> below.</p></div><h4 id="the-public-i18n-api">1.2 The Public I18n API</h4><p>The most important methods of the I18n API are:</p><div class="code_container">
+<p>普通用户只要使用这些公开方法即可，但了解后台的功能也有助于使用 i18n API。</p><div class="note"><p>默认提供的“Simple”后台可以用其他强大的后台替代（推荐这么做），例如把翻译后的数据存储在关系型数据库中，或 GetText 语言包中。详情参见下文的“<a href="#using-different-backends">使用其他后台</a>”一节。</p></div><h4 id="公开-api">1.2 公开 API</h4><p>I18n API 最重要的方法是：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 translate # Lookup text translations
 localize  # Localize Date and Time objects to local formats
 
 </pre>
 </div>
-<p>These have the aliases #t and #l so you can use them like this:</p><div class="code_container">
+<p>这两个方法都有别名，分别为 <code>#t</code> 和 <code>#l</code>。因此可以这么用：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 I18n.t 'store.title'
 I18n.l Time.now
 
 </pre>
 </div>
-<p>There are also attribute readers and writers for the following attributes:</p><div class="code_container">
+<p>I18n API 同时还提供了针对下述属性的读取和设值方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 load_path         # Announce your custom translation files
 locale            # Get and set the current locale
@@ -292,14 +297,14 @@ backend           # Use a different backend
 
 </pre>
 </div>
-<p>So, let's internationalize a simple Rails application from the ground up in the next chapters!</p><h3 id="setup-the-rails-application-for-internationalization">2 Setup the Rails Application for Internationalization</h3><p>There are just a few simple steps to get up and running with I18n support for your application.</p><h4 id="configure-the-i18n-module">2.1 Configure the I18n Module</h4><p>Following the <em>convention over configuration</em> philosophy, Rails will set up your application with reasonable defaults. If you need different settings, you can overwrite them easily.</p><p>Rails adds all <code>.rb</code> and <code>.yml</code> files from the <code>config/locales</code> directory to your <strong>translations load path</strong>, automatically.</p><p>The default <code>en.yml</code> locale in this directory contains a sample pair of translation strings:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<p>下一节起，我们要从零开始国际化一个简单的 Rails 程序。</p><h3 id="为国际化做准备">2 为国际化做准备</h3><p>为程序提供 I18n 支持只需简单几步。</p><h4 id="配置-i18n-模块">2.1 配置 I18n 模块</h4><p>按照“多约定，少配置”原则，Rails 会为程序提供一些合理的默认值。如果想使用其他设置，可以很容易的改写默认值。</p><p>Rails 会自动把 <code>config/locales</code> 文件夹中所有 <code>.rb</code> 和 <code>.yml</code> 文件加入<strong>译文加载路径</strong>。</p><p>默认提供的 <code>en.yml</code> 文件中包含一些简单的翻译文本：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 en:
   hello: "Hello world"
 
 </pre>
 </div>
-<p>This means, that in the <code>:en</code> locale, the key <em>hello</em> will map to the <em>Hello world</em> string. Every string inside Rails is internationalized in this way, see for instance Active Model validation messages in the <a href="https://github.com/rails/rails/blob/master/activemodel/lib/active_model/locale/en.yml"><code>activemodel/lib/active_model/locale/en.yml</code></a> file or time and date formats in the <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml"><code>activesupport/lib/active_support/locale/en.yml</code></a> file. You can use YAML or standard Ruby Hashes to store translations in the default (Simple) backend.</p><p>The I18n library will use <strong>English</strong> as a <strong>default locale</strong>, i.e. if you don't set a different locale, <code>:en</code> will be used for looking up translations.</p><div class="note"><p>The i18n library takes a <strong>pragmatic approach</strong> to locale keys (after <a href="http://groups.google.com/group/rails-i18n/browse_thread/thread/14dede2c7dbe9470/80eec34395f64f3c?hl=en">some discussion</a>), including only the <em>locale</em> ("language") part, like <code>:en</code>, <code>:pl</code>, not the <em>region</em> part, like <code>:en-US</code> or <code>:en-GB</code>, which are traditionally used for separating "languages" and "regional setting" or "dialects". Many international applications use only the "language" element of a locale such as <code>:cs</code>, <code>:th</code> or <code>:es</code> (for Czech, Thai and Spanish). However, there are also regional differences within different language groups that may be important. For instance, in the <code>:en-US</code> locale you would have $ as a currency symbol, while in <code>:en-GB</code>, you would have £. Nothing stops you from separating regional and other settings in this way: you just have to provide full "English - United Kingdom" locale in a <code>:en-GB</code> dictionary. Various <a href="http://rails-i18n.org/wiki">Rails I18n plugins</a> such as <a href="https://github.com/globalize/globalize">Globalize3</a> may help you implement it.</p></div><p>The <strong>translations load path</strong> (<code>I18n.load_path</code>) is just a Ruby Array of paths to your translation files that will be loaded automatically and available in your application. You can pick whatever directory and translation file naming scheme makes sense for you.</p><div class="note"><p>The backend will lazy-load these translations when a translation is looked up for the first time. This makes it possible to just swap the backend with something else even after translations have already been announced.</p></div><p>The default <code>application.rb</code> files has instructions on how to add locales from another directory and how to set a different default locale. Just uncomment and edit the specific lines.</p><div class="code_container">
+<p>上面这段代码的意思是，在 <code>:en</code> 语言中，<code>hello</code> 键映射到字符串 <code>"Hello world"</code> 上。Rails 中的每个字符串的国际化都使用这种方式，比如说 Active Model <a href="https://github.com/rails/rails/blob/master/activemodel/lib/active_model/locale/en.yml">数据验证消息</a>以及<a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml">日期和时间格式</a>。在默认的后台中，可以使用 YAML 或标准的 Ruby Hash 存储翻译数据。</p><p>I18n 库使用的默认语言是<strong>英语</strong>，所以如果没设为其他语言，就会用 <code>:en</code> 查找翻译数据。</p><div class="note"><p>经过<a href="http://groups.google.com/group/rails-i18n/browse_thread/thread/14dede2c7dbe9470/80eec34395f64f3c?hl=en">讨论</a>之后，i18n 库决定为语言名称使用一种<strong>务实的方案</strong>，只说明所用语言（例如，<code>:en</code>，<code>:pl</code>），不区分地区（例如，<code>:en-US</code>，<code>:en-GB</code>）。地区经常用来区分同一语言在不同地区的分支或者方言。很多国际化程序只使用语言名称，例如 <code>:cs</code>、<code>:th</code> 和 <code>:es</code>（分别为捷克语，泰语和西班牙语）。不过，同一语种在不同地区可能有重要差别。例如，在 <code>:en-US</code> 中，货币符号是“$”，但在 <code>:en-GB</code> 中是“£”。在 Rails 中使用区分地区的语言设置也是可行的，只要在 <code>:en-GB</code> 中使用完整的“English - United Kingdom”即可。很多 <a href="http://rails-i18n.org/wiki">Rails I18n 插件</a>，例如 <a href="https://github.com/globalize/globalize">Globalize3</a>，都可以实现。</p></div><p><strong>译文加载路径</strong>（<code>I18n.load_path</code>）是一个 Ruby 数组，由译文文件的路径组成，Rails 程序会自动加载这些文件。你可以使用任何一个文件夹，任何一种文件命名方式。</p><div class="note"><p>首次加载查找译文时，后台会惰性加载这些译文。这么做即使已经声明过，也可以更换所用后台。</p></div><p><code>application.rb</code> 文件中的默认内容有介绍如何从其他文件夹中添加本地数据，以及如何设置默认使用的语言。去掉相关代码行前面的注释，修改即可。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
 # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
@@ -307,7 +312,7 @@ en:
 
 </pre>
 </div>
-<h4 id="optional:-custom-i18n-configuration-setup">2.2 Optional: Custom I18n Configuration Setup</h4><p>For the sake of completeness, let's mention that if you do not want to use the <code>application.rb</code> file for some reason, you can always wire up things manually, too.</p><p>To tell the I18n library where it can find your custom translation files you can specify the load path anywhere in your application - just make sure it gets run before any translations are actually looked up. You might also want to change the default locale. The simplest thing possible is to put the following into an initializer:</p><div class="code_container">
+<h4 id="（选做）更改-i18n-库的设置">2.2 （选做）更改 I18n 库的设置</h4><p>如果基于某些原因不想使用 <code>application.rb</code> 文件中的设置，我们来介绍一下手动设置的方法。</p><p>告知 I18n 库在哪里寻找译文文件，可以在程序的任何地方指定加载路径。但要保证这个设置要在加载译文之前执行。我们可能还要修改默认使用的语言。要完成这两个设置，最简单的方法是把下面的代码放到一个初始化脚本中：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # in config/initializers/locale.rb
 
@@ -319,7 +324,7 @@ I18n.default_locale = :pt
 
 </pre>
 </div>
-<h4 id="setting-and-passing-the-locale">2.3 Setting and Passing the Locale</h4><p>If you want to translate your Rails application to a <strong>single language other than English</strong> (the default locale), you can set I18n.default_locale to your locale in <code>application.rb</code> or an initializer as shown above, and it will persist through the requests.</p><p>However, you would probably like to <strong>provide support for more locales</strong> in your application. In such case, you need to set and pass the locale between requests.</p><div class="warning"><p>You may be tempted to store the chosen locale in a <em>session</em> or a <em>cookie</em>. However, <strong>do not do this</strong>. The locale should be transparent and a part of the URL. This way you won't break people's basic assumptions about the web itself: if you send a URL to a friend, they should see the same page and content as you. A fancy word for this would be that you're being <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer"><em>RESTful</em></a>. Read more about the RESTful approach in <a href="http://www.infoq.com/articles/rest-introduction">Stefan Tilkov's articles</a>. Sometimes there are exceptions to this rule and those are discussed below.</p></div><p>The <em>setting part</em> is easy. You can set the locale in a <code>before_action</code> in the <code>ApplicationController</code> like this:</p><div class="code_container">
+<h4 id="设置并传入所用语言">2.3 设置并传入所用语言</h4><p>如果想把 Rails 程序翻译成英语（默认语言）之外的其他语言，可以在 <code>application.rb</code> 文件或初始化脚本中设置 <code>I18n.default_locale</code> 选项。这个设置对所有请求都有效。</p><p>不过，或许你希望为程序提供多种语言支持。此时，需要在请求中指定所用语言。</p><div class="warning"><p>你可能想过把用户选择适用的语言保存在会话或 cookie 中，请<strong>千万别</strong>这么做。所用语言应该是透明的，写在 URL 中。这样做不会破坏用户对网页内容的预想，如果把 URL 发给一个朋友，他应该看到和我相同的内容。这种方式在 <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST 架构</a>中很容易实现。不过也有不适用 REST 架构的情况，后文会说明。</p></div><p>设置所用语言的方法很简单，只需在 <code>ApplicationController</code> 的 <code>before_action</code> 中作如下设定即可：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 before_action :set_locale
 
@@ -329,14 +334,14 @@ end
 
 </pre>
 </div>
-<p>This requires you to pass the locale as a URL query parameter as in <code>http://example.com/books?locale=pt</code>. (This is, for example, Google's approach.) So <code>http://localhost:3000?locale=pt</code> will load the Portuguese localization, whereas <code>http://localhost:3000?locale=de</code> would load the German localization, and so on. You may skip the next section and head over to the <strong>Internationalize your application</strong> section, if you want to try things out by manually placing the locale in the URL and reloading the page.</p><p>Of course, you probably don't want to manually include the locale in every URL all over your application, or want the URLs look differently, e.g. the usual <code>http://example.com/pt/books</code> versus <code>http://example.com/en/books</code>. Let's discuss the different options you have.</p><h4 id="setting-the-locale-from-the-domain-name">2.4 Setting the Locale from the Domain Name</h4><p>One option you have is to set the locale from the domain name where your application runs. For example, we want <code>www.example.com</code> to load the English (or default) locale, and <code>www.example.es</code> to load the Spanish locale. Thus the <em>top-level domain name</em> is used for locale setting. This has several advantages:</p>
+<p>使用这种方法要把语言作为 URL 查询参数传入，例如 <code>http://example.com/books?locale=pt</code>（这是 Google 使用的方法）。<code>http://localhost:3000?locale=pt</code> 会加载葡萄牙语，<code>http://localhost:3000?locale=de</code> 会加载德语，以此类推。如果想手动在 URL 中指定语言再刷新页面，可以跳过后面几小节，直接阅读“<a href="#internationalizing-your-application">国际化程序</a>”一节。</p><p>当然了，你可能并不想手动在每个 URL 中指定语言，或者想使用其他形式的 URL，例如 <code>http://example.com/pt/books</code> 或 <code>http://example.com/en/books</code>。下面分别介绍其他各种设置语言的方法。</p><h4 id="使用不同的域名加载不同的语言">2.4 使用不同的域名加载不同的语言</h4><p>设置所用语言可以通过不同的域名实现。例如，<code>www.example.com</code> 加载英语内容，<code>www.example.es</code> 加载西班牙语内容。这里使用的是不同的顶级域名。这么做有多个好处：</p>
 <ul>
-<li>The locale is an <em>obvious</em> part of the URL.</li>
-<li>People intuitively grasp in which language the content will be displayed.</li>
-<li>It is very trivial to implement in Rails.</li>
-<li>Search engines seem to like that content in different languages lives at different, inter-linked domains.</li>
+<li>所用语言在 URL 中很明显；</li>
+<li>用户很容易得知所查看内容使用的语言；</li>
+<li>在 Rails 中可以轻松实现；</li>
+<li>搜索引擎似乎喜欢把不同语言的内容放在不同但相互关联的域名上；</li>
 </ul>
-<p>You can implement it like this in your <code>ApplicationController</code>:</p><div class="code_container">
+<p>在 <code>ApplicationController</code> 中加入如下代码可以实现这种处理方式：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 before_action :set_locale
 
@@ -352,12 +357,12 @@ end
 # in your /etc/hosts file to try this out locally
 def extract_locale_from_tld
   parsed_locale = request.host.split('.').last
-  I18n.available_locales.map(&amp;:to_s).include?(parsed_locale) ? parsed_locale : nil
+  I18n.available_locales.include?(parsed_locale.to_sym) ? parsed_locale : nil
 end
 
 </pre>
 </div>
-<p>We can also set the locale from the <em>subdomain</em> in a very similar way:</p><div class="code_container">
+<p>类似地，还可以使用不同的二级域名提供不同语言的内容：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # Get locale code from request subdomain (like http://it.application.local:3000)
 # You have to put something like:
@@ -365,22 +370,23 @@ end
 # in your /etc/hosts file to try this out locally
 def extract_locale_from_subdomain
   parsed_locale = request.subdomains.first
-  I18n.available_locales.map(&amp;:to_s).include?(parsed_locale) ? parsed_locale : nil
+  I18n.available_locales.include?(parsed_locale.to_sym) ? parsed_locale : nil
 end
 
 </pre>
 </div>
-<p>If your application includes a locale switching menu, you would then have something like this in it:</p><div class="code_container">
+<p>如果程序中需要切换语言的连接，可以这么写：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 link_to("Deutsch", "#{APP_CONFIG[:deutsch_website_url]}#{request.env['REQUEST_URI']}")
 
 </pre>
 </div>
-<p>assuming you would set <code>APP_CONFIG[:deutsch_website_url]</code> to some value like <code>http://www.application.de</code>.</p><p>This solution has aforementioned advantages, however, you may not be able or may not want to provide different localizations ("language versions") on different domains. The most obvious solution would be to include locale code in the URL params (or request path).</p><h4 id="setting-the-locale-from-the-url-params">2.5 Setting the Locale from the URL Params</h4><p>The most usual way of setting (and passing) the locale would be to include it in URL params, as we did in the <code>I18n.locale = params[:locale]</code> <em>before_action</em> in the first example. We would like to have URLs like <code>www.example.com/books?locale=ja</code> or <code>www.example.com/ja/books</code> in this case.</p><p>This approach has almost the same set of advantages as setting the locale from the domain name: namely that it's RESTful and in accord with the rest of the World Wide Web. It does require a little bit more work to implement, though.</p><p>Getting the locale from <code>params</code> and setting it accordingly is not hard; including it in every URL and thus <strong>passing it through the requests</strong> is. To include an explicit option in every URL, e.g. <code>link_to(books_url(locale: I18n.locale))</code>, would be tedious and probably impossible, of course.</p><p>Rails contains infrastructure for "centralizing dynamic decisions about the URLs" in its <a href="http://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Base.html#method-i-default_url_options"><code>ApplicationController#default_url_options</code></a>, which is useful precisely in this scenario: it enables us to set "defaults" for <a href="http://api.rubyonrails.org/classes/ActionDispatch/Routing/UrlFor.html#method-i-url_for"><code>url_for</code></a> and helper methods dependent on it (by implementing/overriding this method).</p><p>We can include something like this in our <code>ApplicationController</code> then:</p><div class="code_container">
+<p>上述代码假设 <code>APP_CONFIG[:deutsch_website_url]</code> 的值为 <code>http://www.application.de</code>。</p><p>这种方法虽有种种好处，但你或许不想在不同的域名上提供不同语言的内容。最好的实现方式肯定是在 URL 的参数中加上语言代码。</p><h4 id="在-url-参数中设置所用语言">2.5 在 URL 参数中设置所用语言</h4><p>The most usual way of setting (and passing) the locale would be to include it in URL params, as we did in the <code>I18n.locale = params[:locale]</code> <em>before_action</em> in the first example. We would like to have URLs like <code>www.example.com/books?locale=ja</code> or <code>www.example.com/ja/books</code> in this case.</p><p>This approach has almost the same set of advantages as setting the locale from the domain name: namely that it's RESTful and in accord with the rest of the World Wide Web. It does require a little bit more work to implement, though.</p><p>Getting the locale from <code>params</code> and setting it accordingly is not hard; including it in every URL and thus <strong>passing it through the requests</strong> is. To include an explicit option in every URL (e.g. <code>link_to( books_url(locale: I18n.locale))</code>) would be tedious and probably impossible, of course.</p><p>Rails contains infrastructure for "centralizing dynamic decisions about the URLs" in its <a href="http://api.rubyonrails.org/classes/ActionController/Base.html#M000515"><code>ApplicationController#default_url_options</code></a>, which is useful precisely in this scenario: it enables us to set "defaults" for <a href="http://api.rubyonrails.org/classes/ActionController/Base.html#M000503"><code>url_for</code></a> and helper methods dependent on it (by implementing/overriding this method).</p><p>We can include something like this in our <code>ApplicationController</code> then:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # app/controllers/application_controller.rb
-def default_url_options(options = {})
-  { locale: I18n.locale }.merge options
+def default_url_options(options={})
+  logger.debug "default_url_options is passed options: #{options.inspect}\n"
+  { locale: I18n.locale }
 end
 
 </pre>
@@ -429,7 +435,7 @@ private
 <p>Of course, in a production environment you would need much more robust code, and could use a plugin such as Iain Hecker's <a href="https://github.com/iain/http_accept_language/tree/master">http_accept_language</a> or even Rack middleware such as Ryan Tomayko's <a href="https://github.com/rack/rack-contrib/blob/master/lib/rack/contrib/locale.rb">locale</a>.</p><h5 id="using-geoip-(or-similar)-database">2.6.2 Using GeoIP (or Similar) Database</h5><p>Another way of choosing the locale from client information would be to use a database for mapping the client IP to the region, such as <a href="http://www.maxmind.com/app/geolitecountry">GeoIP Lite Country</a>. The mechanics of the code would be very similar to the code above - you would need to query the database for the user's IP, and look up your preferred locale for the country/region/city returned.</p><h5 id="user-profile">2.6.3 User Profile</h5><p>You can also provide users of your application with means to set (and possibly over-ride) the locale in your application interface, as well. Again, mechanics for this approach would be very similar to the code above - you'd probably let users choose a locale from a dropdown list and save it to their profile in the database. Then you'd set the locale to this value.</p><h3 id="internationalizing-your-application">3 Internationalizing your Application</h3><p>OK! Now you've initialized I18n support for your Ruby on Rails application and told it which locale to use and how to preserve it between requests. With that in place, you're now ready for the really interesting stuff.</p><p>Let's <em>internationalize</em> our application, i.e. abstract every locale-specific parts, and then <em>localize</em> it, i.e. provide necessary translations for these abstracts.</p><p>You most probably have something like this in one of your applications:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/routes.rb
-Rails.application.routes.draw do
+Yourapp::Application.routes.draw do
   root to: "home#index"
 end
 
@@ -460,7 +466,7 @@ end
 </pre>
 </div>
 <div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 # app/views/home/index.html.erb
 &lt;h1&gt;Hello World&lt;/h1&gt;
 &lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;
@@ -479,7 +485,7 @@ end
 </pre>
 </div>
 <div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 # app/views/home/index.html.erb
 &lt;h1&gt;&lt;%=t :hello_world %&gt;&lt;/h1&gt;
 &lt;p&gt;&lt;%= flash[:notice] %&gt;&lt;/p&gt;
@@ -487,7 +493,7 @@ end
 </pre>
 </div>
 <p>When you now render this view, it will show an error message which tells you that the translations for the keys <code>:hello_world</code> and <code>:hello_flash</code> are missing.</p><p><img src="images/i18n/demo_translation_missing.png" alt="rails i18n demo translation missing"></p><div class="note"><p>Rails adds a <code>t</code> (<code>translate</code>) helper method to your views so that you do not need to spell out <code>I18n.t</code> all the time. Additionally this helper will catch missing translations and wrap the resulting error message into a <code>&lt;span class="translation_missing"&gt;</code>.</p></div><p>So let's add the missing translations into the dictionary files (i.e. do the "localization" part):</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 # config/locales/en.yml
 en:
   hello_world: Hello world!
@@ -525,7 +531,7 @@ en:
 </pre>
 </div>
 <p>And in our pirate translations file let's add a time format (it's already there in Rails' defaults for English):</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 # config/locales/pirate.yml
 pirate:
   time:
@@ -707,7 +713,7 @@ en:
 </pre>
 </div>
 <div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 # app/views/home/index.html.erb
 &lt;div&gt;&lt;%= t('welcome') %&gt;&lt;/div&gt;
 &lt;div&gt;&lt;%= raw t('welcome') %&gt;&lt;/div&gt;
@@ -716,8 +722,48 @@ en:
 
 </pre>
 </div>
-<div class="note"><p>Automatic conversion to HTML safe translate text is only available from the <code>translate</code> view helper method.</p></div><p><img src="images/i18n/demo_html_safe.png" alt="i18n demo html safe"></p><h4 id="translations-for-active-record-models">4.6 Translations for Active Record Models</h4><p>You can use the methods <code>Model.model_name.human</code> and <code>Model.human_attribute_name(attribute)</code> to transparently look up translations for your model and attribute names.</p><p>For example when you add the following translations:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<div class="note"><p>Automatic conversion to HTML safe translate text is only available from the <code>translate</code> view helper method.</p></div><p><img src="images/i18n/demo_html_safe.png" alt="i18n demo html safe"></p><h3 id="how-to-store-your-custom-translations">5 How to Store your Custom Translations</h3><p>The Simple backend shipped with Active Support allows you to store translations in both plain Ruby and YAML format.<sup class="footnote" id="footnote-2-ref"><a href="#footnote-2">2</a></sup></p><p>For example a Ruby Hash providing translations can look like this:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+{
+  pt: {
+    foo: {
+      bar: "baz"
+    }
+  }
+}
+
+</pre>
+</div>
+<p>The equivalent YAML file would look like this:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+pt:
+  foo:
+    bar: baz
+
+</pre>
+</div>
+<p>As you see, in both cases the top level key is the locale. <code>:foo</code> is a namespace key and <code>:bar</code> is the key for the translation "baz".</p><p>Here is a "real" example from the Active Support <code>en.yml</code> translations YAML file:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+en:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
+
+</pre>
+</div>
+<p>So, all of the following equivalent lookups will return the <code>:short</code> date format <code>"%b %d"</code>:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+I18n.t 'date.formats.short'
+I18n.t 'formats.short', scope: :date
+I18n.t :short, scope: 'date.formats'
+I18n.t :short, scope: [:date, :formats]
+
+</pre>
+</div>
+<p>Generally we recommend using YAML as a format for storing translations. There are cases, though, where you want to store Ruby lambdas as part of your locale data, e.g. for special date formats.</p><h4 id="translations-for-active-record-models">5.1 Translations for Active Record Models</h4><p>You can use the methods <code>Model.model_name.human</code> and <code>Model.human_attribute_name(attribute)</code> to transparently look up translations for your model and attribute names.</p><p>For example when you add the following translations:</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 en:
   activerecord:
     models:
@@ -730,7 +776,7 @@ en:
 </pre>
 </div>
 <p>Then <code>User.model_name.human</code> will return "Dude" and <code>User.human_attribute_name("login")</code> will return "Handle".</p><p>You can also set a plural form for model names, adding as following:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 en:
   activerecord:
     models:
@@ -740,18 +786,7 @@ en:
 
 </pre>
 </div>
-<p>Then <code>User.model_name.human(count: 2)</code> will return "Dudes". With <code>count: 1</code> or without params will return "Dude".</p><p>In the event you need to access nested attributes within a given model, you should nest these under <code>model/attribute</code> at the model level of your translation file:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-en:
-  activerecord:
-    attributes:
-      user/gender:
-        female: "Female"
-        male: "Male"
-
-</pre>
-</div>
-<p>Then <code>User.human_attribute_name("gender.female")</code> will return "Female".</p><h5 id="error-message-scopes">4.6.1 Error Message Scopes</h5><p>Active Record validation error messages can also be translated easily. Active Record gives you a couple of namespaces where you can place your message translations in order to provide different messages and translation for certain models, attributes, and/or validations. It also transparently takes single table inheritance into account.</p><p>This gives you quite powerful means to flexibly adjust your messages to your application's needs.</p><p>Consider a User model with a validation for the name attribute like this:</p><div class="code_container">
+<p>Then <code>User.model_name.human(count: 2)</code> will return "Dudes". With <code>count: 1</code> or without params will return "Dude".</p><h5 id="error-message-scopes">5.1.1 Error Message Scopes</h5><p>Active Record validation error messages can also be translated easily. Active Record gives you a couple of namespaces where you can place your message translations in order to provide different messages and translation for certain models, attributes, and/or validations. It also transparently takes single table inheritance into account.</p><p>This gives you quite powerful means to flexibly adjust your messages to your application's needs.</p><p>Consider a User model with a validation for the name attribute like this:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User &lt; ActiveRecord::Base
   validates :name, presence: true
@@ -799,7 +834,7 @@ errors.messages.blank
 
 </pre>
 </div>
-<p>This way you can provide special translations for various error messages at different points in your models inheritance chain and in the attributes, models, or default scopes.</p><h5 id="error-message-interpolation">4.6.2 Error Message Interpolation</h5><p>The translated model name, translated attribute name, and value are always available for interpolation.</p><p>So, for example, instead of the default error message <code>"cannot be blank"</code> you could use the attribute name like this : <code>"Please fill in your %{attribute}"</code>.</p>
+<p>This way you can provide special translations for various error messages at different points in your models inheritance chain and in the attributes, models, or default scopes.</p><h5 id="error-message-interpolation">5.1.2 Error Message Interpolation</h5><p>The translated model name, translated attribute name, and value are always available for interpolation.</p><p>So, for example, instead of the default error message <code>"cannot be blank"</code> you could use the attribute name like this : <code>"Please fill in your %{attribute}"</code>.</p>
 <ul>
 <li>
 <code>count</code>, where available, can be used for pluralization if present:</li>
@@ -955,7 +990,7 @@ errors.messages.blank
 </tr>
 </tbody>
 </table>
-<h5 id="translations-for-the-active-record-error_messages_for-helper">4.6.3 Translations for the Active Record <code>error_messages_for</code> Helper</h5><p>If you are using the Active Record <code>error_messages_for</code> helper, you will want to add
+<h5 id="translations-for-the-active-record-error_messages_for-helper">5.1.3 Translations for the Active Record <code>error_messages_for</code> Helper</h5><p>If you are using the Active Record <code>error_messages_for</code> helper, you will want to add
 translations for it.</p><p>Rails ships with the following translations:</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 en:
@@ -970,7 +1005,7 @@ en:
 </pre>
 </div>
 <div class="note"><p>In order to use this helper, you need to install <a href="https://github.com/joelmoss/dynamic_form">DynamicForm</a>
-gem by adding this line to your Gemfile: <code>gem 'dynamic_form'</code>.</p></div><h4 id="translations-for-action-mailer-e-mail-subjects">4.7 Translations for Action Mailer E-Mail Subjects</h4><p>If you don't pass a subject to the <code>mail</code> method, Action Mailer will try to find
+gem by adding this line to your Gemfile: <code>gem 'dynamic_form'</code>.</p></div><h4 id="translations-for-action-mailer-e-mail-subjects">5.2 Translations for Action Mailer E-Mail Subjects</h4><p>If you don't pass a subject to the <code>mail</code> method, Action Mailer will try to find
 it in your translations. The performed lookup will use the pattern
 <code>&lt;mailer_scope&gt;.&lt;action_name&gt;.subject</code> to construct the key.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -992,84 +1027,24 @@ en:
 
 </pre>
 </div>
-<p>To send parameters to interpolation use the <code>default_i18n_subject</code> method on the mailer.</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-# user_mailer.rb
-class UserMailer &lt; ActionMailer::Base
-  def welcome(user)
-    mail(to: user.email, subject: default_i18n_subject(user: user.name))
-  end
-end
-
-</pre>
-</div>
-<div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-en:
-  user_mailer:
-    welcome:
-      subject: "%{user}, welcome to Rails Guides!"
-
-</pre>
-</div>
-<h4 id="overview-of-other-built-in-methods-that-provide-i18n-support">4.8 Overview of Other Built-In Methods that Provide I18n Support</h4><p>Rails uses fixed strings and other localizations, such as format strings and other format information in a couple of helpers. Here's a brief overview.</p><h5 id="action-view-helper-methods">4.8.1 Action View Helper Methods</h5>
+<h4 id="overview-of-other-built-in-methods-that-provide-i18n-support">5.3 Overview of Other Built-In Methods that Provide I18n Support</h4><p>Rails uses fixed strings and other localizations, such as format strings and other format information in a couple of helpers. Here's a brief overview.</p><h5 id="action-view-helper-methods">5.3.1 Action View Helper Methods</h5>
 <ul>
 <li><p><code>distance_of_time_in_words</code> translates and pluralizes its result and interpolates the number of seconds, minutes, hours, and so on. See <a href="https://github.com/rails/rails/blob/master/actionview/lib/action_view/locale/en.yml#L4">datetime.distance_in_words</a> translations.</p></li>
 <li><p><code>datetime_select</code> and <code>select_month</code> use translated month names for populating the resulting select tag. See <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml#L15">date.month_names</a> for translations. <code>datetime_select</code> also looks up the order option from <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml#L18">date.order</a> (unless you pass the option explicitly). All date selection helpers translate the prompt using the translations in the <a href="https://github.com/rails/rails/blob/master/actionview/lib/action_view/locale/en.yml#L39">datetime.prompts</a> scope if applicable.</p></li>
 <li><p>The <code>number_to_currency</code>, <code>number_with_precision</code>, <code>number_to_percentage</code>, <code>number_with_delimiter</code>, and <code>number_to_human_size</code> helpers use the number format settings located in the <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml#L37">number</a> scope.</p></li>
 </ul>
-<h5 id="active-model-methods">4.8.2 Active Model Methods</h5>
+<h5 id="active-model-methods">5.3.2 Active Model Methods</h5>
 <ul>
 <li><p><code>model_name.human</code> and <code>human_attribute_name</code> use translations for model names and attribute names if available in the <a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/locale/en.yml#L36">activerecord.models</a> scope. They also support translations for inherited class names (e.g. for use with STI) as explained above in "Error message scopes".</p></li>
 <li><p><code>ActiveModel::Errors#generate_message</code> (which is used by Active Model validations but may also be used manually) uses <code>model_name.human</code> and <code>human_attribute_name</code> (see above). It also translates the error message and supports translations for inherited class names as explained above in "Error message scopes".</p></li>
 <li><p><code>ActiveModel::Errors#full_messages</code> prepends the attribute name to the error message using a separator that will be looked up from <a href="https://github.com/rails/rails/blob/master/activemodel/lib/active_model/locale/en.yml#L4">errors.format</a> (and which defaults to <code>"%{attribute} %{message}"</code>).</p></li>
 </ul>
-<h5 id="active-support-methods">4.8.3 Active Support Methods</h5>
+<h5 id="active-support-methods">5.3.3 Active Support Methods</h5>
 <ul>
 <li>
 <code>Array#to_sentence</code> uses format settings as given in the <a href="https://github.com/rails/rails/blob/master/activesupport/lib/active_support/locale/en.yml#L33">support.array</a> scope.</li>
 </ul>
-<h3 id="how-to-store-your-custom-translations">5 How to Store your Custom Translations</h3><p>The Simple backend shipped with Active Support allows you to store translations in both plain Ruby and YAML format.<sup class="footnote" id="footnote-2-ref"><a href="#footnote-2">2</a></sup></p><p>For example a Ruby Hash providing translations can look like this:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-{
-  pt: {
-    foo: {
-      bar: "baz"
-    }
-  }
-}
-
-</pre>
-</div>
-<p>The equivalent YAML file would look like this:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-pt:
-  foo:
-    bar: baz
-
-</pre>
-</div>
-<p>As you see, in both cases the top level key is the locale. <code>:foo</code> is a namespace key and <code>:bar</code> is the key for the translation "baz".</p><p>Here is a "real" example from the Active Support <code>en.yml</code> translations YAML file:</p><div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-en:
-  date:
-    formats:
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
-
-</pre>
-</div>
-<p>So, all of the following equivalent lookups will return the <code>:short</code> date format <code>"%b %d"</code>:</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-I18n.t 'date.formats.short'
-I18n.t 'formats.short', scope: :date
-I18n.t :short, scope: 'date.formats'
-I18n.t :short, scope: [:date, :formats]
-
-</pre>
-</div>
-<p>Generally we recommend using YAML as a format for storing translations. There are cases, though, where you want to store Ruby lambdas as part of your locale data, e.g. for special date formats.</p><h3 id="customize-your-i18n-setup">6 Customize your I18n Setup</h3><h4 id="using-different-backends">6.1 Using Different Backends</h4><p>For several reasons the Simple backend shipped with Active Support only does the "simplest thing that could possibly work" <em>for Ruby on Rails</em><sup class="footnote" id="footnote-3-ref"><a href="#footnote-3">3</a></sup> ... which means that it is only guaranteed to work for English and, as a side effect, languages that are very similar to English. Also, the simple backend is only capable of reading translations but cannot dynamically store them to any format.</p><p>That does not mean you're stuck with these limitations, though. The Ruby I18n gem makes it very easy to exchange the Simple backend implementation with something else that fits better for your needs. E.g. you could exchange it with Globalize's Static backend:</p><div class="code_container">
+<h3 id="customize-your-i18n-setup">6 Customize your I18n Setup</h3><h4 id="using-different-backends">6.1 Using Different Backends</h4><p>For several reasons the Simple backend shipped with Active Support only does the "simplest thing that could possibly work" <em>for Ruby on Rails</em><sup class="footnote" id="footnote-3-ref"><a href="#footnote-3">3</a></sup> ... which means that it is only guaranteed to work for English and, as a side effect, languages that are very similar to English. Also, the simple backend is only capable of reading translations but cannot dynamically store them to any format.</p><p>That does not mean you're stuck with these limitations, though. The Ruby I18n gem makes it very easy to exchange the Simple backend implementation with something else that fits better for your needs. E.g. you could exchange it with Globalize's Static backend:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 I18n.backend = Globalize::Backend::Static.new
 

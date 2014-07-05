@@ -164,7 +164,7 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Action View 基础</h2><p>读完本文后，你将学会：</p>
+      <h2>Action View 基础</h2><p>读完本文，你将学到：</p>
 <ul>
 <li>Action View 是什么，如何在 Rails 中使用；</li>
 <li>模板、局部视图和布局的最佳使用方法；</li>
@@ -221,7 +221,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="action-view-是什么？">1 Action View 是什么？</h3><p>Action View 和 Action Controller 是 Action Pack 的两个主要组件。在 Rails 中，请求由 Action Pack 分两步处理，一步交给控制器（逻辑处理），一步交给视图（渲染视图）。一般来说，Action Controller 的作用是和数据库通信，根据需要执行 CRUD 操作；Action View 用来构建响应。</p><p>Action View 模板由嵌入 HTML 的 Ruby 代码编写。为了保证模板代码简洁明了，Action View 提供了很多帮助方法，用来构建表单、日期和字符串等。如果需要，自己编写帮助方法也很简单。</p><p>I&gt; Action View 的有些功能和 Active Record 绑定在一起，但并不意味着 Action View 依赖于 Active Record。Action View 是个独立的代码库，可以在任何 Ruby 代码库中使用。</p><h3 id="在-rails-中使用-action-view">2 在 Rails 中使用 Action View</h3><p>每个控制器在 <code>app/views</code> 中都对应一个文件夹，用来保存该控制器的模板文件。模板文件的作用是显示控制器动作的视图。</p><p>我们来看一下使用脚手架创建资源时，Rails 做了哪些事情：</p><div class="code_container">
+        <h3 id="action-view-是什么？">1 Action View 是什么？</h3><p>Action View 和 Action Controller 是 Action Pack 的两个主要组件。在 Rails 中，请求由 Action Pack 分两步处理，一步交给控制器（逻辑处理），一步交给视图（渲染视图）。一般来说，Action Controller 的作用是和数据库通信，根据需要执行 CRUD 操作；Action View 用来构建响应。</p><p>Action View 模板由嵌入 HTML 的 Ruby 代码编写。为了保证模板代码简洁明了，Action View 提供了很多帮助方法，用来构建表单、日期和字符串等。如果需要，自己编写帮助方法也很简单。</p><div class="note"><p>Action View 的有些功能和 Active Record 绑定在一起，但并不意味着 Action View 依赖于 Active Record。Action View 是个独立的代码库，可以在任何 Ruby 代码库中使用。</p></div><h3 id="在-rails-中使用-action-view">2 在 Rails 中使用 Action View</h3><p>每个控制器在 <code>app/views</code> 中都对应一个文件夹，用来保存该控制器的模板文件。模板文件的作用是显示控制器动作的视图。</p><p>我们来看一下使用脚手架创建资源时，Rails 做了哪些事情：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails generate scaffold post
       [...]
@@ -404,7 +404,7 @@ end
 
 </pre>
 </div>
-<p>在这段代码中，渲染各 <code>_product</code> 局部视图之间还会渲染 <code>_product_ruler</code> 局部视图（不传入任何数据）。</p><h4 id="布局">3.3 布局</h4><p>布局用来渲染 Rails 控制器动作的页面整体结构。一般来说，Rails 程序中有多个布局，大多数页面都使用这个布局渲染。例如，网站中可能有个布局用来渲染用户登录后的页面，以及一个布局用来渲染市场和销售页面。在用户登录后使用的布局中可能包含一个顶级导航，会在多个控制器动作中使用。在 SaaS 程序中，销售布局中可能包含一个顶级导航，指向“定价”和“联系”页面。每个布局都可以有自己的外观样式。关于布局的详细介绍，请阅读“<a href="%7B%7B%20site.baseurl%20%7D%7D/layouts_and_rendering.html">Rails 布局和视图渲染</a>”一文。</p><h3 id="局部布局">4 局部布局</h3><p>局部视图可以使用自己的布局。局部布局和动作使用的全局布局不一样，但原理相同。</p><p>例如，要在网页中显示一篇文章，文章包含在一个 <code>div</code> 标签中。首先，我们要创建一个新 <code>Post</code> 实例：</p><div class="code_container">
+<p>在这段代码中，渲染各 <code>_product</code> 局部视图之间还会渲染 <code>_product_ruler</code> 局部视图（不传入任何数据）。</p><h4 id="布局">3.3 布局</h4><p>布局用来渲染 Rails 控制器动作的页面整体结构。一般来说，Rails 程序中有多个布局，大多数页面都使用这个布局渲染。例如，网站中可能有个布局用来渲染用户登录后的页面，以及一个布局用来渲染市场和销售页面。在用户登录后使用的布局中可能包含一个顶级导航，会在多个控制器动作中使用。在 SaaS 程序中，销售布局中可能包含一个顶级导航，指向“定价”和“联系”页面。每个布局都可以有自己的外观样式。关于布局的详细介绍，请阅读“<a href="layouts_and_rendering.html">Rails 布局和视图渲染</a>”一文。</p><h3 id="局部布局">4 局部布局</h3><p>局部视图可以使用自己的布局。局部布局和动作使用的全局布局不一样，但原理相同。</p><p>例如，要在网页中显示一篇文章，文章包含在一个 <code>div</code> 标签中。首先，我们要创建一个新 <code>Post</code> 实例：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Post.create(body: 'Partial Layouts are cool!')
 

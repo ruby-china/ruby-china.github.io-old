@@ -164,42 +164,42 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Rails on Rack</h2><p>This guide covers Rails integration with Rack and interfacing with other Rack components.</p><p>After reading this guide, you will know:</p>
+      <h2>Rails on Rack</h2><p>本文介绍 Rails 和 Rack 的集成，以及与其他 Rack 组件的配合。</p><p>读完本文，你将学到：</p>
 <ul>
-<li>How to use Rack Middlewares in your Rails applications.</li>
-<li>Action Pack&#39;s internal Middleware stack.</li>
-<li>How to define a custom Middleware stack.</li>
+<li>如何在 Rails 程序中使用中间件；</li>
+<li>Action Pack 内建的中间件；</li>
+<li>如何编写中间件；</li>
 </ul>
 
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#introduction-to-rack">Introduction to Rack</a></li>
+<li><a href="#rack-%E7%AE%80%E4%BB%8B">Rack 简介</a></li>
 <li>
 <a href="#rails-on-rack">Rails on Rack</a>
 
 <ul>
-<li><a href="#rails-application's-rack-object">Rails Application's Rack Object</a></li>
+<li><a href="#rails-%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84-rack-%E5%AF%B9%E8%B1%A1">Rails 程序中的 Rack 对象</a></li>
 <li><a href="#rails-server"><code>rails server</code></a></li>
 <li><a href="#rackup"><code>rackup</code></a></li>
 </ul>
 </li>
 <li>
-<a href="#action-dispatcher-middleware-stack">Action Dispatcher Middleware Stack</a>
+<a href="#action-dispatcher-%E4%B8%AD%E9%97%B4%E4%BB%B6">Action Dispatcher 中间件</a>
 
 <ul>
-<li><a href="#inspecting-middleware-stack">Inspecting Middleware Stack</a></li>
-<li><a href="#configuring-middleware-stack">Configuring Middleware Stack</a></li>
-<li><a href="#internal-middleware-stack">Internal Middleware Stack</a></li>
+<li><a href="#%E6%9F%A5%E7%9C%8B%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%B6">查看使用的中间件</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6">设置中间件</a></li>
+<li><a href="#%E5%86%85%E9%83%A8%E4%B8%AD%E9%97%B4%E4%BB%B6">内部中间件</a></li>
 </ul>
 </li>
 <li>
-<a href="#resources">Resources</a>
+<a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90">参考资源</a>
 
 <ul>
-<li><a href="#learning-rack">Learning Rack</a></li>
-<li><a href="#understanding-middlewares">Understanding Middlewares</a></li>
+<li><a href="#%E5%AD%A6%E4%B9%A0">学习</a></li>
+<li><a href="#%E7%90%86%E8%A7%A3%E4%B8%AD%E9%97%B4%E4%BB%B6">理解中间件</a></li>
 </ul>
 </li>
 </ol>
@@ -212,14 +212,12 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <div class="warning"><p>This guide assumes a working knowledge of Rack protocol and Rack concepts such as middlewares, url maps and <code>Rack::Builder</code>.</p></div><h3 id="introduction-to-rack">1 Introduction to Rack</h3><p>Rack provides a minimal, modular and adaptable interface for developing web applications in Ruby. By wrapping HTTP requests and responses in the simplest way possible, it unifies and distills the API for web servers, web frameworks, and software in between (the so-called middleware) into a single method call.</p>
+        <div class="warning"><p>阅读本文之前需要了解 Rack 协议及相关概念，如中间件、URL 映射和 <code>Rack::Builder</code>。</p></div><h3 id="rack-简介">1 Rack 简介</h3><p>Rack 为使用 Ruby 开发的网页程序提供了小型模块化，适应性极高的接口。Rack 尽量使用最简单的方式封装 HTTP 请求和响应，为服务器、框架和二者之间的软件（中间件）提供了统一的 API，只要调用一个简单的方法就能完成一切操作。</p>
 <ul>
-<li><a href="http://rack.github.io/">Rack API Documentation</a></li>
+<li><a href="http://rack.rubyforge.org/doc/">Rack API 文档</a></li>
 </ul>
-<p>Explaining Rack is not really in the scope of this guide. In case you are not familiar with Rack's basics, you should check out the <a href="#resources">Resources</a> section below.</p><h3 id="rails-on-rack">2 Rails on Rack</h3><h4 id="rails-application's-rack-object">2.1 Rails Application's Rack Object</h4><p><code>Rails.application</code> is the primary Rack application object of a Rails
-application. Any Rack compliant web server should be using
-<code>Rails.application</code> object to serve a Rails application.</p><h4 id="rails-server">2.2 <code>rails server</code>
-</h4><p><code>rails server</code> does the basic job of creating a <code>Rack::Server</code> object and starting the webserver.</p><p>Here's how <code>rails server</code> creates an instance of <code>Rack::Server</code></p><div class="code_container">
+<p>详细解说 Rack 不是本文的目的，如果不知道 Rack 基础知识，可以阅读“<a href="#resources">参考资源</a>”一节。</p><h3 id="rails-on-rack">2 Rails on Rack</h3><h4 id="rails-程序中的-rack-对象">2.1 Rails 程序中的 Rack 对象</h4><p><code>ApplicationName::Application</code> 是 Rails 程序中最主要的 Rack 程序对象。任何支持 Rack 的服务器都应该使用 <code>ApplicationName::Application</code> 对象服务 Rails 程序。<code>Rails.application</code> 也指向 <code>ApplicationName::Application</code> 对象。</p><h4 id="rails-server">2.2 <code>rails server</code>
+</h4><p><code>rails server</code> 命令会创建 <code>Rack::Server</code> 对象并启动服务器。</p><p><code>rails server</code> 创建 <code>Rack::Server</code> 实例的方法如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Rails::Server.new.tap do |server|
   require APP_PATH
@@ -229,7 +227,7 @@ end
 
 </pre>
 </div>
-<p>The <code>Rails::Server</code> inherits from <code>Rack::Server</code> and calls the <code>Rack::Server#start</code> method this way:</p><div class="code_container">
+<p><code>Rails::Server</code> 继承自 <code>Rack::Server</code>，使用下面的方式调用 <code>Rack::Server#start</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Server &lt; ::Rack::Server
   def start
@@ -240,7 +238,7 @@ end
 
 </pre>
 </div>
-<p>Here's how it loads the middlewares:</p><div class="code_container">
+<p><code>Rails::Server</code> 加载中间件的方式如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def middleware
   middlewares = []
@@ -251,27 +249,27 @@ end
 
 </pre>
 </div>
-<p><code>Rails::Rack::Debugger</code> is primarily useful only in the development environment. The following table explains the usage of the loaded middlewares:</p>
+<p><code>Rails::Rack::Debugger</code> 基本上只在开发环境中有用。下表说明了加载的各中间件的用途：</p>
 <table>
 <thead>
 <tr>
-<th>Middleware</th>
-<th>Purpose</th>
+<th>中间件</th>
+<th>用途</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>Rails::Rack::Debugger</code></td>
-<td>Starts Debugger</td>
+<td>启用调试功能</td>
 </tr>
 <tr>
 <td><code>Rack::ContentLength</code></td>
-<td>Counts the number of bytes in the response and set the HTTP Content-Length header</td>
+<td>计算响应的长度，单位为字节，然后设置 HTTP Content-Length 报头</td>
 </tr>
 </tbody>
 </table>
 <h4 id="rackup">2.3 <code>rackup</code>
-</h4><p>To use <code>rackup</code> instead of Rails' <code>rails server</code>, you can put the following inside <code>config.ru</code> of your Rails application's root directory:</p><div class="code_container">
+</h4><p>如果想用 <code>rackup</code> 代替 <code>rails server</code> 命令，可以在 Rails 程序根目录下的 <code>config.ru</code> 文件中写入下面的代码：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # Rails.root/config.ru
 require ::File.expand_path('../config/environment', __FILE__)
@@ -282,25 +280,25 @@ run Rails.application
 
 </pre>
 </div>
-<p>And start the server:</p><div class="code_container">
+<p>然后使用下面的命令启动服务器：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rackup config.ru
 
 </pre>
 </div>
-<p>To find out more about different <code>rackup</code> options:</p><div class="code_container">
+<p>查看 <code>rackup</code> 的其他选项，可以执行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rackup --help
 
 </pre>
 </div>
-<h3 id="action-dispatcher-middleware-stack">3 Action Dispatcher Middleware Stack</h3><p>Many of Action Dispatcher's internal components are implemented as Rack middlewares. <code>Rails::Application</code> uses <code>ActionDispatch::MiddlewareStack</code> to combine various internal and external middlewares to form a complete Rails Rack application.</p><div class="note"><p><code>ActionDispatch::MiddlewareStack</code> is Rails equivalent of <code>Rack::Builder</code>, but built for better flexibility and more features to meet Rails' requirements.</p></div><h4 id="inspecting-middleware-stack">3.1 Inspecting Middleware Stack</h4><p>Rails has a handy rake task for inspecting the middleware stack in use:</p><div class="code_container">
+<h3 id="action-dispatcher-中间件">3 Action Dispatcher 中间件</h3><p>Action Dispatcher 中的很多组件都以 Rack 中间件的形式实现。<code>Rails::Application</code> 通过 <code>ActionDispatch::MiddlewareStack</code> 把内部和外部的中间件组合在一起，形成一个完整的 Rails Rack 程序。</p><div class="note"><p>在 Rails 中，<code>ActionDispatch::MiddlewareStack</code> 的作用和 <code>Rack::Builder</code> 一样，不过前者更灵活，也为满足 Rails 的需求加入了更多功能。</p></div><h4 id="查看使用的中间件">3.1 查看使用的中间件</h4><p>Rails 提供了一个 rake 任务，用来查看使用的中间件：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake middleware
+$ rake middleware
 
 </pre>
 </div>
-<p>For a freshly generated Rails application, this might produce something like:</p><div class="code_container">
+<p>在新建的 Rails 程序中，可能会输出如下结果：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 use Rack::Sendfile
 use ActionDispatch::Static
@@ -325,15 +323,18 @@ use ActionDispatch::ParamsParser
 use Rack::Head
 use Rack::ConditionalGet
 use Rack::ETag
-run Rails.application.routes
+run MyApp::Application.routes
 
 </pre>
 </div>
-<p>The default middlewares shown here (and some others) are each summarized in the <a href="#internal-middleware-stack">Internal Middlewares</a> section, below.</p><h4 id="configuring-middleware-stack">3.2 Configuring Middleware Stack</h4><p>Rails provides a simple configuration interface <code>config.middleware</code> for adding, removing and modifying the middlewares in the middleware stack via <code>application.rb</code> or the environment specific configuration file <code>environments/&lt;environment&gt;.rb</code>.</p><h5 id="adding-a-middleware">3.2.1 Adding a Middleware</h5><p>You can add a new middleware to the middleware stack using any of the following methods:</p>
+<p>这里列出的各中间件在“<a href="#internal-middleware-stack">内部中间件</a>”一节有详细介绍。</p><h4 id="设置中间件">3.2 设置中间件</h4><p>Rails 在 <code>application.rb</code> 和 <code>environments/&lt;environment&gt;.rb</code> 文件中提供了一个简单的设置项 <code>config.middleware</code>，可以添加新中间件，删除再用的中间件，或者修改中间件的加载顺序。</p><h5 id="添加新中间件">3.2.1 添加新中间件</h5><p>使用下面列出的任何一种方法都可以添加新中间件：</p>
 <ul>
-<li><p><code>config.middleware.use(new_middleware, args)</code> - Adds the new middleware at the bottom of the middleware stack.</p></li>
-<li><p><code>config.middleware.insert_before(existing_middleware, new_middleware, args)</code> - Adds the new middleware before the specified existing middleware in the middleware stack.</p></li>
-<li><p><code>config.middleware.insert_after(existing_middleware, new_middleware, args)</code> - Adds the new middleware after the specified existing middleware in the middleware stack.</p></li>
+<li>
+<code>config.middleware.use(new_middleware, args)</code>：把新中间件添加到列表末尾；</li>
+<li>
+<code>config.middleware.insert_before(existing_middleware, new_middleware, args)</code>：在 <code>existing_middleware</code> 之前添加新中间件；</li>
+<li>
+<code>config.middleware.insert_after(existing_middleware, new_middleware, args)</code>：在 <code>existing_middleware</code> 之后添加新中间件；</li>
 </ul>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -348,7 +349,7 @@ config.middleware.insert_after ActiveRecord::QueryCache, Lifo::Cache, page_cache
 
 </pre>
 </div>
-<h5 id="swapping-a-middleware">3.2.2 Swapping a Middleware</h5><p>You can swap an existing middleware in the middleware stack using <code>config.middleware.swap</code>.</p><div class="code_container">
+<h5 id="替换中间件">3.2.2 替换中间件</h5><p>使用 <code>config.middleware.swap</code> 可以替换现有的中间件：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 
@@ -357,27 +358,26 @@ config.middleware.swap ActionDispatch::ShowExceptions, Lifo::ShowExceptions
 
 </pre>
 </div>
-<h5 id="deleting-a-middleware">3.2.3 Deleting a Middleware</h5><p>Add the following lines to your application configuration:</p><div class="code_container">
+<h5 id="删除中间件">3.2.3 删除中间件</h5><p>在程序的设置文件中加入下面的代码：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 config.middleware.delete "Rack::Lock"
 
 </pre>
 </div>
-<p>And now if you inspect the middleware stack, you'll find that <code>Rack::Lock</code> is
-not a part of it.</p><div class="code_container">
+<p>现在查看所用的中间件，会发现 <code>Rack::Lock</code> 不在输出结果中。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake middleware
+$ rake middleware
 (in /Users/lifo/Rails/blog)
 use ActionDispatch::Static
 use #&lt;ActiveSupport::Cache::Strategy::LocalCache::Middleware:0x00000001c304c8&gt;
 use Rack::Runtime
 ...
-run Rails.application.routes
+run Blog::Application.routes
 
 </pre>
 </div>
-<p>If you want to remove session related middleware, do the following:</p><div class="code_container">
+<p>如果想删除会话相关的中间件，可以这么做：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 config.middleware.delete "ActionDispatch::Cookies"
@@ -386,115 +386,23 @@ config.middleware.delete "ActionDispatch::Flash"
 
 </pre>
 </div>
-<p>And to remove browser related middleware,</p><div class="code_container">
+<p>删除浏览器相关的中间件：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 config.middleware.delete "Rack::MethodOverride"
 
 </pre>
 </div>
-<h4 id="internal-middleware-stack">3.3 Internal Middleware Stack</h4><p>Much of Action Controller's functionality is implemented as Middlewares. The following list explains the purpose of each of them:</p><p><strong><code>Rack::Sendfile</code></strong></p>
+<h4 id="内部中间件">3.3 内部中间件</h4><p>Action Controller 的很多功能都以中间件的形式实现。下面解释个中间件的作用。</p><p><strong><code>Rack::Sendfile</code></strong>：设置服务器上的 X-Sendfile 报头。通过 <code>config.action_dispatch.x_sendfile_header</code> 选项设置。</p><p><strong><code>ActionDispatch::Static</code></strong>：用来服务静态资源文件。如果选项 <code>config.serve_static_assets</code> 为 <code>false</code>，则禁用这个中间件。</p><p><strong><code>Rack::Lock</code></strong>：把 <code>env["rack.multithread"]</code> 旗标设为 <code>false</code>，程序放入互斥锁中。</p><p><strong><code>ActiveSupport::Cache::Strategy::LocalCache::Middleware</code></strong>：在内存中保存缓存，非线程安全。</p><p><strong><code>Rack::Runtime</code></strong>：设置 X-Runtime 报头，即执行请求的时长，单位为秒。</p><p><strong><code>Rack::MethodOverride</code></strong>：如果指定了 <code>params[:_method]</code> 参数，会覆盖所用的请求方法。这个中间件实现了 PUT 和 DELETE 方法。</p><p><strong><code>ActionDispatch::RequestId</code></strong>：在响应中设置一个唯一的 X-Request-Id 报头，并启用 <code>ActionDispatch::Request#uuid</code> 方法。</p><p><strong><code>Rails::Rack::Logger</code></strong>：请求开始时提醒日志，请求完成后写入日志。</p><p><strong><code>ActionDispatch::ShowExceptions</code></strong>：补救程序抛出的所有异常，调用处理异常的程序，使用特定的格式显示给用户。</p><p><strong><code>ActionDispatch::DebugExceptions</code></strong>：如果在本地开发，把异常写入日志，并显示一个调试页面。</p><p><strong><code>ActionDispatch::RemoteIp</code></strong>：检查欺骗攻击的 IP。</p><p><strong><code>ActionDispatch::Reloader</code></strong>：提供“准备”和“清理”回调，协助开发环境中的代码重新加载功能。</p><p><strong><code>ActionDispatch::Callbacks</code></strong>：在处理请求之前调用“准备”回调。</p><p><strong><code>ActiveRecord::Migration::CheckPending</code></strong>：检查是否有待运行的迁移，如果有就抛出 <code>ActiveRecord::PendingMigrationError</code> 异常。</p><p><strong><code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code></strong>：请求处理完成后，清理活跃的连接，除非在发起请求的环境中把 <code>rack.test</code> 设为 <code>true</code>。</p><p><strong><code>ActiveRecord::QueryCache</code></strong>：启用 Active Record 查询缓存。</p><p><strong><code>ActionDispatch::Cookies</code></strong>：设置请求的 cookies。</p><p><strong><code>ActionDispatch::Session::CookieStore</code></strong>：负责把会话存储在 cookies 中。</p><p><strong><code>ActionDispatch::Flash</code></strong>：设置 Flash 消息的键。只有设定了 <code>config.action_controller.session_store</code> 选项时才可用。</p><p><strong><code>ActionDispatch::ParamsParser</code></strong>：把请求中的参数出入 <code>params</code>。</p><p><strong><code>ActionDispatch::Head</code></strong>：把 HEAD 请求转换成 GET 请求，并处理。</p><p><strong><code>Rack::ConditionalGet</code></strong>：添加对“条件 GET”的支持，如果页面未修改，就不响应。</p><p><strong><code>Rack::ETag</code></strong>：为所有字符串类型的主体添加 ETags 报头。ETags 用来验证缓存。</p><div class="info"><p>设置 Rack 时可使用上述任意一个中间件。</p></div><h3 id="参考资源">4 参考资源</h3><h4 id="学习">4.1 学习</h4>
 <ul>
-<li>Sets server specific X-Sendfile header. Configure this via <code>config.action_dispatch.x_sendfile_header</code> option.</li>
-</ul>
-<p><strong><code>ActionDispatch::Static</code></strong></p>
-<ul>
-<li>Used to serve static assets. Disabled if <code>config.serve_static_assets</code> is <code>false</code>.</li>
-</ul>
-<p><strong><code>Rack::Lock</code></strong></p>
-<ul>
-<li>Sets <code>env["rack.multithread"]</code> flag to <code>false</code> and wraps the application within a Mutex.</li>
-</ul>
-<p><strong><code>ActiveSupport::Cache::Strategy::LocalCache::Middleware</code></strong></p>
-<ul>
-<li>Used for memory caching. This cache is not thread safe.</li>
-</ul>
-<p><strong><code>Rack::Runtime</code></strong></p>
-<ul>
-<li>Sets an X-Runtime header, containing the time (in seconds) taken to execute the request.</li>
-</ul>
-<p><strong><code>Rack::MethodOverride</code></strong></p>
-<ul>
-<li>Allows the method to be overridden if <code>params[:_method]</code> is set. This is the middleware which supports the PUT and DELETE HTTP method types.</li>
-</ul>
-<p><strong><code>ActionDispatch::RequestId</code></strong></p>
-<ul>
-<li>Makes a unique <code>X-Request-Id</code> header available to the response and enables the <code>ActionDispatch::Request#uuid</code> method.</li>
-</ul>
-<p><strong><code>Rails::Rack::Logger</code></strong></p>
-<ul>
-<li>Notifies the logs that the request has began. After request is complete, flushes all the logs.</li>
-</ul>
-<p><strong><code>ActionDispatch::ShowExceptions</code></strong></p>
-<ul>
-<li>Rescues any exception returned by the application and calls an exceptions app that will wrap it in a format for the end user.</li>
-</ul>
-<p><strong><code>ActionDispatch::DebugExceptions</code></strong></p>
-<ul>
-<li>Responsible for logging exceptions and showing a debugging page in case the request is local.</li>
-</ul>
-<p><strong><code>ActionDispatch::RemoteIp</code></strong></p>
-<ul>
-<li>Checks for IP spoofing attacks.</li>
-</ul>
-<p><strong><code>ActionDispatch::Reloader</code></strong></p>
-<ul>
-<li>Provides prepare and cleanup callbacks, intended to assist with code reloading during development.</li>
-</ul>
-<p><strong><code>ActionDispatch::Callbacks</code></strong></p>
-<ul>
-<li>Runs the prepare callbacks before serving the request.</li>
-</ul>
-<p><strong><code>ActiveRecord::Migration::CheckPending</code></strong></p>
-<ul>
-<li>Checks pending migrations and raises <code>ActiveRecord::PendingMigrationError</code> if any migrations are pending.</li>
-</ul>
-<p><strong><code>ActiveRecord::ConnectionAdapters::ConnectionManagement</code></strong></p>
-<ul>
-<li>Cleans active connections after each request, unless the <code>rack.test</code> key in the request environment is set to <code>true</code>.</li>
-</ul>
-<p><strong><code>ActiveRecord::QueryCache</code></strong></p>
-<ul>
-<li>Enables the Active Record query cache.</li>
-</ul>
-<p><strong><code>ActionDispatch::Cookies</code></strong></p>
-<ul>
-<li>Sets cookies for the request.</li>
-</ul>
-<p><strong><code>ActionDispatch::Session::CookieStore</code></strong></p>
-<ul>
-<li>Responsible for storing the session in cookies.</li>
-</ul>
-<p><strong><code>ActionDispatch::Flash</code></strong></p>
-<ul>
-<li>Sets up the flash keys. Only available if <code>config.action_controller.session_store</code> is set to a value.</li>
-</ul>
-<p><strong><code>ActionDispatch::ParamsParser</code></strong></p>
-<ul>
-<li>Parses out parameters from the request into <code>params</code>.</li>
-</ul>
-<p><strong><code>ActionDispatch::Head</code></strong></p>
-<ul>
-<li>Converts HEAD requests to <code>GET</code> requests and serves them as so.</li>
-</ul>
-<p><strong><code>Rack::ConditionalGet</code></strong></p>
-<ul>
-<li>Adds support for "Conditional <code>GET</code>" so that server responds with nothing if page wasn't changed.</li>
-</ul>
-<p><strong><code>Rack::ETag</code></strong></p>
-<ul>
-<li>Adds ETag header on all String bodies. ETags are used to validate cache.</li>
-</ul>
-<div class="info"><p>It's possible to use any of the above middlewares in your custom Rack stack.</p></div><h3 id="resources">4 Resources</h3><h4 id="learning-rack">4.1 Learning Rack</h4>
-<ul>
-<li><a href="http://rack.github.io">Official Rack Website</a></li>
-<li><a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html">Introducing Rack</a></li>
+<li><a href="http://rack.github.io">Rack 官网</a></li>
+<li><a href="http://chneukirchen.org/blog/archive/2007/02/introducing-rack.html">Rack 简介</a></li>
 <li><a href="http://m.onkey.org/ruby-on-rack-1-hello-rack">Ruby on Rack #1 - Hello Rack!</a></li>
 <li><a href="http://m.onkey.org/ruby-on-rack-2-the-builder">Ruby on Rack #2 - The Builder</a></li>
 </ul>
-<h4 id="understanding-middlewares">4.2 Understanding Middlewares</h4>
+<h4 id="理解中间件">4.2 理解中间件</h4>
 <ul>
-<li><a href="http://railscasts.com/episodes/151-rack-middleware">Railscast on Rack Middlewares</a></li>
+<li><a href="http://railscasts.com/episodes/151-rack-middleware">Railscast 介绍 Rack 中间件的视频</a></li>
 </ul>
 
 

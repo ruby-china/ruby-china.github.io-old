@@ -164,7 +164,7 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Rails 路由全解</h2><p>本文介绍面向用户的 Rails 路由功能。</p><p>读完后，你将学会：</p>
+      <h2>Rails 路由全解</h2><p>本文介绍面向用户的 Rails 路由功能。</p><p>读完本文，你将学到：</p>
 <ul>
 <li>如何理解 <code>routes.rb</code> 文件中的代码；</li>
 <li>如何使用推荐的资源式，或使用 <code>match</code> 方法编写路由；</li>
@@ -468,12 +468,13 @@ resource :geocoder
 <code>geocoder_path</code> 返回 <code>/geocoder</code>
 </li>
 </ul>
-<p>和复数资源一样，上面各帮助方法都有对应的 <code>_url</code> 形式，返回主机、端口加路径。</p><p>W&gt; 有个一直存在的问题导致 <code>form_for</code> 无法自动处理单数资源。为了解决这个问题，可以直接指定表单的 URL，例如：
-W&gt;
-W&gt;
-W&gt;<code>ruby
-W&gt; form_for @geocoder, url: geocoder_path do |f|
-W&gt;</code></p><h4 id="控制器命名空间和路由">2.6 控制器命名空间和路由</h4><p>你可能想把一系列控制器放在一个命名空间内，最常见的是把管理相关的控制器放在 <code>Admin::</code> 命名空间内。你需要把这些控制器存在 <code>app/controllers/admin</code> 文件夹中，然后在路由中做如下声明：</p><div class="code_container">
+<p>和复数资源一样，上面各帮助方法都有对应的 <code>_url</code> 形式，返回主机、端口加路径。</p><div class="warning"><p>有个一直存在的问题导致 <code>form_for</code> 无法自动处理单数资源。为了解决这个问题，可以直接指定表单的 URL，例如：</p></div><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+form_for @geocoder, url: geocoder_path do |f|
+
+</pre>
+</div>
+<h4 id="控制器命名空间和路由">2.6 控制器命名空间和路由</h4><p>你可能想把一系列控制器放在一个命名空间内，最常见的是把管理相关的控制器放在 <code>Admin::</code> 命名空间内。你需要把这些控制器存在 <code>app/controllers/admin</code> 文件夹中，然后在路由中做如下声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 namespace :admin do
   resources :posts, :comments

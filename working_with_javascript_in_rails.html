@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Working with JavaScript in Rails — Ruby on Rails 指南</title>
+<title>在 Rails 中使用 JavaScript — Ruby on Rails 指南</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -164,49 +164,47 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Working with JavaScript in Rails</h2><p>This guide covers the built-in Ajax/JavaScript functionality of Rails (and
-more); it will enable you to create rich and dynamic Ajax applications with
-ease!</p><p>After reading this guide, you will know:</p>
+      <h2>在 Rails 中使用 JavaScript</h2><p>本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易的开发强大的 Ajax 程序。</p><p>读完本文，你将学到：</p>
 <ul>
-<li>The basics of Ajax.</li>
-<li>Unobtrusive JavaScript.</li>
-<li>How Rails&#39; built-in helpers assist you.</li>
-<li>How to handle Ajax on the server side.</li>
-<li>The Turbolinks gem.</li>
+<li>Ajax 基本知识；</li>
+<li>剥离式 JavaScript；</li>
+<li>如何使用 Rails 内建的帮助方法；</li>
+<li>如何在服务器端处理 Ajax；</li>
+<li>Turbolinks 简介；</li>
 </ul>
 
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#an-introduction-to-ajax">An Introduction to Ajax</a></li>
-<li><a href="#unobtrusive-javascript">Unobtrusive JavaScript</a></li>
+<li><a href="#ajax-%E7%AE%80%E4%BB%8B">Ajax 简介</a></li>
+<li><a href="#%E5%89%A5%E7%A6%BB%E5%BC%8F-javascript">剥离式 JavaScript</a></li>
 <li>
-<a href="#built-in-helpers">Built-in Helpers</a>
+<a href="#%E5%86%85%E5%BB%BA%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">内建的帮助方法</a>
 
 <ul>
-<li><a href="#form_for">form_for</a></li>
-<li><a href="#form_tag">form_tag</a></li>
-<li><a href="#link_to">link_to</a></li>
-<li><a href="#button_to">button_to</a></li>
+<li><a href="#form_for"><code>form_for</code></a></li>
+<li><a href="#form_tag"><code>form_tag</code></a></li>
+<li><a href="#link_to"><code>link_to</code></a></li>
+<li><a href="#button_to"><code>button_to</code></a></li>
 </ul>
 </li>
 <li>
-<a href="#server-side-concerns">Server-Side Concerns</a>
+<a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%A4%84%E7%90%86">服务器端处理</a>
 
 <ul>
-<li><a href="#a-simple-example">A Simple Example</a></li>
+<li><a href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90">一个简单的例子</a></li>
 </ul>
 </li>
 <li>
 <a href="#turbolinks">Turbolinks</a>
 
 <ul>
-<li><a href="#how-turbolinks-works">How Turbolinks Works</a></li>
-<li><a href="#page-change-events">Page Change Events</a></li>
+<li><a href="#turbolinks-%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">Turbolinks 的工作原理</a></li>
+<li><a href="#%E9%A1%B5%E9%9D%A2%E5%86%85%E5%AE%B9%E5%8F%98%E6%9B%B4%E4%BA%8B%E4%BB%B6">页面内容变更事件</a></li>
 </ul>
 </li>
-<li><a href="#other-resources">Other Resources</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90">其他资源</a></li>
 </ol>
 
           </div>
@@ -217,49 +215,26 @@ ease!</p><p>After reading this guide, you will know:</p>
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="an-introduction-to-ajax">1 An Introduction to Ajax</h3><p>In order to understand Ajax, you must first understand what a web browser does
-normally.</p><p>When you type <code>http://localhost:3000</code> into your browser's address bar and hit
-'Go,' the browser (your 'client') makes a request to the server. It parses the
-response, then fetches all associated assets, like JavaScript files,
-stylesheets and images. It then assembles the page. If you click a link, it
-does the same process: fetch the page, fetch the assets, put it all together,
-show you the results. This is called the 'request response cycle.'</p><p>JavaScript can also make requests to the server, and parse the response. It
-also has the ability to update information on the page. Combining these two
-powers, a JavaScript writer can make a web page that can update just parts of
-itself, without needing to get the full page data from the server. This is a
-powerful technique that we call Ajax.</p><p>Rails ships with CoffeeScript by default, and so the rest of the examples
-in this guide will be in CoffeeScript. All of these lessons, of course, apply
-to vanilla JavaScript as well.</p><p>As an example, here's some CoffeeScript code that makes an Ajax request using
-the jQuery library:</p><div class="code_container">
+        <h3 id="ajax-简介">1 Ajax 简介</h3><p>在理解 Ajax 之前，要先知道网页浏览器常规的工作原理。</p><p>在浏览器的地址栏中输入 <code>http://localhost:3000</code> 后，浏览器（客户端）会向服务器发起一个请求。然后浏览器会处理响应，获取相关的资源文件，比如 JavaScript、样式表、图片，然后显示页面内容。点击链接后发生的事情也是如此：获取页面内容，获取资源文件，把全部内容放在一起，显示最终的网页。这个过程叫做“请求-响应循环”。</p><p>JavaScript 也可以向服务器发起请求，并处理响应。而且还能更新网页中的内容。因此，JavaScript 程序员可以编写只需更需部分内容的网页，而不用从服务器获取完整的页面数据。这是一种强大的技术，我们称之为 Ajax。</p><p>Rails 默认支持 CoffeeScript，后文所有的示例都用 CoffeeScript 编写。本文介绍的技术，在普通的 JavaScript 中也可使用。</p><p>例如，下面这段 CoffeeScript 代码使用 jQuery 发起一个 Ajax 请求：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $.ajax(url: "/test").done (html) -&gt;
   $("#results").append html
 
 </pre>
 </div>
-<p>This code fetches data from "/test", and then appends the result to the <code>div</code>
-with an id of <code>results</code>.</p><p>Rails provides quite a bit of built-in support for building web pages with this
-technique. You rarely have to write this code yourself. The rest of this guide
-will show you how Rails can help you write websites in this way, but it's
-all built on top of this fairly simple technique.</p><h3 id="unobtrusive-javascript">2 Unobtrusive JavaScript</h3><p>Rails uses a technique called "Unobtrusive JavaScript" to handle attaching
-JavaScript to the DOM. This is generally considered to be a best-practice
-within the frontend community, but you may occasionally read tutorials that
-demonstrate other ways.</p><p>Here's the simplest way to write JavaScript. You may see it referred to as
-'inline JavaScript':</p><div class="code_container">
+<p>这段代码从 <code>/test</code> 地址上获取数据，然后把结果附加到 <code>div#results</code>。</p><p>Rails 内建了很多使用这种技术开发程序的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种程序提供帮助，不过都构建在这种简单的技术之上。</p><h3 id="剥离式-javascript">2 剥离式 JavaScript</h3><p>Rails 使用一种叫做“剥离式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。剥离式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。</p><p>下面是编写 JavaScript 最简单的方式，你可能见过，这叫做“行间 JavaScript”：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="#" onclick="this.style.backgroundColor='#990000'"&gt;Paint it red&lt;/a&gt;
 
 </pre>
 </div>
-<p>When clicked, the link background will become red. Here's the problem: what
-happens when we have lots of JavaScript we want to execute on a click?</p><div class="code_container">
+<p>点击链接后，链接的背景会变成红色。这种用法的问题是，如果点击链接后想执行大量代码怎么办？</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';"&gt;Paint it green&lt;/a&gt;
 
 </pre>
 </div>
-<p>Awkward, right? We could pull the function definition out of the click handler,
-and turn it into CoffeeScript:</p><div class="code_container">
+<p>太别扭了，不是吗？我们可以把处理点击的代码定义成一个函数，用 CoffeeScript 编写如下：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 paintIt = (element, backgroundColor, textColor) -&gt;
   element.style.backgroundColor = backgroundColor
@@ -268,14 +243,13 @@ paintIt = (element, backgroundColor, textColor) -&gt;
 
 </pre>
 </div>
-<p>And then on our page:</p><div class="code_container">
+<p>然后在页面中这么做：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
 
 </pre>
 </div>
-<p>That's a little bit better, but what about multiple links that have the same
-effect?</p><div class="code_container">
+<p>这种方法好点儿，但是如果很多链接需要同样的效果该怎么办呢？</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="#" onclick="paintIt(this, '#990000')"&gt;Paint it red&lt;/a&gt;
 &lt;a href="#" onclick="paintIt(this, '#009900', '#FFFFFF')"&gt;Paint it green&lt;/a&gt;
@@ -283,9 +257,7 @@ effect?</p><div class="code_container">
 
 </pre>
 </div>
-<p>Not very DRY, eh? We can fix this by using events instead. We'll add a <code>data-*</code>
-attribute to our link, and then bind a handler to the click event of every link
-that has that attribute:</p><div class="code_container">
+<p>非常不符合 DRY 原则。为了解决这个问题，我们可以使用“事件”。在链接上添加一个 <code>data-*</code> 属性，然后把处理程序绑定到拥有这个属性的点击事件上：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 paintIt = (element, backgroundColor, textColor) -&gt;
   element.style.backgroundColor = backgroundColor
@@ -293,9 +265,7 @@ paintIt = (element, backgroundColor, textColor) -&gt;
     element.style.color = textColor
 
 $ -&gt;
-  $("a[data-background-color]").click (e) -&gt;
-    e.preventDefault()
-
+  $("a[data-background-color]").click -&gt;
     backgroundColor = $(this).data("background-color")
     textColor = $(this).data("text-color")
     paintIt(this, backgroundColor, textColor)
@@ -310,120 +280,93 @@ $ -&gt;
 
 </pre>
 </div>
-<p>We call this 'unobtrusive' JavaScript because we're no longer mixing our
-JavaScript into our HTML. We've properly separated our concerns, making future
-change easy. We can easily add behavior to any link by adding the data
-attribute. We can run all of our JavaScript through a minimizer and
-concatenator. We can serve our entire JavaScript bundle on every page, which
-means that it'll get downloaded on the first page load and then be cached on
-every page after that. Lots of little benefits really add up.</p><p>The Rails team strongly encourages you to write your CoffeeScript (and
-JavaScript) in this style, and you can expect that many libraries will also
-follow this pattern.</p><h3 id="built-in-helpers">3 Built-in Helpers</h3><p>Rails provides a bunch of view helper methods written in Ruby to assist you
-in generating HTML. Sometimes, you want to add a little Ajax to those elements,
-and Rails has got your back in those cases.</p><p>Because of Unobtrusive JavaScript, the Rails "Ajax helpers" are actually in two
-parts: the JavaScript half and the Ruby half.</p><p><a href="https://github.com/rails/jquery-ujs/blob/master/src/rails.js">rails.js</a>
-provides the JavaScript half, and the regular Ruby view helpers add appropriate
-tags to your DOM. The CoffeeScript in rails.js then listens for these
-attributes, and attaches appropriate handlers.</p><h4 id="form_for">3.1 form_for</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code></a>
-is a helper that assists with writing forms. <code>form_for</code> takes a <code>:remote</code>
-option. It works like this:</p><div class="code_container">
+<p>我们把这种方法称为“剥离式 JavaScript”，因为 JavaScript 代码不再和 HTML 混用。我们把两中代码完全分开，这么做易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 <code>data</code> 属性就行。所有 JavaScript 代码都可以放在一个文件中，进行压缩，每个页面都使用这个 JavaScript 文件，因此只在第一次请求时加载，后续请求会直接从缓存中读取。“剥离式 JavaScript”带来的好处太多了。</p><p>Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，而且你会发现很多代码库都沿用了这种方式。</p><h3 id="内建的帮助方法">3 内建的帮助方法</h3><p>Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。</p><p>因为使用的是剥离式 JavaScript，所以 Ajax 相关的帮助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。</p><p><a href="https://github.com/rails/jquery-ujs/blob/master/src/rails.js">rails.js</a> 提供 JavaScript 代码，常规的 Ruby 视图帮助方法用来生成 DOM 标签。rails.js 中的 CoffeeScript 会监听这些属性，执行相应的处理程序。</p><h4 id="form_for">3.1 <code>form_for</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code></a> 方法协助编写表单，可指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
-&lt;%= form_for(@article, remote: true) do |f| %&gt;
+&lt;%= form_for(@post, remote: true) do |f| %&gt;
   ...
 &lt;% end %&gt;
 
 </pre>
 </div>
-<p>This will generate the following HTML:</p><div class="code_container">
+<p>生成的 HTML 如下：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
-&lt;form accept-charset="UTF-8" action="/articles" class="new_article" data-remote="true" id="new_article" method="post"&gt;
+&lt;form accept-charset="UTF-8" action="/posts" class="new_post" data-remote="true" id="new_post" method="post"&gt;
   ...
 &lt;/form&gt;
 
 </pre>
 </div>
-<p>Note the <code>data-remote="true"</code>. Now, the form will be submitted by Ajax rather
-than by the browser's normal submit mechanism.</p><p>You probably don't want to just sit there with a filled out <code>&lt;form&gt;</code>, though.
-You probably want to do something upon a successful submission. To do that,
-bind to the <code>ajax:success</code> event. On failure, use <code>ajax:error</code>. Check it out:</p><div class="code_container">
+<p>注意 <code>data-remote="true"</code> 属性，现在这个表单不会通过常规的提交按钮方式提交，而是通过 Ajax 提交。</p><p>或许你并不需要一个只能填写内容的表单，而是想在表单提交成功后做些事情。为此，我们要绑定到 <code>ajax:success</code> 事件上。处理表单提交失败的程序要绑定到 <code>ajax:error</code> 事件上。例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $(document).ready -&gt;
-  $("#new_article").on("ajax:success", (e, data, status, xhr) -&gt;
-    $("#new_article").append xhr.responseText
+  $("#new_post").on("ajax:success", (e, data, status, xhr) -&gt;
+    $("#new_post").append xhr.responseText
   ).on "ajax:error", (e, xhr, status, error) -&gt;
-    $("#new_article").append "&lt;p&gt;ERROR&lt;/p&gt;"
+    $("#new_post").append "&lt;p&gt;ERROR&lt;/p&gt;"
 
 </pre>
 </div>
-<p>Obviously, you'll want to be a bit more sophisticated than that, but it's a
-start. You can see more about the events <a href="https://github.com/rails/jquery-ujs/wiki/ajax">in the jquery-ujs wiki</a>.</p><h4 id="form_tag">3.2 form_tag</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag"><code>form_tag</code></a>
-is very similar to <code>form_for</code>. It has a <code>:remote</code> option that you can use like
-this:</p><div class="code_container">
+<p>显然你需要的功能比这要复杂，上面的例子只是个入门。关于事件的更多内容请阅读 <a href="https://github.com/rails/jquery-ujs/wiki/ajax">jquery-ujs 的维基</a>。</p><h4 id="form_tag">3.2 <code>form_tag</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormTagHelper.html#method-i-form_tag"><code>form_tag</code></a> 方法的功能和 <code>form_for</code> 类似，也可指定 <code>:remote</code> 选项，如下所示：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
-&lt;%= form_tag('/articles', remote: true) do %&gt;
+&lt;%= form_tag('/posts', remote: true) do %&gt;
   ...
 &lt;% end %&gt;
 
 </pre>
 </div>
-<p>This will generate the following HTML:</p><div class="code_container">
+<p>生成的 HTML 如下：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
-&lt;form accept-charset="UTF-8" action="/articles" data-remote="true" method="post"&gt;
+&lt;form accept-charset="UTF-8" action="/posts" data-remote="true" method="post"&gt;
   ...
 &lt;/form&gt;
 
 </pre>
 </div>
-<p>Everything else is the same as <code>form_for</code>. See its documentation for full
-details.</p><h4 id="link_to">3.3 link_to</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a>
-is a helper that assists with generating links. It has a <code>:remote</code> option you
-can use like this:</p><div class="code_container">
+<p>其他用法都和 <code>form_for</code> 一样。详细介绍参见文档。</p><h4 id="link_to">3.3 <code>link_to</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to"><code>link_to</code></a> 方法用来生成链接，可以指定 <code>:remote</code>，用法如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
-&lt;%= link_to "an article", @article, remote: true %&gt;
+&lt;%= link_to "a post", @post, remote: true %&gt;
 
 </pre>
 </div>
-<p>which generates</p><div class="code_container">
+<p>生成的 HTML 如下：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
-&lt;a href="/articles/1" data-remote="true"&gt;an article&lt;/a&gt;
+&lt;a href="/posts/1" data-remote="true"&gt;a post&lt;/a&gt;
 
 </pre>
 </div>
-<p>You can bind to the same Ajax events as <code>form_for</code>. Here's an example. Let's
-assume that we have a list of articles that can be deleted with just one
-click. We would generate some HTML like this:</p><div class="code_container">
+<p>绑定的 Ajax 事件和 <code>form_for</code> 方法一样。下面举个例子。加入有一个文章列表，我们想只点击一个链接就删除所有文章，视图代码如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
-&lt;%= link_to "Delete article", @article, remote: true, method: :delete %&gt;
+&lt;%= link_to "Delete post", @post, remote: true, method: :delete %&gt;
 
 </pre>
 </div>
-<p>and write some CoffeeScript like this:</p><div class="code_container">
+<p>CoffeeScript 代码如下：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ -&gt;
   $("a[data-remote]").on "ajax:success", (e, data, status, xhr) -&gt;
-    alert "The article was deleted."
+    alert "The post was deleted."
 
 </pre>
 </div>
-<h4 id="button_to">3.4 button_to</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code></a> is a helper that helps you create buttons. It has a <code>:remote</code> option that you can call like this:</p><div class="code_container">
+<h4 id="button_to">3.4 <code>button_to</code>
+</h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-button_to"><code>button_to</code></a> 方法用来生成按钮，可以指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
-&lt;%= button_to "An article", @article, remote: true %&gt;
+&lt;%= button_to "A post", @post, remote: true %&gt;
 
 </pre>
 </div>
-<p>this generates</p><div class="code_container">
+<p>生成的 HTML 如下：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
-&lt;form action="/articles/1" class="button_to" data-remote="true" method="post"&gt;
-  &lt;div&gt;&lt;input type="submit" value="An article"&gt;&lt;/div&gt;
+&lt;form action="/posts/1" class="button_to" data-remote="true" method="post"&gt;
+  &lt;div&gt;&lt;input type="submit" value="A post"&gt;&lt;/div&gt;
 &lt;/form&gt;
 
 </pre>
 </div>
-<p>Since it's just a <code>&lt;form&gt;</code>, all of the information on <code>form_for</code> also applies.</p><h3 id="server-side-concerns">4 Server-Side Concerns</h3><p>Ajax isn't just client-side, you also need to do some work on the server
-side to support it. Often, people like their Ajax requests to return JSON
-rather than HTML. Let's discuss what it takes to make that happen.</p><h4 id="a-simple-example">4.1 A Simple Example</h4><p>Imagine you have a series of users that you would like to display and provide a
-form on that same page to create a new user. The index action of your
-controller looks like this:</p><div class="code_container">
+<p>因为生成的就是一个表单，所以 <code>form_for</code> 的全部信息否可使用。</p><h3 id="服务器端处理">4 服务器端处理</h3><p>Ajax 不仅需要编写客户端代码，服务器端也要做处理。Ajax 请求一般不返回 HTML，而是 JSON。下面详细介绍处理过程。</p><h4 id="一个简单的例子">4.1 一个简单的例子</h4><p>假设在网页中要显示一系列用户，还有一个新建用户的表单，控制器的 <code>index</code> 动作如下所示：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class UsersController &lt; ApplicationController
   def index
@@ -434,7 +377,7 @@ class UsersController &lt; ApplicationController
 
 </pre>
 </div>
-<p>The index view (<code>app/views/users/index.html.erb</code>) contains:</p><div class="code_container">
+<p><code>index</code> 动作的视图（<code>app/views/users/index.html.erb</code>）如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;b&gt;Users&lt;/b&gt;
 
@@ -452,18 +395,13 @@ class UsersController &lt; ApplicationController
 
 </pre>
 </div>
-<p>The <code>app/views/users/_user.html.erb</code> partial contains the following:</p><div class="code_container">
+<p><code>app/views/users/_user.html.erb</code> 局部视图如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;li&gt;&lt;%= user.name %&gt;&lt;/li&gt;
 
 </pre>
 </div>
-<p>The top portion of the index page displays the users. The bottom portion
-provides a form to create a new user.</p><p>The bottom form will call the <code>create</code> action on the <code>UsersController</code>. Because
-the form's remote option is set to true, the request will be posted to the
-<code>UsersController</code> as an Ajax request, looking for JavaScript. In order to
-serve that request, the <code>create</code> action of your controller would look like
-this:</p><div class="code_container">
+<p><code>index</code> 动作的上部显示用户，下部显示新建用户的表单。</p><p>下部的表单会调用 <code>UsersController</code> 的 <code>create</code> 动作。因为表单的 <code>remote</code> 属性为 <code>true</code>，所以发往 <code>UsersController</code> 的是 Ajax 请求，使用 JavaScript 处理。要想处理这个请求，控制器的  <code>create</code> 动作应该这么写：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
   # app/controllers/users_controller.rb
   # ......
@@ -484,55 +422,37 @@ this:</p><div class="code_container">
 
 </pre>
 </div>
-<p>Notice the format.js in the <code>respond_to</code> block; that allows the controller to
-respond to your Ajax request. You then have a corresponding
-<code>app/views/users/create.js.erb</code> view file that generates the actual JavaScript
-code that will be sent and executed on the client side.</p><div class="code_container">
+<p>注意，在 <code>respond_to</code> 的代码块中使用了 <code>format.js</code>，这样控制器才能处理 Ajax 请求。然后还要新建 <code>app/views/users/create.js.erb</code> 视图文件，编写发送响应以及在客户端执行的 JavaScript 代码。</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 $("&lt;%= escape_javascript(render @user) %&gt;").appendTo("#users");
 
 </pre>
 </div>
-<h3 id="turbolinks">5 Turbolinks</h3><p>Rails 4 ships with the <a href="https://github.com/rails/turbolinks">Turbolinks gem</a>.
-This gem uses Ajax to speed up page rendering in most applications.</p><h4 id="how-turbolinks-works">5.1 How Turbolinks Works</h4><p>Turbolinks attaches a click handler to all <code>&lt;a&gt;</code> on the page. If your browser
-supports
-[PushState](<a href="https://developer.mozilla.org/en-US/docs/DOM/Manipulating_the_browser_history#The_pushState(%5C).C2.A0method">https://developer.mozilla.org/en-US/docs/DOM/Manipulating_the_browser_history#The_pushState(\).C2.A0method</a>),
-Turbolinks will make an Ajax request for the page, parse the response, and
-replace the entire <code>&lt;body&gt;</code> of the page with the <code>&lt;body&gt;</code> of the response. It
-will then use PushState to change the URL to the correct one, preserving
-refresh semantics and giving you pretty URLs.</p><p>The only thing you have to do to enable Turbolinks is have it in your Gemfile,
-and put <code>//= require turbolinks</code> in your CoffeeScript manifest, which is usually
-<code>app/assets/javascripts/application.js</code>.</p><p>If you want to disable Turbolinks for certain links, add a <code>data-no-turbolink</code>
-attribute to the tag:</p><div class="code_container">
+<h3 id="turbolinks">5 Turbolinks</h3><p>Rails 4 提供了 <a href="https://github.com/rails/turbolinks">Turbolinks gem</a>，这个 gem 可用于大多数程序，加速页面渲染。</p><h4 id="turbolinks-的工作原理">5.1 Turbolinks 的工作原理</h4><p>Turbolinks 为页面中所有的 <code>&lt;a&gt;</code> 元素添加了一个点击事件处理程序。如果浏览器支持 <a href="http://dwz.cn/pushstate">PushState</a>，Turbolinks 会发起 Ajax 请求，处理响应，然后使用响应主体替换原始页面的整个 <code>&lt;body&gt;</code> 元素。最后，使用 PushState 技术更改页面的 URL，让新页面可刷新，并且有个精美的 URL。</p><p>要想使用 Turbolinks，只需将其加入 <code>Gemfile</code>，然后在 <code>app/assets/javascripts/application.js</code> 中加入 <code>//= require turbolinks</code> 即可。</p><p>如果某个链接不想使用 Turbolinks，可以在链接中添加 <code>data-no-turbolink</code> 属性：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="..." data-no-turbolink&gt;No turbolinks here&lt;/a&gt;.
 
 </pre>
 </div>
-<h4 id="page-change-events">5.2 Page Change Events</h4><p>When writing CoffeeScript, you'll often want to do some sort of processing upon
-page load. With jQuery, you'd write something like this:</p><div class="code_container">
+<h4 id="页面内容变更事件">5.2 页面内容变更事件</h4><p>编写 CoffeeScript 代码时，经常需要在页面加载时做一些事情。在 jQuery 中，我们可以这么写：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $(document).ready -&gt;
   alert "page has loaded!"
 
 </pre>
 </div>
-<p>However, because Turbolinks overrides the normal page loading process, the
-event that this relies on will not be fired. If you have code that looks like
-this, you must change your code to do this instead:</p><div class="code_container">
+<p>不过，因为 Turbolinks 改变了常规的页面加载流程，所以不会触发这个事件。如果编写了类似上面的代码，要将其修改为：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $(document).on "page:change", -&gt;
   alert "page has loaded!"
 
 </pre>
 </div>
-<p>For more details, including other events you can bind to, check out <a href="https://github.com/rails/turbolinks/blob/master/README.md">the
-Turbolinks
-README</a>.</p><h3 id="other-resources">6 Other Resources</h3><p>Here are some helpful links to help you learn even more:</p>
+<p>其他可用事件等详细信息，请参阅 <a href="https://github.com/rails/turbolinks/blob/master/README.md">Turbolinks 的说明文件</a>。</p><h3 id="其他资源">6 其他资源</h3><p>下面列出一些链接，可以帮助你进一步学习：</p>
 <ul>
-<li><a href="https://github.com/rails/jquery-ujs/wiki">jquery-ujs wiki</a></li>
-<li><a href="https://github.com/rails/jquery-ujs/wiki/External-articles">jquery-ujs list of external articles</a></li>
-<li><a href="http://www.alfajango.com/blog/rails-3-remote-links-and-forms/">Rails 3 Remote Links and Forms: A Definitive Guide</a></li>
+<li><a href="https://github.com/rails/jquery-ujs/wiki">jquery-ujs 的维基</a></li>
+<li><a href="https://github.com/rails/jquery-ujs/wiki/External-articles">其他介绍 jquery-ujs 的文章</a></li>
+<li><a href="http://www.alfajango.com/blog/rails-3-remote-links-and-forms/">Rails 3 远程链接和表单权威指南</a></li>
 <li><a href="http://railscasts.com/episodes/205-unobtrusive-javascript">Railscasts: Unobtrusive JavaScript</a></li>
 <li><a href="http://railscasts.com/episodes/390-turbolinks">Railscasts: Turbolinks</a></li>
 </ul>

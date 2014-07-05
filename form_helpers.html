@@ -164,7 +164,7 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>表单帮助方法</h2><p>表单是网页程序的基本组成部分，用于接收用户的输入。然而，由于表单中控件的名称和各种属性，使用标记语言难以编写和维护。Rails 提供了很多视图帮助方法简化表单的创建过程。因为各帮助方法的用途不一样，所以开发者在使用之前必须要知道相似帮助方法的差异。</p><p>读完本文后，你将学会：</p>
+      <h2>表单帮助方法</h2><p>表单是网页程序的基本组成部分，用于接收用户的输入。然而，由于表单中控件的名称和各种属性，使用标记语言难以编写和维护。Rails 提供了很多视图帮助方法简化表单的创建过程。因为各帮助方法的用途不一样，所以开发者在使用之前必须要知道相似帮助方法的差异。</p><p>读完本文，你将学到：</p>
 <ul>
 <li>如何创建搜索表单等不需要操作模型的普通表单；</li>
 <li>如何使用针对模型的表单创建和编辑数据库中的记录；</li>
@@ -309,7 +309,7 @@
 
 </pre>
 </div>
-<p>T&gt; 表单中的每个 <code>input</code> 元素都有 ID 属性，其值和 <code>name</code> 属性的值一样（上例中是 <code>q</code>）。ID 可用于 CSS 样式或使用 JavaScript 处理表单控件。</p><p>除了 <code>text_field_tag</code> 和 <code>submit_tag</code> 之外，每个 HTML 表单控件都有对应的帮助方法。</p><div class="note"><p>搜索表单的请求类型一定要用 GET，这样用户才能把某个搜索结果页面加入收藏夹，以便后续访问。一般来说，Rails 建议使用合适的请求方法处理表单。</p></div><h4 id="调用-form_tag-时使用多个-hash-参数">1.2 调用 <code>form_tag</code> 时使用多个 Hash 参数</h4><p><code>form_tag</code> 方法可接受两个参数：表单提交地址和一个 Hash 选项。Hash 选项指定提交表单使用的请求方法和 HTML 选项，例如 <code>form</code> 元素的 <code>class</code> 属性。</p><p>和 <code>link_to</code> 方法一样，提交地址不一定非得使用字符串，也可使用一个由 URL 参数组成的 Hash，这个 Hash 经 Rails 路由转换成 URL 地址。这种情况下，<code>form_tag</code> 方法的两个参数都是 Hash，同时指定两个参数时很容易产生问题。假设写成下面这样：</p><div class="code_container">
+<div class="info"><p>表单中的每个 <code>input</code> 元素都有 ID 属性，其值和 <code>name</code> 属性的值一样（上例中是 <code>q</code>）。ID 可用于 CSS 样式或使用 JavaScript 处理表单控件。</p></div><p>除了 <code>text_field_tag</code> 和 <code>submit_tag</code> 之外，每个 HTML 表单控件都有对应的帮助方法。</p><div class="note"><p>搜索表单的请求类型一定要用 GET，这样用户才能把某个搜索结果页面加入收藏夹，以便后续访问。一般来说，Rails 建议使用合适的请求方法处理表单。</p></div><h4 id="调用-form_tag-时使用多个-hash-参数">1.2 调用 <code>form_tag</code> 时使用多个 Hash 参数</h4><p><code>form_tag</code> 方法可接受两个参数：表单提交地址和一个 Hash 选项。Hash 选项指定提交表单使用的请求方法和 HTML 选项，例如 <code>form</code> 元素的 <code>class</code> 属性。</p><p>和 <code>link_to</code> 方法一样，提交地址不一定非得使用字符串，也可使用一个由 URL 参数组成的 Hash，这个 Hash 经 Rails 路由转换成 URL 地址。这种情况下，<code>form_tag</code> 方法的两个参数都是 Hash，同时指定两个参数时很容易产生问题。假设写成下面这样：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 form_tag(controller: "people", action: "search", method: "get", class: "nifty_form")
 # =&gt; '&lt;form accept-charset="UTF-8" action="/people/search?method=get&amp;class=nifty_form" method="post"&gt;'
@@ -401,7 +401,7 @@ form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_
 
 </pre>
 </div>
-<p>用户看不到隐藏输入框，但却和其他文本类输入框一样，能保存数据。隐藏输入框中的值可以通过 JavaScript 修改。</p><div class="note"><p>搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框是 HTML5 提供的控件。如果想在旧版本的浏览器中保持体验一致，需要使用 HTML5 polyfill（使用 CSS 或 JavaScript 编写）。polyfill 虽<a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">无不足之处</a>，但现今比较流行的工具是 <a href="http://www.modernizr.com/">Modernizr</a> 和 <a href="http://yepnopejs.com/">yepnope</a>，根据检测到的 HTML5 特性添加相应的功能。</p></div><p>T&gt; 如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“<a href="security.html#logging">Rails 安全指南</a>”。</p><h3 id="处理模型对象">2 处理模型对象</h3><h4 id="模型对象帮助方法">2.1 模型对象帮助方法</h4><p>表单的一个特别常见的用途是编辑或创建模型对象。这时可以使用 <code>*_tag</code> 帮助方法，但是太麻烦了，每个元素都要设置正确的参数名称和默认值。Rails 提供了很多帮助方法可以简化这一过程，这些帮助方法没有 <code>_tag</code> 后缀，例如 <code>text_field</code> 和 <code>text_area</code>。</p><p>这些帮助方法的第一个参数是实例变量的名字，第二个参数是在对象上调用的方法名（一般都是模型的属性）。Rails 会把在对象上调用方法得到的值设为控件的 <code>value</code> 属性值，并且设置相应的 <code>name</code> 属性值。如果在控制器中定义了 <code>@person</code> 实例变量，其名字为“Henry”，在表单中有以下代码：</p><div class="code_container">
+<p>用户看不到隐藏输入框，但却和其他文本类输入框一样，能保存数据。隐藏输入框中的值可以通过 JavaScript 修改。</p><div class="note"><p>搜索关键字输入框，电话号码输入框，日期输入框，时间输入框，颜色输入框，日期时间输入框，本地日期时间输入框，月份输入框，星期输入框，URL 地址输入框，Email 地址输入框，数字输入框和范围输入框是 HTML5 提供的控件。如果想在旧版本的浏览器中保持体验一致，需要使用 HTML5 polyfill（使用 CSS 或 JavaScript 编写）。polyfill 虽<a href="https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills">无不足之处</a>，但现今比较流行的工具是 <a href="http://www.modernizr.com/">Modernizr</a> 和 <a href="http://yepnopejs.com/">yepnope</a>，根据检测到的 HTML5 特性添加相应的功能。</p></div><div class="info"><p>如果使用密码输入框，或许还不想把其中的值写入日志。具体做法参见“<a href="security.html#logging">Rails 安全指南</a>”。</p></div><h3 id="处理模型对象">2 处理模型对象</h3><h4 id="模型对象帮助方法">2.1 模型对象帮助方法</h4><p>表单的一个特别常见的用途是编辑或创建模型对象。这时可以使用 <code>*_tag</code> 帮助方法，但是太麻烦了，每个元素都要设置正确的参数名称和默认值。Rails 提供了很多帮助方法可以简化这一过程，这些帮助方法没有 <code>_tag</code> 后缀，例如 <code>text_field</code> 和 <code>text_area</code>。</p><p>这些帮助方法的第一个参数是实例变量的名字，第二个参数是在对象上调用的方法名（一般都是模型的属性）。Rails 会把在对象上调用方法得到的值设为控件的 <code>value</code> 属性值，并且设置相应的 <code>name</code> 属性值。如果在控制器中定义了 <code>@person</code> 实例变量，其名字为“Henry”，在表单中有以下代码：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= text_field(:person, :name) %&gt;
 
@@ -413,7 +413,7 @@ form_tag({controller: "people", action: "search"}, method: "get", class: "nifty_
 
 </pre>
 </div>
-<p>提交表单后，用户输入的值存储在 <code>params[:person][:name]</code> 中。<code>params[:person]</code> 这个 Hash 可以传递给 <code>Person.new</code> 方法；如果 <code>@person</code> 是 <code>Person</code> 的实例，还可传递给 <code>@person.update</code>。一般来说，这些帮助方法的第二个参数是对象属性的名字，但 Rails 并不对此做强制要求，只要对象能响应 <code>name</code> 和 <code>name=</code> 方法即可。</p><p>W&gt; 传入的参数必须是实例变量的名字，例如 <code>:person</code> 或 <code>"person"</code>，而不是模型对象的实例本身。</p><p>Rails 还提供了用于显示模型对象数据验证错误的帮助方法，详情参阅“<a href="active_record_validations.html#displaying-validation-errors-in-views">Active Record 数据验证</a>”一文。</p><h4 id="把表单绑定到对象上">2.2 把表单绑定到对象上</h4><p>虽然上述用法很方便，但却不是最好的使用方式。如果 <code>Person</code> 有很多要编辑的属性，我们就得不断重复编写要编辑对象的名字。我们想要的是能把表单绑定到对象上的方法，<code>form_for</code> 帮助方法就是为此而生。</p><p>假设有个用来处理文章的控制器 <code>app/controllers/articles_controller.rb</code>：</p><div class="code_container">
+<p>提交表单后，用户输入的值存储在 <code>params[:person][:name]</code> 中。<code>params[:person]</code> 这个 Hash 可以传递给 <code>Person.new</code> 方法；如果 <code>@person</code> 是 <code>Person</code> 的实例，还可传递给 <code>@person.update</code>。一般来说，这些帮助方法的第二个参数是对象属性的名字，但 Rails 并不对此做强制要求，只要对象能响应 <code>name</code> 和 <code>name=</code> 方法即可。</p><div class="warning"><p>传入的参数必须是实例变量的名字，例如 <code>:person</code> 或 <code>"person"</code>，而不是模型对象的实例本身。</p></div><p>Rails 还提供了用于显示模型对象数据验证错误的帮助方法，详情参阅“<a href="active_record_validations.html#displaying-validation-errors-in-views">Active Record 数据验证</a>”一文。</p><h4 id="把表单绑定到对象上">2.2 把表单绑定到对象上</h4><p>虽然上述用法很方便，但却不是最好的使用方式。如果 <code>Person</code> 有很多要编辑的属性，我们就得不断重复编写要编辑对象的名字。我们想要的是能把表单绑定到对象上的方法，<code>form_for</code> 帮助方法就是为此而生。</p><p>假设有个用来处理文章的控制器 <code>app/controllers/articles_controller.rb</code>：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def new
   @article = Article.new
@@ -477,7 +477,7 @@ resources :articles
 
 </pre>
 </div>
-<p>T&gt; 声明资源有很多附属作用。资源的创建与使用请阅读“<a href="routing.html#resource-routing-the-rails-default">Rails 路由全解</a>”一文。</p><p>处理 REST 资源时，使用“记录辨别”技术可以简化 <code>form_for</code> 方法的调用。简单来说，你可以只把模型实例传给 <code>form_for</code>，让 Rails 查找模型名等其他信息：</p><div class="code_container">
+<div class="info"><p>声明资源有很多附属作用。资源的创建与使用请阅读“<a href="routing.html#resource-routing-the-rails-default">Rails 路由全解</a>”一文。</p></div><p>处理 REST 资源时，使用“记录辨别”技术可以简化 <code>form_for</code> 方法的调用。简单来说，你可以只把模型实例传给 <code>form_for</code>，让 Rails 查找模型名等其他信息：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 ## Creating a new article
 # long-style:
@@ -493,7 +493,7 @@ form_for(@article)
 
 </pre>
 </div>
-<p>注意，不管记录是否存在，使用简短形式的 <code>form_for</code> 调用都很方便。记录辨别技术很智能，会调用 <code>record.new_record?</code> 方法检查是否为新记录；而且还能自动选择正确的提交地址，根据对象所属的类生成 <code>name</code> 属性的值。</p><p>Rails 还会自动设置 <code>class</code> 和 <code>id</code> 属性。在新建文章的表单中，<code>id</code> 和 <code>class</code> 属性的值都是 <code>new_article</code>。如果编辑 ID 为 23 的文章，表单的 <code>class</code> 为 <code>edit_article</code>，<code>id</code> 为 <code>edit_article_23</code>。为了行文简洁，后文会省略这些属性。</p><p>W&gt; 如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，<code>:url</code> 和 <code>:method</code> 选项。</p><h5 id="处理命名空间">2.3.1 处理命名空间</h5><p>如果在路由中使用了命名空间，<code>form_for</code> 方法也有相应的简写形式。如果程序中有个 <code>admin</code> 命名空间，表单可以写成：</p><div class="code_container">
+<p>注意，不管记录是否存在，使用简短形式的 <code>form_for</code> 调用都很方便。记录辨别技术很智能，会调用 <code>record.new_record?</code> 方法检查是否为新记录；而且还能自动选择正确的提交地址，根据对象所属的类生成 <code>name</code> 属性的值。</p><p>Rails 还会自动设置 <code>class</code> 和 <code>id</code> 属性。在新建文章的表单中，<code>id</code> 和 <code>class</code> 属性的值都是 <code>new_article</code>。如果编辑 ID 为 23 的文章，表单的 <code>class</code> 为 <code>edit_article</code>，<code>id</code> 为 <code>edit_article_23</code>。为了行文简洁，后文会省略这些属性。</p><div class="warning"><p>如果在模型中使用单表继承（single-table inheritance，简称 STI），且只有父类声明为资源，子类就不能依赖记录辨别技术，必须指定模型名，<code>:url</code> 和 <code>:method</code> 选项。</p></div><h5 id="处理命名空间">2.3.1 处理命名空间</h5><p>如果在路由中使用了命名空间，<code>form_for</code> 方法也有相应的简写形式。如果程序中有个 <code>admin</code> 命名空间，表单可以写成：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 form_for [:admin, @article]
 
@@ -574,7 +574,7 @@ form_tag(search_path, method: "patch")
 
 </pre>
 </div>
-<p>当 Rails 发现生成的选项 <code>value</code> 属性值和指定的值一样时，就会在这个选项中加上 <code>selected</code> 属性。</p><p>T&gt; <code>options_for_select</code> 方法的第二个参数必须完全和需要选中的选项 <code>value</code> 属性值相等。如果 <code>value</code> 的值是整数 2，就不能传入字符串 <code>"2"</code>，必须传入数字 <code>2</code>。注意，从 <code>params</code> 中获取的值都是字符串。</p><p>使用 Hash 可以为选项指定任意属性：</p><div class="code_container">
+<p>当 Rails 发现生成的选项 <code>value</code> 属性值和指定的值一样时，就会在这个选项中加上 <code>selected</code> 属性。</p><div class="info"><p><code>options_for_select</code> 方法的第二个参数必须完全和需要选中的选项 <code>value</code> 属性值相等。如果 <code>value</code> 的值是整数 2，就不能传入字符串 <code>"2"</code>，必须传入数字 <code>2</code>。注意，从 <code>params</code> 中获取的值都是字符串。</p></div><p>使用 Hash 可以为选项指定任意属性：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= options_for_select([['Lisbon', 1, {'data-size' =&gt; '2.8 million'}], ['Madrid', 2, {'data-size' =&gt; '3.2 million'}]], 2) %&gt;
 
@@ -619,7 +619,7 @@ form_tag(search_path, method: "patch")
 
 </pre>
 </div>
-<p>W&gt; 如果使用 <code>select</code> 方法（或类似的帮助方法，例如 <code>collection_select</code> 和 <code>select_tag</code>）处理 <code>belongs_to</code> 关联，必须传入外键名（在上例中是 <code>city_id</code>），而不是关联名。如果传入的是 <code>city</code> 而不是 <code>city_id</code>，把 <code>params</code> 传给 <code>Person.new</code> 或 <code>update</code> 方法时，会抛出异常：<code>ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)</code>。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。</p><h4 id="根据任意对象组成的集合创建-option-标签">3.3 根据任意对象组成的集合创建 <code>option</code> 标签</h4><p>使用 <code>options_for_select</code> 方法生成 <code>option</code> 标签必须使用数组指定各选项的文本和值。如果有个 <code>City</code> 模型，想根据模型实例组成的集合生成 <code>option</code> 标签应该怎么做呢？一种方法是遍历集合，创建一个嵌套数组：</p><div class="code_container">
+<div class="warning"><p>如果使用 <code>select</code> 方法（或类似的帮助方法，例如 <code>collection_select</code> 和 <code>select_tag</code>）处理 <code>belongs_to</code> 关联，必须传入外键名（在上例中是 <code>city_id</code>），而不是关联名。如果传入的是 <code>city</code> 而不是 <code>city_id</code>，把 <code>params</code> 传给 <code>Person.new</code> 或 <code>update</code> 方法时，会抛出异常：<code>ActiveRecord::AssociationTypeMismatch: City(#17815740) expected, got String(#1138750)</code>。这个要求还可以这么理解，表单帮助方法只能编辑模型的属性。此外还要知道，允许用户直接编辑外键具有潜在地安全隐患。</p></div><h4 id="根据任意对象组成的集合创建-option-标签">3.3 根据任意对象组成的集合创建 <code>option</code> 标签</h4><p>使用 <code>options_for_select</code> 方法生成 <code>option</code> 标签必须使用数组指定各选项的文本和值。如果有个 <code>City</code> 模型，想根据模型实例组成的集合生成 <code>option</code> 标签应该怎么做呢？一种方法是遍历集合，创建一个嵌套数组：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;% cities_array = City.all.map { |city| [city.name, city.id] } %&gt;
 &lt;%= options_for_select(cities_array) %&gt;
@@ -751,12 +751,12 @@ end
 
 </pre>
 </div>
-<p>如果 <code>f</code> 是 <code>FormBuilder</code> 类的实例，上述代码会渲染局部视图 <code>form</code>，并把传入局部视图的对象设为表单构造器。如果表单构造器是 <code>LabellingFormBuilder</code> 类的实例，则会渲染局部视图 <code>labelling_form</code>。</p><h3 id="理解参数命名约定">7 理解参数命名约定</h3><p>从前几节可以看出，表单提交的数据可以直接保存在 <code>params</code> Hash 中，或者嵌套在子 Hash 中。例如，在 <code>Person</code> 模型对应控制器的 <code>create</code> 动作中，<code>params[:person]</code> 一般是一个 Hash，保存创建 <code>Person</code> 实例的所有属性。<code>params</code> Hash 中也可以保存数组，或由 Hash 组成的数组，等等。</p><p>HTML 表单基本上不能处理任何结构化数据，提交的只是由普通的字符串组成的键值对。在程序中使用的数组参数和 Hash 参数是通过 Rails 的参数命名约定生成的。</p><p>T&gt; 如果想快速试验本节中的示例，可以在控制台中直接调用 Rack 的参数解析器。例如：
+<p>如果 <code>f</code> 是 <code>FormBuilder</code> 类的实例，上述代码会渲染局部视图 <code>form</code>，并把传入局部视图的对象设为表单构造器。如果表单构造器是 <code>LabellingFormBuilder</code> 类的实例，则会渲染局部视图 <code>labelling_form</code>。</p><h3 id="理解参数命名约定">7 理解参数命名约定</h3><p>从前几节可以看出，表单提交的数据可以直接保存在 <code>params</code> Hash 中，或者嵌套在子 Hash 中。例如，在 <code>Person</code> 模型对应控制器的 <code>create</code> 动作中，<code>params[:person]</code> 一般是一个 Hash，保存创建 <code>Person</code> 实例的所有属性。<code>params</code> Hash 中也可以保存数组，或由 Hash 组成的数组，等等。</p><p>HTML 表单基本上不能处理任何结构化数据，提交的只是由普通的字符串组成的键值对。在程序中使用的数组参数和 Hash 参数是通过 Rails 的参数命名约定生成的。</p><div class="info"><p>如果想快速试验本节中的示例，可以在控制台中直接调用 Rack 的参数解析器。例如：
 T&gt;
 <code>ruby
-T&gt; Rack::Utils.parse_query "name=fred&amp;phone=0123456789"
-T&gt; # =&gt; {"name"=&gt;"fred", "phone"=&gt;"0123456789"}
-T&gt;</code></p><h4 id="基本结构">7.1 基本结构</h4><p>数组和 Hash 是两种基本结构。获取 Hash 中值的方法和 <code>params</code> 一样。如果表单中包含以下控件：</p><div class="code_container">
+TIP: Rack::Utils.parse_query "name=fred&amp;phone=0123456789"
+TIP: # =&gt; {"name"=&gt;"fred", "phone"=&gt;"0123456789"}
+TIP:</code></p></div><h4 id="基本结构">7.1 基本结构</h4><p>数组和 Hash 是两种基本结构。获取 Hash 中值的方法和 <code>params</code> 一样。如果表单中包含以下控件：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;input id="person_name" name="person[name]" type="text" value="Henry"/&gt;
 
@@ -796,7 +796,7 @@ T&gt;</code></p><h4 id="基本结构">7.1 基本结构</h4><p>数组和 Hash 是
 
 </pre>
 </div>
-<p>得到的 <code>params[:addresses]</code> 值是一个由 Hash 组成的数组，Hash 中的键包括 <code>line1</code>、<code>line2</code> 和 <code>city</code>。如果 Rails 发现输入框的 <code>name</code> 属性值已经存在于当前 Hash 中，就会新建一个 Hash。</p><p>不过有个限制，虽然 Hash 可以嵌套任意层级，但数组只能嵌套一层。如果需要嵌套多层数组，可以使用 Hash 实现。例如，如果想创建一个包含模型对象的数组，可以创建一个 Hash，以模型对象的 ID、数组索引或其他参数为键。</p><p>W&gt; 数组类型参数不能很好的在 <code>check_box</code> 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 <code>check_box</code> 方法额外创建了一个同名的隐藏 <code>input</code> 元素。如果没有选中复选框，只会提交隐藏 <code>input</code> 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 <code>input</code> 值，就会创建一个新数组元素。所以更推荐使用 <code>check_box_tag</code> 方法，或者用 Hash 代替数组。</p><h4 id="使用表单帮助方法">7.3 使用表单帮助方法</h4><p>前面几节并没有使用 Rails 提供的表单帮助方法。你可以自己创建 <code>input</code> 元素的 <code>name</code> 属性，然后直接将其传递给 <code>text_field_tag</code> 等帮助方法。但是 Rails 提供了更高级的支持。本节介绍 <code>form_for</code> 和 <code>fields_for</code> 方法的 <code>name</code> 参数以及 <code>:index</code> 选项。</p><p>你可能会想编写一个表单，其中有很多字段，用于编辑某人的所有地址。例如：</p><div class="code_container">
+<p>得到的 <code>params[:addresses]</code> 值是一个由 Hash 组成的数组，Hash 中的键包括 <code>line1</code>、<code>line2</code> 和 <code>city</code>。如果 Rails 发现输入框的 <code>name</code> 属性值已经存在于当前 Hash 中，就会新建一个 Hash。</p><p>不过有个限制，虽然 Hash 可以嵌套任意层级，但数组只能嵌套一层。如果需要嵌套多层数组，可以使用 Hash 实现。例如，如果想创建一个包含模型对象的数组，可以创建一个 Hash，以模型对象的 ID、数组索引或其他参数为键。</p><div class="warning"><p>数组类型参数不能很好的在 <code>check_box</code> 帮助方法中使用。根据 HTML 规范，未选中的复选框不应该提交值。但是不管是否选中都提交值往往更便于处理。为此 <code>check_box</code> 方法额外创建了一个同名的隐藏 <code>input</code> 元素。如果没有选中复选框，只会提交隐藏 <code>input</code> 元素的值，如果选中则同时提交两个值，但复选框的值优先级更高。处理数组参数时重复提交相同的参数会让 Rails 迷惑，因为对 Rails 来说，见到重复的 <code>input</code> 值，就会创建一个新数组元素。所以更推荐使用 <code>check_box_tag</code> 方法，或者用 Hash 代替数组。</p></div><h4 id="使用表单帮助方法">7.3 使用表单帮助方法</h4><p>前面几节并没有使用 Rails 提供的表单帮助方法。你可以自己创建 <code>input</code> 元素的 <code>name</code> 属性，然后直接将其传递给 <code>text_field_tag</code> 等帮助方法。但是 Rails 提供了更高级的支持。本节介绍 <code>form_for</code> 和 <code>fields_for</code> 方法的 <code>name</code> 参数以及 <code>:index</code> 选项。</p><p>你可能会想编写一个表单，其中有很多字段，用于编辑某人的所有地址。例如：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= form_for @person do |person_form| %&gt;
   &lt;%= person_form.text_field :name %&gt;
