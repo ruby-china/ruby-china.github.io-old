@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Active Record Migrations — Ruby on Rails 指南</title>
+<title>Active Record 数据库迁移 — Ruby on Rails 指南</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -92,8 +92,6 @@
                 <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
                 <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
                 <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
-                <dt>Rails 指南翻译术语</dt>
-                <dd><a href="translation_terms.html">翻译术语</a></dd>
               </dl>
           </div>
         </li>
@@ -156,9 +154,6 @@
                   <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
                   <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
               </optgroup>
-              <optgroup label="Rails 指南翻译术语">
-                  <option value="translation_terms.html">翻译术语</option>
-              </optgroup>
           </select>
         </li>
       </ul>
@@ -169,72 +164,66 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Active Record Migrations</h2><p>Migrations are a feature of Active Record that allows you to evolve your
-database schema over time. Rather than write schema modifications in pure SQL,
-migrations allow you to use an easy Ruby DSL to describe changes to your
-tables.</p><p>After reading this guide, you will know:</p>
+      <h2>Active Record 数据库迁移</h2><p>迁移是 Active Record 提供的一个功能，按照时间顺序管理数据库模式。使用迁移，无需编写 SQL，使用简单的 Ruby DSL 就能修改数据表。</p><p>读完本文，你将学到：</p>
 <ul>
-<li>The generators you can use to create them.</li>
-<li>The methods Active Record provides to manipulate your database.</li>
-<li>The Rake tasks that manipulate migrations and your schema.</li>
-<li>How migrations relate to <code>schema.rb</code>.</li>
+<li>生成迁移文件的生成器；</li>
+<li>Active Record 提供用来修改数据库的方法；</li>
+<li>管理迁移和数据库模式的 Rake 任务；</li>
+<li>迁移和 <code>schema.rb</code> 文件的关系；</li>
 </ul>
 
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#migration-overview">Migration Overview</a></li>
+<li><a href="#%E8%BF%81%E7%A7%BB%E7%AE%80%E4%BB%8B">迁移简介</a></li>
 <li>
-<a href="#creating-a-migration">Creating a Migration</a>
+<a href="#%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB">创建迁移</a>
 
 <ul>
-<li><a href="#creating-a-standalone-migration">Creating a Standalone Migration</a></li>
-<li><a href="#model-generators">Model Generators</a></li>
-<li><a href="#passing-modifiers">Passing Modifiers</a></li>
+<li><a href="#%E5%8D%95%E7%8B%AC%E5%88%9B%E5%BB%BA%E8%BF%81%E7%A7%BB">单独创建迁移</a></li>
+<li><a href="#%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90%E5%99%A8">模型生成器</a></li>
+<li><a href="#%E6%94%AF%E6%8C%81%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%BF%AE%E9%A5%B0%E7%AC%A6">支持的类型修饰符</a></li>
 </ul>
 </li>
 <li>
-<a href="#writing-a-migration">Writing a Migration</a>
+<a href="#%E7%BC%96%E5%86%99%E8%BF%81%E7%A7%BB">编写迁移</a>
 
 <ul>
-<li><a href="#creating-a-table">Creating a Table</a></li>
-<li><a href="#creating-a-join-table">Creating a Join Table</a></li>
-<li><a href="#changing-tables">Changing Tables</a></li>
-<li><a href="#changing-columns">Changing Columns</a></li>
-<li><a href="#column-modifiers">Column Modifiers</a></li>
-<li><a href="#foreign-keys">Foreign Keys</a></li>
-<li><a href="#when-helpers-aren't-enough">When Helpers aren't Enough</a></li>
-<li><a href="#using-the-change-method">Using the <code>change</code> Method</a></li>
-<li><a href="#using-reversible">Using <code>reversible</code></a></li>
-<li><a href="#using-the-up/down-methods">Using the <code>up</code>/<code>down</code> Methods</a></li>
-<li><a href="#reverting-previous-migrations">Reverting Previous Migrations</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8">创建数据表</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E8%81%94%E5%90%88%E6%95%B0%E6%8D%AE%E8%A1%A8">创建联合数据表</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E8%A1%A8">修改数据表</a></li>
+<li><a href="#%E5%A6%82%E6%9E%9C%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95%E4%B8%8D%E5%A4%9F%E7%94%A8">如果帮助方法不够用</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-change-%E6%96%B9%E6%B3%95">使用 <code>change</code> 方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-reversible-%E6%96%B9%E6%B3%95">使用 <code>reversible</code> 方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-up-%E5%92%8C-down-%E6%96%B9%E6%B3%95">使用 <code>up</code> 和 <code>down</code> 方法</a></li>
+<li><a href="#%E6%92%A4%E9%94%80%E4%B9%8B%E5%89%8D%E7%9A%84%E8%BF%81%E7%A7%BB">撤销之前的迁移</a></li>
 </ul>
 </li>
 <li>
-<a href="#running-migrations">Running Migrations</a>
+<a href="#%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB">运行迁移</a>
 
 <ul>
-<li><a href="#rolling-back">Rolling Back</a></li>
-<li><a href="#setup-the-database">Setup the Database</a></li>
-<li><a href="#resetting-the-database">Resetting the Database</a></li>
-<li><a href="#running-specific-migrations">Running Specific Migrations</a></li>
-<li><a href="#running-migrations-in-different-environments">Running Migrations in Different Environments</a></li>
-<li><a href="#changing-the-output-of-running-migrations">Changing the Output of Running Migrations</a></li>
+<li><a href="#%E5%9B%9E%E6%BB%9A">回滚</a></li>
+<li><a href="#%E6%90%AD%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">搭建数据库</a></li>
+<li><a href="#%E9%87%8D%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93">重建数据库</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C%E6%8C%87%E5%AE%9A%E7%9A%84%E8%BF%81%E7%A7%BB">运行指定的迁移</a></li>
+<li><a href="#%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%8E%AF%E5%A2%83%E4%B8%AD%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB">在不同的环境中运行迁移</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB%E6%97%B6%E7%9A%84%E8%BE%93%E5%87%BA">修改运行迁移时的输出</a></li>
 </ul>
 </li>
-<li><a href="#changing-existing-migrations">Changing Existing Migrations</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89%E7%9A%84%E8%BF%81%E7%A7%BB">修改现有的迁移</a></li>
 <li>
-<a href="#schema-dumping-and-you">Schema Dumping and You</a>
+<a href="#%E5%AF%BC%E5%87%BA%E6%A8%A1%E5%BC%8F">导出模式</a>
 
 <ul>
-<li><a href="#what-are-schema-files-for-questionmark">What are Schema Files for?</a></li>
-<li><a href="#types-of-schema-dumps">Types of Schema Dumps</a></li>
-<li><a href="#schema-dumps-and-source-control">Schema Dumps and Source Control</a></li>
+<li><a href="#%E6%A8%A1%E5%BC%8F%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8">模式文件的作用</a></li>
+<li><a href="#%E5%AF%BC%E5%87%BA%E7%9A%84%E6%A8%A1%E5%BC%8F%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B">导出的模式文件类型</a></li>
+<li><a href="#%E6%A8%A1%E5%BC%8F%E5%AF%BC%E5%87%BA%E5%92%8C%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6">模式导出和版本控制</a></li>
 </ul>
 </li>
-<li><a href="#active-record-and-referential-integrity">Active Record and Referential Integrity</a></li>
-<li><a href="#migrations-and-seed-data">Migrations and Seed Data</a></li>
+<li><a href="#active-record-%E5%92%8C%E5%BC%95%E7%94%A8%E5%AE%8C%E6%95%B4%E6%80%A7">Active Record 和引用完整性</a></li>
+<li><a href="#%E8%BF%81%E7%A7%BB%E5%92%8C%E7%A7%8D%E5%AD%90%E6%95%B0%E6%8D%AE">迁移和种子数据</a></li>
 </ol>
 
           </div>
@@ -245,15 +234,7 @@ tables.</p><p>After reading this guide, you will know:</p>
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="migration-overview">1 Migration Overview</h3><p>Migrations are a convenient way to
-<a href="http://en.wikipedia.org/wiki/Schema_migration">alter your database schema over time</a>
-in a consistent and easy way. They use a Ruby DSL so that you don't have to
-write SQL by hand, allowing your schema and changes to be database independent.</p><p>You can think of each migration as being a new 'version' of the database. A
-schema starts off with nothing in it, and each migration modifies it to add or
-remove tables, columns, or entries. Active Record knows how to update your
-schema along this timeline, bringing it from whatever point it is in the
-history to the latest version. Active Record will also update your
-<code>db/schema.rb</code> file to match the up-to-date structure of your database.</p><p>Here's an example of a migration:</p><div class="code_container">
+        <h3 id="迁移简介">1 迁移简介</h3><p>迁移使用一种统一、简单的方式，按照时间顺序修改数据库的模式。迁移使用 Ruby DSL 编写，因此不用手动编写 SQL 语句，对数据库的操作和所用的数据库种类无关。</p><p>你可以把每个迁移看做数据库的一个修订版本。数据库中一开始什么也没有，各个迁移会添加或删除数据表、字段或记录。Active Record 知道如何按照时间线更新数据库，不管数据库现在的模式如何，都能更新到最新结构。同时，Active Record 还会更新 <code>db/schema.rb</code> 文件，匹配最新的数据库结构。</p><p>下面是一个迁移示例：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class CreateProducts &lt; ActiveRecord::Migration
   def change
@@ -268,21 +249,7 @@ end
 
 </pre>
 </div>
-<p>This migration adds a table called <code>products</code> with a string column called
-<code>name</code> and a text column called <code>description</code>. A primary key column called <code>id</code>
-will also be added implicitly, as it's the default primary key for all Active
-Record models. The <code>timestamps</code> macro adds two columns, <code>created_at</code> and
-<code>updated_at</code>. These special columns are automatically managed by Active Record
-if they exist.</p><p>Note that we define the change that we want to happen moving forward in time.
-Before this migration is run, there will be no table. After, the table will
-exist. Active Record knows how to reverse this migration as well: if we roll
-this migration back, it will remove the table.</p><p>On databases that support transactions with statements that change the schema,
-migrations are wrapped in a transaction. If the database does not support this
-then when a migration fails the parts of it that succeeded will not be rolled
-back. You will have to rollback the changes that were made by hand.</p><div class="note"><p>There are certain queries that can't run inside a transaction. If your
-adapter supports DDL transactions you can use <code>disable_ddl_transaction!</code> to
-disable them for a single migration.</p></div><p>If you wish for a migration to do something that Active Record doesn't know how
-to reverse, you can use <code>reversible</code>:</p><div class="code_container">
+<p>这个迁移创建了一个名为 <code>products</code> 的表，然后在表中创建字符串字段 <code>name</code> 和文本字段 <code>description</code>。名为 <code>id</code> 的主键字段会被自动创建。<code>id</code> 字段是所有 Active Record 模型的默认主键。<code>timestamps</code> 方法创建两个字段：<code>created_at</code> 和 <code>updated_at</code>。如果数据表中有这两个字段，Active Record 会负责操作。</p><p>注意，对数据库的改动按照时间向前 推移。运行迁移之前，数据表还不存在。运行迁移后，才会创建数据表。Active Record 知道如何撤销迁移，如果回滚这次迁移，数据表会被删除。</p><p>在支持事物的数据库中，对模式的改动会在一个事物中执行。如果数据库不支持事物，迁移失败时，成功执行的操作将无法回滚。如要回滚，必须手动改回来。</p><div class="note"><p>某些查询无法在事物中运行。如果适配器支持 DDL 事物，可以在某个迁移中调用 <code>disable_ddl_transaction!</code> 方法禁用。</p></div><p>如果想在迁移中执行 Active Record 不知如何撤销的操作，可以使用 <code>reversible</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ChangeProductsPrice &lt; ActiveRecord::Migration
   def change
@@ -297,7 +264,7 @@ end
 
 </pre>
 </div>
-<p>Alternatively, you can use <code>up</code> and <code>down</code> instead of <code>change</code>:</p><div class="code_container">
+<p>或者不用 <code>change</code> 方法，分别使用 <code>up</code> 和 <code>down</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ChangeProductsPrice &lt; ActiveRecord::Migration
   def up
@@ -315,24 +282,13 @@ end
 
 </pre>
 </div>
-<h3 id="creating-a-migration">2 Creating a Migration</h3><h4 id="creating-a-standalone-migration">2.1 Creating a Standalone Migration</h4><p>Migrations are stored as files in the <code>db/migrate</code> directory, one for each
-migration class. The name of the file is of the form
-<code>YYYYMMDDHHMMSS_create_products.rb</code>, that is to say a UTC timestamp
-identifying the migration followed by an underscore followed by the name
-of the migration. The name of the migration class (CamelCased version)
-should match the latter part of the file name. For example
-<code>20080906120000_create_products.rb</code> should define class <code>CreateProducts</code> and
-<code>20080906120001_add_details_to_products.rb</code> should define
-<code>AddDetailsToProducts</code>. Rails uses this timestamp to determine which migration
-should be run and in what order, so if you're copying a migration from another
-application or generate a file yourself, be aware of its position in the order.</p><p>Of course, calculating timestamps is no fun, so Active Record provides a
-generator to handle making it for you:</p><div class="code_container">
+<h3 id="创建迁移">2 创建迁移</h3><h4 id="单独创建迁移">2.1 单独创建迁移</h4><p>迁移文件存储在 <code>db/migrate</code> 文件夹中，每个迁移保存在一个文件中。文件名采用 <code>YYYYMMDDHHMMSS_create_products.rb</code> 形式，即一个 UTC 时间戳后加以下划线分隔的迁移名。迁移的类名（驼峰式）要和文件名时间戳后面的部分匹配。例如，在 <code>20080906120000_create_products.rb</code> 文件中要定义 <code>CreateProducts</code> 类；在 <code>20080906120001_add_details_to_products.rb</code> 文件中要定义 <code>AddDetailsToProducts</code> 类。文件名中的时间戳决定要运行哪个迁移，以及按照什么顺序运行。从其他程序中复制迁移，或者自己生成迁移时，要注意运行的顺序。</p><p>自己计算时间戳不是件简单的事，所以 Active Record 提供了一个生成器：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddPartNumberToProducts
+$ rails generate migration AddPartNumberToProducts
 
 </pre>
 </div>
-<p>This will create an empty but appropriately named migration:</p><div class="code_container">
+<p>这个命令生成一个空的迁移，但名字已经起好了：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddPartNumberToProducts &lt; ActiveRecord::Migration
   def change
@@ -341,15 +297,13 @@ end
 
 </pre>
 </div>
-<p>If the migration name is of the form "AddXXXToYYY" or "RemoveXXXFromYYY" and is
-followed by a list of column names and types then a migration containing the
-appropriate <code>add_column</code> and <code>remove_column</code> statements will be created.</p><div class="code_container">
+<p>如果迁移的名字是“AddXXXToYYY”或者“RemoveXXXFromYYY”这种格式，而且后面跟着一个字段名和类型列表，那么迁移中会生成合适的 <code>add_column</code> 或 <code>remove_column</code> 语句。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddPartNumberToProducts part_number:string
+$ rails generate migration AddPartNumberToProducts part_number:string
 
 </pre>
 </div>
-<p>will generate</p><div class="code_container">
+<p>这个命令生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddPartNumberToProducts &lt; ActiveRecord::Migration
   def change
@@ -359,13 +313,13 @@ end
 
 </pre>
 </div>
-<p>If you'd like to add an index on the new column, you can do that as well:</p><div class="code_container">
+<p>如果想为新建的字段创建添加索引，可以这么做：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddPartNumberToProducts part_number:string:index
+$ rails generate migration AddPartNumberToProducts part_number:string:index
 
 </pre>
 </div>
-<p>will generate</p><div class="code_container">
+<p>这个命令生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddPartNumberToProducts &lt; ActiveRecord::Migration
   def change
@@ -376,13 +330,13 @@ end
 
 </pre>
 </div>
-<p>Similarly, you can generate a migration to remove a column from the command line:</p><div class="code_container">
+<p>类似地，还可以生成删除字段的迁移：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration RemovePartNumberFromProducts part_number:string
+$ rails generate migration RemovePartNumberFromProducts part_number:string
 
 </pre>
 </div>
-<p>generates</p><div class="code_container">
+<p>这个命令生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class RemovePartNumberFromProducts &lt; ActiveRecord::Migration
   def change
@@ -392,13 +346,13 @@ end
 
 </pre>
 </div>
-<p>You are not limited to one magically generated column. For example:</p><div class="code_container">
+<p>迁移生成器不单只能创建一个字段，例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddDetailsToProducts part_number:string price:decimal
+$ rails generate migration AddDetailsToProducts part_number:string price:decimal
 
 </pre>
 </div>
-<p>generates</p><div class="code_container">
+<p>生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddDetailsToProducts &lt; ActiveRecord::Migration
   def change
@@ -409,15 +363,13 @@ end
 
 </pre>
 </div>
-<p>If the migration name is of the form "CreateXXX" and is
-followed by a list of column names and types then a migration creating the table
-XXX with the columns listed will be generated. For example:</p><div class="code_container">
+<p>如果迁移名是“CreateXXX”形式，后面跟着一串字段名和类型声明，迁移就会创建名为“XXX”的表，以及相应的字段。例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration CreateProducts name:string part_number:string
+$ rails generate migration CreateProducts name:string part_number:string
 
 </pre>
 </div>
-<p>generates</p><div class="code_container">
+<p>生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class CreateProducts &lt; ActiveRecord::Migration
   def change
@@ -430,16 +382,13 @@ end
 
 </pre>
 </div>
-<p>As always, what has been generated for you is just a starting point. You can add
-or remove from it as you see fit by editing the
-<code>db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb</code> file.</p><p>Also, the generator accepts column type as <code>references</code>(also available as
-<code>belongs_to</code>). For instance:</p><div class="code_container">
+<p>生成器生成的只是一些基础代码，你可以根据需要修改 <code>db/migrate/YYYYMMDDHHMMSS_add_details_to_products.rb</code> 文件，增删代码。</p><p>在生成器中还可把字段类型设为 <code>references</code>（还可使用 <code>belongs_to</code>）。例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddUserRefToProducts user:references
+$ rails generate migration AddUserRefToProducts user:references
 
 </pre>
 </div>
-<p>generates</p><div class="code_container">
+<p>生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddUserRefToProducts &lt; ActiveRecord::Migration
   def change
@@ -449,13 +398,13 @@ end
 
 </pre>
 </div>
-<p>This migration will create a <code>user_id</code> column and appropriate index.</p><p>There is also a generator which will produce join tables if <code>JoinTable</code> is part of the name:</p><div class="code_container">
+<p>这个迁移会创建 <code>user_id</code> 字段，并建立索引。</p><p>如果迁移名中包含 <code>JoinTable</code>，生成器还会创建联合数据表：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails g migration CreateJoinTableCustomerProduct customer product
+rails g migration CreateJoinTableCustomerProduct customer product
 
 </pre>
 </div>
-<p>will produce the following migration:</p><div class="code_container">
+<p>生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class CreateJoinTableCustomerProduct &lt; ActiveRecord::Migration
   def change
@@ -468,16 +417,13 @@ end
 
 </pre>
 </div>
-<h4 id="model-generators">2.2 Model Generators</h4><p>The model and scaffold generators will create migrations appropriate for adding
-a new model. This migration will already contain instructions for creating the
-relevant table. If you tell Rails what columns you want, then statements for
-adding these columns will also be created. For example, running:</p><div class="code_container">
+<h4 id="模型生成器">2.2 模型生成器</h4><p>模型生成器和脚手架生成器会生成合适的迁移，创建模型。迁移中会包含创建所需数据表的代码。如果在生成器中指定了字段，还会生成创建字段的代码。例如，运行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate model Product name:string description:text
+$ rails generate model Product name:string description:text
 
 </pre>
 </div>
-<p>will create a migration that looks like this</p><div class="code_container">
+<p>会生成如下的迁移：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class CreateProducts &lt; ActiveRecord::Migration
   def change
@@ -492,14 +438,26 @@ end
 
 </pre>
 </div>
-<p>You can append as many column name/type pairs as you want.</p><h4 id="passing-modifiers">2.3 Passing Modifiers</h4><p>Some commonly used <a href="#column-modifiers">type modifiers</a> can be passed directly on
-the command line. They are enclosed by curly braces and follow the field type:</p><p>For instance, running:</p><div class="code_container">
+<p>字段的名字和类型数量不限。</p><h4 id="支持的类型修饰符">2.3 支持的类型修饰符</h4><p>在字段类型后面，可以在花括号中添加选项。可用的修饰符如下：</p>
+<ul>
+<li>
+<code>limit</code>：设置 <code>string/text/binary/integer</code> 类型字段的最大值；</li>
+<li>
+<code>precision</code>：设置 <code>decimal</code> 类型字段的精度，即数字的位数；</li>
+<li>
+<code>scale</code>：设置 <code>decimal</code> 类型字段小数点后的数字位数；</li>
+<li>
+<code>polymorphic</code>：为 <code>belongs_to</code> 关联添加 <code>type</code> 字段；</li>
+<li>
+<code>null</code>：是否允许该字段的值为 <code>NULL</code>；</li>
+</ul>
+<p>例如，执行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
+$ rails generate migration AddDetailsToProducts 'price:decimal{5,2}' supplier:references{polymorphic}
 
 </pre>
 </div>
-<p>will produce a migration that looks like this</p><div class="code_container">
+<p>生成的迁移如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddDetailsToProducts &lt; ActiveRecord::Migration
   def change
@@ -510,10 +468,7 @@ end
 
 </pre>
 </div>
-<div class="info"><p>Have a look at the generators help output for further details.</p></div><h3 id="writing-a-migration">3 Writing a Migration</h3><p>Once you have created your migration using one of the generators it's time to
-get to work!</p><h4 id="creating-a-table">3.1 Creating a Table</h4><p>The <code>create_table</code> method is one of the most fundamental, but most of the time,
-will be generated for you from using a model or scaffold generator. A typical
-use would be</p><div class="code_container">
+<h3 id="编写迁移">3 编写迁移</h3><p>使用前面介绍的生成器生成迁移后，就可以开始写代码了。</p><h4 id="创建数据表">3.1 创建数据表</h4><p><code>create_table</code> 方法最常用，大多数时候都会由模型或脚手架生成器生成。典型的用例如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_table :products do |t|
   t.string :name
@@ -521,12 +476,7 @@ end
 
 </pre>
 </div>
-<p>which creates a <code>products</code> table with a column called <code>name</code> (and as discussed
-below, an implicit <code>id</code> column).</p><p>By default, <code>create_table</code> will create a primary key called <code>id</code>. You can change
-the name of the primary key with the <code>:primary_key</code> option (don't forget to
-update the corresponding model) or, if you don't want a primary key at all, you
-can pass the option <code>id: false</code>. If you need to pass database specific options
-you can place an SQL fragment in the <code>:options</code> option. For example:</p><div class="code_container">
+<p>这个迁移会创建 <code>products</code> 数据表，在数据表中创建 <code>name</code> 字段（后面会介绍，还会自动创建 <code>id</code> 字段）。</p><p>默认情况下，<code>create_table</code> 方法会创建名为 <code>id</code> 的主键。通过 <code>:primary_key</code> 选项可以修改主键名（修改后别忘了修改相应的模型）。如果不想生成主键，可以传入 <code>id: false</code> 选项。如果设置数据库的选项，可以在 <code>:options</code> 选择中使用 SQL。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_table :products, options: "ENGINE=BLACKHOLE" do |t|
   t.string :name, null: false
@@ -534,33 +484,25 @@ end
 
 </pre>
 </div>
-<p>will append <code>ENGINE=BLACKHOLE</code> to the SQL statement used to create the table
-(when using MySQL, the default is <code>ENGINE=InnoDB</code>).</p><h4 id="creating-a-join-table">3.2 Creating a Join Table</h4><p>Migration method <code>create_join_table</code> creates a HABTM join table. A typical use
-would be:</p><div class="code_container">
+<p>这样设置之后，会在创建数据表的 SQL 语句后面加上 <code>ENGINE=BLACKHOLE</code>。（MySQL 默认的选项是 <code>ENGINE=InnoDB</code>）</p><h4 id="创建联合数据表">3.2 创建联合数据表</h4><p><code>create_join_table</code> 方法用来创建 HABTM 联合数据表。典型的用例如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_join_table :products, :categories
 
 </pre>
 </div>
-<p>which creates a <code>categories_products</code> table with two columns called
-<code>category_id</code> and <code>product_id</code>. These columns have the option <code>:null</code> set to
-<code>false</code> by default. This can be overridden by specifying the <code>:column_options</code>
-option.</p><div class="code_container">
+<p>这段代码会创建一个名为 <code>categories_products</code> 的数据表，包含两个字段：<code>category_id</code> 和 <code>product_id</code>。这两个字段的 <code>:null</code> 选项默认情况都是 <code>false</code>，不过可在 <code>:column_options</code> 选项中设置。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_join_table :products, :categories, column_options: {null: true}
 
 </pre>
 </div>
-<p>will create the <code>product_id</code> and <code>category_id</code> with the <code>:null</code> option as
-<code>true</code>.</p><p>You can pass the option <code>:table_name</code> when you want to customize the table
-name. For example:</p><div class="code_container">
+<p>这段代码会把 <code>product_id</code> 和 <code>category_id</code> 字段的 <code>:null</code> 选项设为 <code>true</code>。</p><p>如果想修改数据表的名字，可以传入 <code>:table_name</code> 选项。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_join_table :products, :categories, table_name: :categorization
 
 </pre>
 </div>
-<p>will create a <code>categorization</code> table.</p><p><code>create_join_table</code> also accepts a block, which you can use to add indices
-(which are not created by default) or additional columns:</p><div class="code_container">
+<p>创建的数据表名为 <code>categorization</code>。</p><p><code>create_join_table</code> 还可接受代码库，用来创建索引（默认无索引）或其他字段。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 create_join_table :products, :categories do |t|
   t.index :product_id
@@ -569,9 +511,7 @@ end
 
 </pre>
 </div>
-<h4 id="changing-tables">3.3 Changing Tables</h4><p>A close cousin of <code>create_table</code> is <code>change_table</code>, used for changing existing
-tables. It is used in a similar fashion to <code>create_table</code> but the object
-yielded to the block knows more tricks. For example:</p><div class="code_container">
+<h4 id="修改数据表">3.3 修改数据表</h4><p>有一个和 <code>create_table</code> 类似地方法，名为 <code>change_table</code>，用来修改现有的数据表。其用法和 <code>create_table</code> 类似，不过传入块的参数知道更多技巧。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 change_table :products do |t|
   t.remove :description, :name
@@ -582,136 +522,61 @@ end
 
 </pre>
 </div>
-<p>removes the <code>description</code> and <code>name</code> columns, creates a <code>part_number</code> string
-column and adds an index on it. Finally it renames the <code>upccode</code> column.</p><h4 id="changing-columns">3.4 Changing Columns</h4><p>Like the <code>remove_column</code> and <code>add_column</code> Rails provides the <code>change_column</code>
-migration method.</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-change_column :products, :part_number, :text
-
-</pre>
-</div>
-<p>This changes the column <code>part_number</code> on products table to be a <code>:text</code> field.</p><p>Besides <code>change_column</code>, the <code>change_column_null</code> and <code>change_column_default</code>
-methods are used specifically to change the null and default values of a
-column.</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-change_column_null :products, :name, false
-change_column_default :products, :approved, false
-
-</pre>
-</div>
-<p>This sets <code>:name</code> field on products to a <code>NOT NULL</code> column and the default
-value of the <code>:approved</code> field to false.</p><div class="info"><p>Unlike <code>change_column</code> (and <code>change_column_default</code>), <code>change_column_null</code>
-is reversible.</p></div><h4 id="column-modifiers">3.5 Column Modifiers</h4><p>Column modifiers can be applied when creating or changing a column:</p>
-<ul>
-<li>
-<code>limit</code>        Sets the maximum size of the <code>string/text/binary/integer</code> fields.</li>
-<li>
-<code>precision</code>    Defines the precision for the <code>decimal</code> fields, representing the
-total number of digits in the number.</li>
-<li>
-<code>scale</code>        Defines the scale for the <code>decimal</code> fields, representing the
-number of digits after the decimal point.</li>
-<li>
-<code>polymorphic</code>  Adds a <code>type</code> column for <code>belongs_to</code> associations.</li>
-<li>
-<code>null</code>         Allows or disallows <code>NULL</code> values in the column.</li>
-<li>
-<code>default</code>      Allows to set a default value on the column. Note that if you
-are using a dynamic value (such as a date), the default will only be calculated
-the first time (i.e. on the date the migration is applied).</li>
-<li>
-<code>index</code>        Adds an index for the column.</li>
-</ul>
-<p>Some adapters may support additional options; see the adapter specific API docs
-for further information.</p><h4 id="foreign-keys">3.6 Foreign Keys</h4><p>While it's not required you might want to add foreign key constraints to
-<a href="#active-record-and-referential-integrity">guarantee referential integrity</a>.</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-add_foreign_key :articles, :authors
-
-</pre>
-</div>
-<p>This adds a new foreign key to the <code>author_id</code> column of the <code>articles</code>
-table. The key references the <code>id</code> column of the <code>articles</code> table. If the
-column names can not be derived from the table names, you can use the
-<code>:column</code> and <code>:primary_key</code> options.</p><p>Rails will generate a name for every foreign key starting with
-<code>fk_rails_</code> followed by 10 random characters.
-There is a <code>:name</code> option to specify a different name if needed.</p><div class="note"><p>Active Record only supports single column foreign keys. <code>execute</code> and
-<code>structure.sql</code> are required to use composite foreign keys.</p></div><p>Removing a foreign key is easy as well:</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-# let Active Record figure out the column name
-remove_foreign_key :accounts, :branches
-
-# remove foreign key for a specific column
-remove_foreign_key :accounts, column: :owner_id
-
-# remove foreign key by name
-remove_foreign_key :accounts, name: :special_fk_name
-
-</pre>
-</div>
-<h4 id="when-helpers-aren't-enough">3.7 When Helpers aren't Enough</h4><p>If the helpers provided by Active Record aren't enough you can use the <code>execute</code>
-method to execute arbitrary SQL:</p><div class="code_container">
+<p>这段代码删除了 <code>description</code> 和 <code>name</code> 字段，创建 <code>part_number</code> 字符串字段，并建立索引，最后重命名 <code>upccode</code> 字段。</p><h4 id="如果帮助方法不够用">3.4 如果帮助方法不够用</h4><p>如果 Active Record 提供的帮助方法不够用，可以使用 <code>excute</code> 方法，执行任意的 SQL 语句：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
 
 </pre>
 </div>
-<p>For more details and examples of individual methods, check the API documentation.
-In particular the documentation for
-<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html"><code>ActiveRecord::ConnectionAdapters::SchemaStatements</code></a>
-(which provides the methods available in the <code>change</code>, <code>up</code> and <code>down</code> methods),
-<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html"><code>ActiveRecord::ConnectionAdapters::TableDefinition</code></a>
-(which provides the methods available on the object yielded by <code>create_table</code>)
-and
-<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html"><code>ActiveRecord::ConnectionAdapters::Table</code></a>
-(which provides the methods available on the object yielded by <code>change_table</code>).</p><h4 id="using-the-change-method">3.8 Using the <code>change</code> Method</h4><p>The <code>change</code> method is the primary way of writing migrations. It works for the
-majority of cases, where Active Record knows how to reverse the migration
-automatically. Currently, the <code>change</code> method supports only these migration
-definitions:</p>
+<p>各方法的详细用法请查阅 API 文档：</p>
+<ul>
+<li>
+<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html"><code>ActiveRecord::ConnectionAdapters::SchemaStatements</code></a>：包含可在 <code>change</code>，<code>up</code> 和 <code>down</code> 中使用的方法；</li>
+<li>
+<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html"><code>ActiveRecord::ConnectionAdapters::TableDefinition</code></a>：包含可在 <code>create_table</code> 方法的块参数上调用的方法；</li>
+<li>
+<a href="http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/Table.html"><code>ActiveRecord::ConnectionAdapters::Table</code></a>：包含可在 <code>change_table</code> 方法的块参数上调用的方法；</li>
+</ul>
+<h4 id="使用-change-方法">3.5 使用 <code>change</code> 方法</h4><p><code>change</code> 是迁移中最常用的方法，大多数情况下都能完成指定的操作，而且 Active Record 知道如何撤这些操作。目前，在 <code>change</code> 方法中只能使用下面的方法：</p>
 <ul>
 <li><code>add_column</code></li>
 <li><code>add_index</code></li>
 <li><code>add_reference</code></li>
 <li><code>add_timestamps</code></li>
-<li><code>add_foreign_key</code></li>
 <li><code>create_table</code></li>
 <li><code>create_join_table</code></li>
 <li>
-<code>drop_table</code> (must supply a block)</li>
+<code>drop_table</code>（必须提供代码块）</li>
 <li>
-<code>drop_join_table</code> (must supply a block)</li>
+<code>drop_join_table</code>（必须提供代码块）</li>
 <li><code>remove_timestamps</code></li>
 <li><code>rename_column</code></li>
 <li><code>rename_index</code></li>
 <li><code>remove_reference</code></li>
 <li><code>rename_table</code></li>
 </ul>
-<p><code>change_table</code> is also reversible, as long as the block does not call <code>change</code>,
-<code>change_default</code> or <code>remove</code>.</p><p>If you're going to need to use any other methods, you should use <code>reversible</code>
-or write the <code>up</code> and <code>down</code> methods instead of using the <code>change</code> method.</p><h4 id="using-reversible">3.9 Using <code>reversible</code>
-</h4><p>Complex migrations may require processing that Active Record doesn't know how
-to reverse. You can use <code>reversible</code> to specify what to do when running a
-migration what else to do when reverting it. For example:</p><div class="code_container">
+<p>只要在块中不使用 <code>change</code>、<code>change_default</code> 或 <code>remove</code> 方法，<code>change_table</code> 中的操作也是可逆的。</p><p>如果要使用任何其他方法，可以使用 <code>reversible</code> 方法，或者不定义 <code>change</code> 方法，而分别定义 <code>up</code> 和 <code>down</code> 方法。</p><h4 id="使用-reversible-方法">3.6 使用 <code>reversible</code> 方法</h4><p>Active Record 可能不知如何撤销复杂的迁移操作，这时可以使用 <code>reversible</code> 方法指定运行迁移和撤销迁移时怎么操作。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ExampleMigration &lt; ActiveRecord::Migration
   def change
-    create_table :distributors do |t|
-      t.string :zipcode
+    create_table :products do |t|
+      t.references :category
     end
 
     reversible do |dir|
       dir.up do
-        # add a CHECK constraint
+        #add a foreign key
         execute &lt;&lt;-SQL
-          ALTER TABLE distributors
-            ADD CONSTRAINT zipchk
-              CHECK (char_length(zipcode) = 5) NO INHERIT;
+          ALTER TABLE products
+            ADD CONSTRAINT fk_products_categories
+            FOREIGN KEY (category_id)
+            REFERENCES categories(id)
         SQL
       end
       dir.down do
         execute &lt;&lt;-SQL
-          ALTER TABLE distributors
-            DROP CONSTRAINT zipchk
+          ALTER TABLE products
+            DROP FOREIGN KEY fk_products_categories
         SQL
       end
     end
@@ -719,38 +584,23 @@ class ExampleMigration &lt; ActiveRecord::Migration
     add_column :users, :home_page_url, :string
     rename_column :users, :email, :email_address
   end
-end
 
 </pre>
 </div>
-<p>Using <code>reversible</code> will ensure that the instructions are executed in the
-right order too. If the previous example migration is reverted,
-the <code>down</code> block will be run after the <code>home_page_url</code> column is removed and
-right before the table <code>distributors</code> is dropped.</p><p>Sometimes your migration will do something which is just plain irreversible; for
-example, it might destroy some data. In such cases, you can raise
-<code>ActiveRecord::IrreversibleMigration</code> in your <code>down</code> block. If someone tries
-to revert your migration, an error message will be displayed saying that it
-can't be done.</p><h4 id="using-the-up/down-methods">3.10 Using the <code>up</code>/<code>down</code> Methods</h4><p>You can also use the old style of migration using <code>up</code> and <code>down</code> methods
-instead of the <code>change</code> method.
-The <code>up</code> method should describe the transformation you'd like to make to your
-schema, and the <code>down</code> method of your migration should revert the
-transformations done by the <code>up</code> method. In other words, the database schema
-should be unchanged if you do an <code>up</code> followed by a <code>down</code>. For example, if you
-create a table in the <code>up</code> method, you should drop it in the <code>down</code> method. It
-is wise to reverse the transformations in precisely the reverse order they were
-made in the <code>up</code> method. The example in the <code>reversible</code> section is equivalent to:</p><div class="code_container">
+<p>使用 <code>reversible</code> 方法还能确保操作按顺序执行。在上面的例子中，如果撤销迁移，<code>down</code> 代码块会在 <code>home_page_url</code> 字段删除后、<code>products</code> 数据表删除前运行。</p><p>有时，迁移的操作根本无法撤销，例如删除数据。这是，可以在 <code>down</code> 代码块中抛出 <code>ActiveRecord::IrreversibleMigration</code> 异常。如果有人尝试撤销迁移，会看到一个错误消息，告诉他无法撤销。</p><h4 id="使用-up-和-down-方法">3.7 使用 <code>up</code> 和 <code>down</code> 方法</h4><p>在迁移中可以不用 <code>change</code> 方法，而用 <code>up</code> 和 <code>down</code> 方法。<code>up</code> 方法定义要对数据库模式做哪些操作，<code>down</code> 方法用来撤销这些操作。也就是说，如果执行 <code>up</code> 后立即执行 <code>down</code>，数据库的模式应该没有任何变化。例如，在 <code>up</code> 中创建了数据表，在 <code>down</code> 方法中就要将其删除。撤销时最好按照添加的相反顺序进行。前一节中的 <code>reversible</code> 用法示例代码可以改成：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ExampleMigration &lt; ActiveRecord::Migration
   def up
-    create_table :distributors do |t|
-      t.string :zipcode
+    create_table :products do |t|
+      t.references :category
     end
 
-    # add a CHECK constraint
+    # add a foreign key
     execute &lt;&lt;-SQL
-      ALTER TABLE distributors
-        ADD CONSTRAINT zipchk
-        CHECK (char_length(zipcode) = 5);
+      ALTER TABLE products
+        ADD CONSTRAINT fk_products_categories
+        FOREIGN KEY (category_id)
+        REFERENCES categories(id)
     SQL
 
     add_column :users, :home_page_url, :string
@@ -762,20 +612,17 @@ class ExampleMigration &lt; ActiveRecord::Migration
     remove_column :users, :home_page_url
 
     execute &lt;&lt;-SQL
-      ALTER TABLE distributors
-        DROP CONSTRAINT zipchk
+      ALTER TABLE products
+        DROP FOREIGN KEY fk_products_categories
     SQL
 
-    drop_table :distributors
+    drop_table :products
   end
 end
 
 </pre>
 </div>
-<p>If your migration is irreversible, you should raise
-<code>ActiveRecord::IrreversibleMigration</code> from your <code>down</code> method. If someone tries
-to revert your migration, an error message will be displayed saying that it
-can't be done.</p><h4 id="reverting-previous-migrations">3.11 Reverting Previous Migrations</h4><p>You can use Active Record's ability to rollback migrations using the <code>revert</code> method:</p><div class="code_container">
+<p>如果迁移不可撤销，应该在 <code>down</code> 方法中抛出 <code>ActiveRecord::IrreversibleMigration</code> 异常。如果有人尝试撤销迁移，会看到一个错误消息，告诉他无法撤销。</p><h4 id="撤销之前的迁移">3.8 撤销之前的迁移</h4><p>Active Record 提供了撤销迁移的功能，通过 <code>revert</code> 方法实现：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require_relative '2012121212_example_migration'
 
@@ -791,29 +638,41 @@ end
 
 </pre>
 </div>
-<p>The <code>revert</code> method also accepts a block of instructions to reverse.
-This could be useful to revert selected parts of previous migrations.
-For example, let's imagine that <code>ExampleMigration</code> is committed and it
-is later decided it would be best to use Active Record validations,
-in place of the <code>CHECK</code> constraint, to verify the zipcode.</p><div class="code_container">
+<p><code>revert</code> 方法还可接受一个块，定义撤销操作。<code>revert</code> 方法可用来撤销以前迁移的部分操作。例如，<code>ExampleMigration</code> 已经执行，但后来觉得最好还是序列化产品列表。那么，可以编写下面的代码：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-class DontUseConstraintForZipcodeValidationMigration &lt; ActiveRecord::Migration
+class SerializeProductListMigration &lt; ActiveRecord::Migration
   def change
+    add_column :categories, :product_list
+
+    reversible do |dir|
+      dir.up do
+        # transfer data from Products to Category#product_list
+      end
+      dir.down do
+        # create Products from Category#product_list
+      end
+    end
+
     revert do
       # copy-pasted code from ExampleMigration
+      create_table :products do |t|
+        t.references :category
+      end
+
       reversible do |dir|
         dir.up do
-          # add a CHECK constraint
+          #add a foreign key
           execute &lt;&lt;-SQL
-            ALTER TABLE distributors
-              ADD CONSTRAINT zipchk
-                CHECK (char_length(zipcode) = 5);
+            ALTER TABLE products
+              ADD CONSTRAINT fk_products_categories
+              FOREIGN KEY (category_id)
+              REFERENCES categories(id)
           SQL
         end
         dir.down do
           execute &lt;&lt;-SQL
-            ALTER TABLE distributors
-              DROP CONSTRAINT zipchk
+            ALTER TABLE products
+              DROP FOREIGN KEY fk_products_categories
           SQL
         end
       end
@@ -825,83 +684,43 @@ end
 
 </pre>
 </div>
-<p>The same migration could also have been written without using <code>revert</code>
-but this would have involved a few more steps: reversing the order
-of <code>create_table</code> and <code>reversible</code>, replacing <code>create_table</code>
-by <code>drop_table</code>, and finally replacing <code>up</code> by <code>down</code> and vice-versa.
-This is all taken care of by <code>revert</code>.</p><h3 id="running-migrations">4 Running Migrations</h3><p>Rails provides a set of Rake tasks to run certain sets of migrations.</p><p>The very first migration related Rake task you will use will probably be
-<code>rake db:migrate</code>. In its most basic form it just runs the <code>change</code> or <code>up</code>
-method for all the migrations that have not yet been run. If there are
-no such migrations, it exits. It will run these migrations in order based
-on the date of the migration.</p><p>Note that running the <code>db:migrate</code> task also invokes the <code>db:schema:dump</code> task, which
-will update your <code>db/schema.rb</code> file to match the structure of your database.</p><p>If you specify a target version, Active Record will run the required migrations
-(change, up, down) until it has reached the specified version. The version
-is the numerical prefix on the migration's filename. For example, to migrate
-to version 20080906120000 run:</p><div class="code_container">
+<p>上面这个迁移也可以不用 <code>revert</code> 方法，不过步骤就多了：调换 <code>create_table</code> 和 <code>reversible</code> 的顺序，把 <code>create_table</code> 换成 <code>drop_table</code>，还要对调 <code>up</code> 和 <code>down</code> 中的代码。这些操作都可交给 <code>revert</code> 方法完成。</p><h3 id="运行迁移">4 运行迁移</h3><p>Rails 提供了很多 Rake 任务，用来执行指定的迁移。</p><p>其中最常使用的是 <code>rake db:migrate</code>，执行还没执行的迁移中的 <code>change</code> 或 <code>up</code> 方法。如果没有未运行的迁移，直接退出。<code>rake db:migrate</code> 按照迁移文件名中时间戳顺序执行迁移。</p><p>注意，执行 <code>db:migrate</code> 时还会执行 <code>db:schema:dump</code>，更新 <code>db/schema.rb</code> 文件，匹配数据库的结构。</p><p>如果指定了版本，Active Record 会运行该版本之前的所有迁移。版本就是迁移文件名前的数字部分。例如，要运行 20080906120000 这个迁移，可以执行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:migrate VERSION=20080906120000
+$ rake db:migrate VERSION=20080906120000
 
 </pre>
 </div>
-<p>If version 20080906120000 is greater than the current version (i.e., it is
-migrating upwards), this will run the <code>change</code> (or <code>up</code>) method
-on all migrations up to and
-including 20080906120000, and will not execute any later migrations. If
-migrating downwards, this will run the <code>down</code> method on all the migrations
-down to, but not including, 20080906120000.</p><h4 id="rolling-back">4.1 Rolling Back</h4><p>A common task is to rollback the last migration. For example, if you made a
-mistake in it and wish to correct it. Rather than tracking down the version
-number associated with the previous migration you can run:</p><div class="code_container">
+<p>如果 20080906120000 比当前的版本高，上面的命令就会执行所有 20080906120000 之前（包括 20080906120000）的迁移中的 <code>change</code> 或 <code>up</code> 方法，但不会运行 20080906120000 之后的迁移。如果回滚迁移，则会执行 20080906120000 之前（不包括 20080906120000）的迁移中的 <code>down</code> 方法。</p><h4 id="回滚">4.1 回滚</h4><p>还有一个常用的操作时回滚到之前的迁移。例如，迁移代码写错了，想纠正。我们无须查找迁移的版本号，直接执行下面的命令即可：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:rollback
+$ rake db:rollback
 
 </pre>
 </div>
-<p>This will rollback the latest migration, either by reverting the <code>change</code>
-method or by running the <code>down</code> method. If you need to undo
-several migrations you can provide a <code>STEP</code> parameter:</p><div class="code_container">
+<p>这个命令会回滚上一次迁移，撤销 <code>change</code> 方法中的操作，或者执行 <code>down</code> 方法。如果想撤销多个迁移，可以使用 <code>STEP</code> 参数：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:rollback STEP=3
+$ rake db:rollback STEP=3
 
 </pre>
 </div>
-<p>will revert the last 3 migrations.</p><p>The <code>db:migrate:redo</code> task is a shortcut for doing a rollback and then migrating
-back up again. As with the <code>db:rollback</code> task, you can use the <code>STEP</code> parameter
-if you need to go more than one version back, for example:</p><div class="code_container">
+<p>这个命令会撤销前三次迁移。</p><p><code>db:migrate:redo</code> 命令可以回滚上一次迁移，然后再次执行迁移。和 <code>db:rollback</code> 一样，如果想重做多次迁移，可以使用 <code>STEP</code> 参数。例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:migrate:redo STEP=3
+$ rake db:migrate:redo STEP=3
 
 </pre>
 </div>
-<p>Neither of these Rake tasks do anything you could not do with <code>db:migrate</code>. They
-are simply more convenient, since you do not need to explicitly specify the
-version to migrate to.</p><h4 id="setup-the-database">4.2 Setup the Database</h4><p>The <code>rake db:setup</code> task will create the database, load the schema and initialize
-it with the seed data.</p><h4 id="resetting-the-database">4.3 Resetting the Database</h4><p>The <code>rake db:reset</code> task will drop the database and set it up again. This is
-functionally equivalent to <code>rake db:drop db:setup</code>.</p><div class="note"><p>This is not the same as running all the migrations. It will only use the
-contents of the current <code>schema.rb</code> file. If a migration can't be rolled back,
-<code>rake db:reset</code> may not help you. To find out more about dumping the schema see
-<a href="#schema-dumping-and-you">Schema Dumping and You</a> section.</p></div><h4 id="running-specific-migrations">4.4 Running Specific Migrations</h4><p>If you need to run a specific migration up or down, the <code>db:migrate:up</code> and
-<code>db:migrate:down</code> tasks will do that. Just specify the appropriate version and
-the corresponding migration will have its <code>change</code>, <code>up</code> or <code>down</code> method
-invoked, for example:</p><div class="code_container">
+<p>这些 Rake 任务的作用和 <code>db:migrate</code> 一样，只是用起来更方便，因为无需查找特定的迁移版本号。</p><h4 id="搭建数据库">4.2 搭建数据库</h4><p><code>rake db:setup</code> 任务会创建数据库，加载模式，并填充种子数据。</p><h4 id="重建数据库">4.3 重建数据库</h4><p><code>rake db:reset</code> 任务会删除数据库，然后重建，等价于 <code>rake db:drop db:setup</code>。</p><div class="note"><p>这个任务和执行所有迁移的作用不同。<code>rake db:reset</code> 使用的是 <code>schema.rb</code> 文件中的内容。如果迁移无法回滚，<code>rake db:reset</code> 起不了作用。详细介绍参见“<a href="#schema-dumping-and-you">导出模式</a>”一节。</p></div><h4 id="运行指定的迁移">4.4 运行指定的迁移</h4><p>如果想执行指定迁移，或者撤销指定迁移，可以使用 <code>db:migrate:up</code> 和 <code>db:migrate:down</code> 任务，指定相应的版本号，就会根据需求调用 <code>change</code>、<code>up</code> 或 <code>down</code> 方法。例如：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:migrate:up VERSION=20080906120000
+$ rake db:migrate:up VERSION=20080906120000
 
 </pre>
 </div>
-<p>will run the 20080906120000 migration by running the <code>change</code> method (or the
-<code>up</code> method). This task will
-first check whether the migration is already performed and will do nothing if
-Active Record believes that it has already been run.</p><h4 id="running-migrations-in-different-environments">4.5 Running Migrations in Different Environments</h4><p>By default running <code>rake db:migrate</code> will run in the <code>development</code> environment.
-To run migrations against another environment you can specify it using the
-<code>RAILS_ENV</code> environment variable while running the command. For example to run
-migrations against the <code>test</code> environment you could run:</p><div class="code_container">
+<p>这个命令会执行 20080906120000 迁移中的 <code>change</code> 方法或 <code>up</code> 方法。<code>db:migrate:up</code> 首先会检测指定的迁移是否已经运行，如果 Active Record 任务已经执行，就不会做任何操作。</p><h4 id="在不同的环境中运行迁移">4.5 在不同的环境中运行迁移</h4><p>默认情况下，<code>rake db:migrate</code> 任务在 <code>development</code> 环境中执行。要在其他环境中运行迁移，执行命令时可以使用环境变量 <code>RAILS_ENV</code> 指定环境。例如，要在 <code>test</code> 环境中运行迁移，可以执行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ bin/rake db:migrate RAILS_ENV=test
+$ rake db:migrate RAILS_ENV=test
 
 </pre>
 </div>
-<h4 id="changing-the-output-of-running-migrations">4.6 Changing the Output of Running Migrations</h4><p>By default migrations tell you exactly what they're doing and how long it took.
-A migration creating a table and adding an index might produce output like this</p><div class="code_container">
+<h4 id="修改运行迁移时的输出">4.6 修改运行迁移时的输出</h4><p>默认情况下，运行迁移时，会输出操作了哪些操作，以及花了多长时间。创建数据表并添加索引的迁移产生的输出如下：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 ==  CreateProducts: migrating =================================================
 -- create_table(:products)
@@ -910,30 +729,30 @@ A migration creating a table and adding an index might produce output like this<
 
 </pre>
 </div>
-<p>Several methods are provided in migrations that allow you to control all this:</p>
+<p>在迁移中可以使用很多方法，控制输出：</p>
 <table>
 <thead>
 <tr>
-<th>Method</th>
-<th>Purpose</th>
+<th>方法</th>
+<th>作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>suppress_messages</td>
-<td>Takes a block as an argument and suppresses any output generated by the block.</td>
+<td>接受一个代码块，禁止代码块中所有操作的输出</td>
 </tr>
 <tr>
 <td>say</td>
-<td>Takes a message argument and outputs it as is. A second boolean argument can be passed to specify whether to indent or not.</td>
+<td>接受一个消息字符串作为参数，将其输出。第二个参数是布尔值，指定输出结果是否缩进</td>
 </tr>
 <tr>
 <td>say_with_time</td>
-<td>Outputs text along with how long it took to run its block. If the block returns an integer it assumes it is the number of rows affected.</td>
+<td>输出文本，以及执行代码块中操作所用时间。如果代码块的返回结果是整数，会当做操作的记录数量</td>
 </tr>
 </tbody>
 </table>
-<p>For example, this migration:</p><div class="code_container">
+<p>例如，下面这个迁移：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class CreateProducts &lt; ActiveRecord::Migration
   def change
@@ -959,7 +778,7 @@ end
 
 </pre>
 </div>
-<p>generates the following output</p><div class="code_container">
+<p>输出结果是：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 ==  CreateProducts: migrating =================================================
 -- Created a table
@@ -971,38 +790,7 @@ end
 
 </pre>
 </div>
-<p>If you want Active Record to not output anything, then running <code>rake db:migrate
-VERBOSE=false</code> will suppress all output.</p><h3 id="changing-existing-migrations">5 Changing Existing Migrations</h3><p>Occasionally you will make a mistake when writing a migration. If you have
-already run the migration then you cannot just edit the migration and run the
-migration again: Rails thinks it has already run the migration and so will do
-nothing when you run <code>rake db:migrate</code>. You must rollback the migration (for
-example with <code>rake db:rollback</code>), edit your migration and then run
-<code>rake db:migrate</code> to run the corrected version.</p><p>In general, editing existing migrations is not a good idea. You will be
-creating extra work for yourself and your co-workers and cause major headaches
-if the existing version of the migration has already been run on production
-machines. Instead, you should write a new migration that performs the changes
-you require. Editing a freshly generated migration that has not yet been
-committed to source control (or, more generally, which has not been propagated
-beyond your development machine) is relatively harmless.</p><p>The <code>revert</code> method can be helpful when writing a new migration to undo
-previous migrations in whole or in part
-(see <a href="#reverting-previous-migrations">Reverting Previous Migrations</a> above).</p><h3 id="schema-dumping-and-you">6 Schema Dumping and You</h3><h4 id="what-are-schema-files-for-questionmark">6.1 What are Schema Files for?</h4><p>Migrations, mighty as they may be, are not the authoritative source for your
-database schema. That role falls to either <code>db/schema.rb</code> or an SQL file which
-Active Record generates by examining the database. They are not designed to be
-edited, they just represent the current state of the database.</p><p>There is no need (and it is error prone) to deploy a new instance of an app by
-replaying the entire migration history. It is much simpler and faster to just
-load into the database a description of the current schema.</p><p>For example, this is how the test database is created: the current development
-database is dumped (either to <code>db/schema.rb</code> or <code>db/structure.sql</code>) and then
-loaded into the test database.</p><p>Schema files are also useful if you want a quick look at what attributes an
-Active Record object has. This information is not in the model's code and is
-frequently spread across several migrations, but the information is nicely
-summed up in the schema file. The
-<a href="https://github.com/ctran/annotate_models">annotate_models</a> gem automatically
-adds and updates comments at the top of each model summarizing the schema if
-you desire that functionality.</p><h4 id="types-of-schema-dumps">6.2 Types of Schema Dumps</h4><p>There are two ways to dump the schema. This is set in <code>config/application.rb</code>
-by the <code>config.active_record.schema_format</code> setting, which may be either <code>:sql</code>
-or <code>:ruby</code>.</p><p>If <code>:ruby</code> is selected then the schema is stored in <code>db/schema.rb</code>. If you look
-at this file you'll find that it looks an awful lot like one very big
-migration:</p><div class="code_container">
+<p>如果不想让 Active Record 输出任何结果，可以使用 <code>rake db:migrate VERBOSE=false</code>。</p><h3 id="修改现有的迁移">5 修改现有的迁移</h3><p>有时编写的迁移中可能有错误，如果已经运行了迁移，不能直接编辑迁移文件再运行迁移。Rails 认为这个迁移已经运行，所以执行 <code>rake db:migrate</code> 任务时什么也不会做。这种情况必须先回滚迁移（例如，执行 <code>rake db:rollback</code> 任务），编辑迁移文件后再执行 <code>rake db:migrate</code> 任务执行改正后的版本。</p><p>一般来说，直接修改现有的迁移不是个好主意。这么做会为你以及你的同事带来额外的工作量，如果这个迁移已经在生产服务器上运行过，还可能带来不必要的麻烦。你应该编写一个新的迁移，做所需的改动。编辑新生成还未纳入版本控制的迁移（或者更宽泛地说，还没有出现在开发设备之外），相对来说是安全的。</p><p>在新迁移中撤销之前迁移中的全部操作或者部分操作可以使用 <code>revert</code> 方法。（参见前面的 <a href="#reverting-previous-migrations">撤销之前的迁移</a> 一节）</p><h3 id="导出模式">6 导出模式</h3><h4 id="模式文件的作用">6.1 模式文件的作用</h4><p>迁移的作用并不是为数据库模式提供可信的参考源。<code>db/schema.rb</code> 或由 Active Record 生成的 SQL 文件才有这个作用。<code>db/schema.rb</code> 这些文件不可修改，其目的是表示数据库的当前结构。</p><p>部署新程序时，无需运行全部的迁移。直接加载数据库结构要简单快速得多。</p><p>例如，测试数据库是这样创建的：导出开发数据库的结构（存入文件 <code>db/schema.rb</code> 或 <code>db/structure.sql</code>），然后导入测试数据库。</p><p>模式文件还可以用来快速查看 Active Record 中有哪些属性。模型中没有属性信息，而且迁移会频繁修改属性，但是模式文件中有最终的结果。<a href="https://github.com/ctran/annotate_models">annotate_models</a> gem 会在模型文件的顶部加入注释，自动添加并更新模型的模式。</p><h4 id="导出的模式文件类型">6.2 导出的模式文件类型</h4><p>导出模式有两种方法，由 <code>config/application.rb</code> 文件中的 <code>config.active_record.schema_format</code> 选项设置，可以是 <code>:sql</code> 或 <code>:ruby</code>。</p><p>如果设为 <code>:ruby</code>，导出的模式保存在 <code>db/schema.rb</code> 文件中。打开这个文件，你会发现内容很多，就像一个很大的迁移：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 ActiveRecord::Schema.define(version: 20080906171750) do
   create_table "authors", force: true do |t|
@@ -1022,35 +810,7 @@ end
 
 </pre>
 </div>
-<p>In many ways this is exactly what it is. This file is created by inspecting the
-database and expressing its structure using <code>create_table</code>, <code>add_index</code>, and so
-on. Because this is database-independent, it could be loaded into any database
-that Active Record supports. This could be very useful if you were to
-distribute an application that is able to run against multiple databases.</p><p>There is however a trade-off: <code>db/schema.rb</code> cannot express database specific
-items such as triggers, or stored procedures. While in a migration you can
-execute custom SQL statements, the schema dumper cannot reconstitute those
-statements from the database. If you are using features like this, then you
-should set the schema format to <code>:sql</code>.</p><p>Instead of using Active Record's schema dumper, the database's structure will
-be dumped using a tool specific to the database (via the <code>db:structure:dump</code>
-Rake task) into <code>db/structure.sql</code>. For example, for PostgreSQL, the <code>pg_dump</code>
-utility is used. For MySQL, this file will contain the output of
-<code>SHOW CREATE TABLE</code> for the various tables.</p><p>Loading these schemas is simply a question of executing the SQL statements they
-contain. By definition, this will create a perfect copy of the database's
-structure. Using the <code>:sql</code> schema format will, however, prevent loading the
-schema into a RDBMS other than the one used to create it.</p><h4 id="schema-dumps-and-source-control">6.3 Schema Dumps and Source Control</h4><p>Because schema dumps are the authoritative source for your database schema, it
-is strongly recommended that you check them into source control.</p><p><code>db/schema.rb</code> contains the current version number of the database. This
-ensures conflicts are going to happen in the case of a merge where both
-branches touched the schema. When that happens, solve conflicts manually,
-keeping the highest version number of the two.</p><h3 id="active-record-and-referential-integrity">7 Active Record and Referential Integrity</h3><p>The Active Record way claims that intelligence belongs in your models, not in
-the database. As such, features such as triggers or constraints,
-which push some of that intelligence back into the database, are not heavily
-used.</p><p>Validations such as <code>validates :foreign_key, uniqueness: true</code> are one way in
-which models can enforce data integrity. The <code>:dependent</code> option on
-associations allows models to automatically destroy child objects when the
-parent is destroyed. Like anything which operates at the application level,
-these cannot guarantee referential integrity and so some people augment them
-with <a href="#foreign-keys">foreign key constraints</a> in the database.</p><p>Although Active Record does not provide all the tools for working directly with
-such features, the <code>execute</code> method can be used to execute arbitrary SQL.</p><h3 id="migrations-and-seed-data">8 Migrations and Seed Data</h3><p>Some people use migrations to add data to the database:</p><div class="code_container">
+<p>大多数情况下，文件的内容都是这样。这个文件使用 <code>create_table</code>、<code>add_index</code> 等方法审查数据库的结构。这个文件盒使用的数据库类型无关，可以导入任何一种 Active Record 支持的数据库。如果开发的程序需要兼容多种数据库，可以使用这个文件。</p><p>不过 <code>db/schema.rb</code> 也有缺点：无法执行数据库的某些操作，例如外键约束，触发器，存储过程。在迁移文件中可以执行 SQL 语句，但导出模式的程序无法从数据库中重建这些语句。如果你的程序用到了前面提到的数据库操作，可以把模式文件的格式设为 <code>:sql</code>。</p><p><code>:sql</code> 格式的文件不使用 Active Record 的模式导出程序，而使用数据库自带的导出工具（执行 <code>db:structure:dump</code> 任务），把数据库模式导入 <code>db/structure.sql</code> 文件。例如，PostgreSQL 使用 <code>pg_dump</code> 导出模式。如果使用 MySQL，<code>db/structure.sql</code> 文件中会出现多个 <code>SHOW CREATE TABLE</code> 用来创建数据表的语句。</p><p>加载模式时，只要执行其中的 SQL 语句即可。按预期，导入后会创建一个完整的数据库结构。使用 <code>:sql</code> 格式，就不能把模式导入其他类型的数据库中了。</p><h4 id="模式导出和版本控制">6.3 模式导出和版本控制</h4><p>因为导出的模式文件时数据库模式的可信源，强烈推荐将其纳入版本控制。</p><h3 id="active-record-和引用完整性">7 Active Record 和引用完整性</h3><p>Active Record 在模型中，而不是数据库中设置关联。因此，需要在数据库中实现的功能，例如触发器、外键约束，不太常用。</p><p><code>validates :foreign_key, uniqueness: true</code> 这个验证是模型保证数据完整性的一种方法。在关联中设置 <code>:dependent</code> 选项，可以保证父对象删除后，子对象也会被删除。和任何一种程序层的操作一样，这些无法完全保证引用完整性，所以很多人还是会在数据库中使用外键约束。</p><p>Active Record 并没有为使用这些功能提供任何工具，不过 <code>execute</code> 方法可以执行任意的 SQL 语句。还可以使用 <a href="https://github.com/matthuhiggins/foreigner">foreigner</a> 等 gem，为 Active Record 添加外键支持（还能把外键导出到 <code>db/schema.rb</code> 文件）。</p><h3 id="迁移和种子数据">8 迁移和种子数据</h3><p>有些人使用迁移把数据存入数据库：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AddInitialProducts &lt; ActiveRecord::Migration
   def up
@@ -1066,9 +826,7 @@ end
 
 </pre>
 </div>
-<p>However, Rails has a 'seeds' feature that should be used for seeding a database
-with initial data. It's a really simple feature: just fill up <code>db/seeds.rb</code>
-with some Ruby code, and run <code>rake db:seed</code>:</p><div class="code_container">
+<p>Rails 提供了“种子”功能，可以把初始化数据存入数据库。这个功能用起来很简单，在 <code>db/seeds.rb</code> 文件中写一些 Ruby 代码，然后执行 <code>rake db:seed</code> 命令即可：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 5.times do |i|
   Product.create(name: "Product ##{i}", description: "A product.")
@@ -1076,8 +834,7 @@ end
 
 </pre>
 </div>
-<p>This is generally a much cleaner way to set up the database of a blank
-application.</p>
+<p>填充新建程序的数据库，使用这种方法操作起来简洁得多。</p>
 
         <h3>反馈</h3>
         <p>
@@ -1086,7 +843,7 @@ application.</p>
         <p>
           如发现任何错误之处，欢迎修正。开始贡献前，可以先阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文件</a>。
         </p>
-        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/docrails-tw/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/docsrails-tw/guides/issues/new">回报</a>。</p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
         <p>
           文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
         </p>
@@ -1123,7 +880,7 @@ application.</p>
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-49903900-1', 'docrails-tw.github.io');
+    // ga('create', '', 'ruby-china.github.io');
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
 

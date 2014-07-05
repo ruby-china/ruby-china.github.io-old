@@ -93,8 +93,6 @@
                 <dd><a href="3_0_release_notes.html">Ruby on Rails 3.0 发布记</a></dd>
                 <dd><a href="2_3_release_notes.html">Ruby on Rails 2.3 发布记</a></dd>
                 <dd><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dd>
-                <dt>Rails 指南翻译术语</dt>
-                <dd><a href="translation_terms.html">翻译术语</a></dd>
               </dl>
           </div>
         </li>
@@ -157,9 +155,6 @@
                   <option value="2_3_release_notes.html">Ruby on Rails 2.3 发布记</option>
                   <option value="2_2_release_notes.html">Ruby on Rails 2.2 发布记</option>
               </optgroup>
-              <optgroup label="Rails 指南翻译术语">
-                  <option value="translation_terms.html">翻译术语</option>
-              </optgroup>
           </select>
         </li>
       </ul>
@@ -172,18 +167,17 @@
     <div class="wrapper">
       <h2>Ruby on Rails 指南 (a6cc7b0)</h2>
 <br>
-<p>
+<p>基于 Rails 4.1 翻译而成</p>
+<!-- <p>
   这些指南基于 Rails 的 <a href="https://github.com/rails/rails/tree/a6cc7b0">master</a> 分支翻译而成。
-</p>
-<p>
-  这些精心撰写的指南帮助您快速上手，快速全面地了解 Rails。
-</p>
-<p>
-  稳定版本的指南（Rails 4.1.2），请参考
+</p> -->
+<p>Rails Guides 涵盖 Rails 的方方面面，文章内容深入浅出，易于理解，是 Rails 入门、开发的必备参考。</p>
+<!-- <p>
+  稳定版本的指南（Rails 4.1.4），请参考
   <a href="http://guides.rubyonrails.org">http://guides.rubyonrails.org</a>。
-</p>
+</p> -->
 <p>
-  其它版本：<a href="http://guides.rubyonrails.org/v4.0.6/">Rails 4.0.6</a>、<a href="http://guides.rubyonrails.org/v3.2.18/">Rails 3.2.18</a>、<a href="http://guides.rubyonrails.org/v2.3.11/">Rails 2.3.11</a>。
+  其它版本：<a href="http://guides.rubyonrails.org/v4.0.8/">Rails 4.0.8</a>、<a href="http://guides.rubyonrails.org/v3.2.19/">Rails 3.2.19</a>、<a href="http://guides.rubyonrails.org/v2.3.11/">Rails 2.3.11</a>。
 </p>
 
 
@@ -204,10 +198,8 @@
 
   <h3>入门</h3>
   <dl>
-      <dt><a href="getting_started.html">Rails 入门</a></dt><dd class="work-in-progress">待翻译</dd><dd>
+      <dt><a href="getting_started.html">Rails 入门</a></dt><dd>
         <p>从安装到建立第一个应用程序所需知道的一切。</p>
-</dd>      <dt><a href="active_model_basics.html">Active Model 基础</a></dt><dd class="work-in-progress">原文撰写中</dd><dd>
-        <p>Rails Model 的基础知识：Active Model。</p>
 </dd>  </dl>
   <h3>模型</h3>
   <dl>
@@ -223,8 +215,6 @@
         <p>本篇介绍如何使用 Active Record 的关联功能。</p>
 </dd>      <dt><a href="active_record_querying.html">Active Record 查询</a></dt><dd>
         <p>本篇介绍如何使用 Active Record 的数据库查询功能。</p>
-</dd>      <dt><a href="active_record_postgresql.html">Active Record PostgreSQL</a></dt><dd class="work-in-progress">原文撰写中</dd><dd>
-        <p>本篇讲解如何使用 Active Record 搭配 PostgreSQL 数据库。</p>
 </dd>  </dl>
   <h3>视图</h3>
   <dl>
@@ -299,7 +289,7 @@
   <h3>发布记</h3>
   <dl>
       <dt><a href="upgrading_ruby_on_rails.html">升级 Ruby on Rails</a></dt><dd class="work-in-progress">待翻译</dd><dd>
-        <p>本篇帮助您将应用程式升级至最新版本。</p>
+        <p>本篇帮助您将程序升级至最新版本。</p>
 </dd>      <dt><a href="4_2_release_notes.html">Ruby on Rails 4.2 发布记</a></dt><dd class="work-in-progress">原文撰写中</dd><dd>
         <p>Rails 4.2 的发布记。</p>
 </dd>      <dt><a href="4_1_release_notes.html">Ruby on Rails 4.1 发布记</a></dt><dd>
@@ -317,11 +307,6 @@
 </dd>      <dt><a href="2_2_release_notes.html">Ruby on Rails 2.2 发布记</a></dt><dd class="work-in-progress">待翻译</dd><dd>
         <p>Rails 2.2 的发布记。</p>
 </dd>  </dl>
-  <h3>Rails 指南翻译术语</h3>
-  <dl>
-      <dt><a href="translation_terms.html">翻译术语</a></dt><dd>
-        <p>翻译所使用的术语。</p>
-</dd>  </dl>
 
 
         <h3>反馈</h3>
@@ -331,7 +316,7 @@
         <p>
           如发现任何错误之处，欢迎修正。开始贡献前，可以先阅读<a href="http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-documentation">贡献指南：文件</a>。
         </p>
-        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/docrails-tw/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/docsrails-tw/guides/issues/new">回报</a>。</p>
+        <p>翻译如有错误，深感抱歉，欢迎 <a href="https://github.com/ruby-china/guides/fork">Fork</a> 修正，或至此处<a href="https://github.com/ruby-china/guides/issues/new">回报</a>。</p>
         <p>
           文章可能有未完成或过时的内容。请先检查 <a href="http://edgeguides.rubyonrails.org">Edge Guides</a> 来确定问题在 master 是否已经修掉了。再上 master 补上缺少的文件。内容参考 <a href="ruby_on_rails_guides_guidelines.html">Ruby on Rails 指南准则</a>来了解行文风格。
         </p>
@@ -368,7 +353,7 @@
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-49903900-1', 'docrails-tw.github.io');
+    // ga('create', '', 'ruby-china.github.io');
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
 
