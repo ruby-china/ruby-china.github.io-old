@@ -197,6 +197,7 @@
 <li><a href="#changes-on-default-scopes">Changes on Default Scopes</a></li>
 <li><a href="#rendering-content-from-string">Rendering content from string</a></li>
 <li><a href="#postgresql-json-and-hstore-datatypes">PostgreSQL json and hstore datatypes</a></li>
+<li><a href="#explicit-block-use-for-activesupport::callbacks">Explicit block use for <code>ActiveSupport::Callbacks</code></a></li>
 </ul>
 </li>
 <li>
@@ -570,7 +571,20 @@ Using <code>render :text</code> may pose a security risk, as the content is sent
 In earlier versions a <code>HashWithIndifferentAccess</code> was used. This means that
 symbol access is no longer supported. This is also the case for
 <code>store_accessors</code> based on top of <code>json</code> or <code>hstore</code> columns. Make sure to use
-string keys consistently.</p><h3 id="upgrading-from-rails-3.2-to-rails-4.0">4 Upgrading from Rails 3.2 to Rails 4.0</h3><p>If your application is currently on any version of Rails older than 3.2.x, you should upgrade to Rails 3.2 before attempting one to Rails 4.0.</p><p>The following changes are meant for upgrading your application to Rails 4.0.</p><h4 id="http-patch">4.1 HTTP PATCH</h4><p>Rails 4 now uses <code>PATCH</code> as the primary HTTP verb for updates when a RESTful
+string keys consistently.</p><h4 id="explicit-block-use-for-activesupport::callbacks">3.15 Explicit block use for <code>ActiveSupport::Callbacks</code>
+</h4><p>Rails 4.1 now expects an explicit block to be passed when calling
+<code>ActiveSupport::Callbacks.set_callback</code>. This change stems from
+<code>ActiveSupport::Callbacks</code> being largely rewritten for the 4.1 release.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# Previously in Rails 4.0
+set_callback :save, :around, -&gt;(r, &amp;block) { stuff; result = block.call; stuff }
+
+# Now in Rails 4.1
+set_callback :save, :around, -&gt;(r, block) { stuff; result = block.call; stuff }
+
+</pre>
+</div>
+<h3 id="upgrading-from-rails-3.2-to-rails-4.0">4 Upgrading from Rails 3.2 to Rails 4.0</h3><p>If your application is currently on any version of Rails older than 3.2.x, you should upgrade to Rails 3.2 before attempting one to Rails 4.0.</p><p>The following changes are meant for upgrading your application to Rails 4.0.</p><h4 id="http-patch">4.1 HTTP PATCH</h4><p>Rails 4 now uses <code>PATCH</code> as the primary HTTP verb for updates when a RESTful
 resource is declared in <code>config/routes.rb</code>. The <code>update</code> action is still used,
 and <code>PUT</code> requests will continue to be routed to the <code>update</code> action as well.
 So, if you're using only the standard RESTful routes, no changes need to be made:</p><div class="code_container">

@@ -178,6 +178,7 @@
 <li><a href="#conversion">Conversion</a></li>
 <li><a href="#dirty">Dirty</a></li>
 <li><a href="#validations">Validations</a></li>
+<li><a href="#activemodel::naming">ActiveModel::Naming</a></li>
 </ul>
 </li>
 </ol>
@@ -362,6 +363,27 @@ person.email = 'me@vishnuatrai.com'
 person.valid?                        # =&gt; true
 person.token = nil
 person.valid?                        # =&gt; raises ActiveModel::StrictValidationFailed
+
+</pre>
+</div>
+<h4 id="activemodel::naming">1.6 ActiveModel::Naming</h4><p>Naming adds a number of class methods which make the naming and routing
+easier to manage. The module defines the <code>model_name</code> class method which
+will define a number of accessors using some <code>ActiveSupport::Inflector</code> methods.</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class Person
+  extend ActiveModel::Naming
+end
+
+Person.model_name.name                # =&gt; "Person"
+Person.model_name.singular            # =&gt; "person"
+Person.model_name.plural              # =&gt; "people"
+Person.model_name.element             # =&gt; "person"
+Person.model_name.human               # =&gt; "Person"
+Person.model_name.collection          # =&gt; "people"
+Person.model_name.param_key           # =&gt; "person"
+Person.model_name.i18n_key            # =&gt; :person
+Person.model_name.route_key           # =&gt; "people"
+Person.model_name.singular_route_key  # =&gt; "person"
 
 </pre>
 </div>
