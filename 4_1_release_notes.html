@@ -418,17 +418,49 @@ xhr :post, :create, format: :js
 <li><p>移除了 Rails 针对整合测试的补救方案（fallback），请配置 <code>ActionDispatch.test_app</code>。</p></li>
 <li><p>移除了 <code>config.page_cache_extension</code> 配置。</p></li>
 <li><p>移除了 <code>ActionController::RecordIdentifier</code>，请改用 <code>ActionView::RecordIdentifier</code>。</p></li>
-<li><p>更改 Action Controller 下列常量的名称：</p></li>
+<li>
+<p>更改 Action Controller 下列常量的名称：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left">移除</th>
+<th style="text-align: left">采用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left">ActionController::AbstractRequest</td>
+<td style="text-align: left">ActionDispatch::Request</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::Request</td>
+<td style="text-align: left">ActionDispatch::Request</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::AbstractResponse</td>
+<td style="text-align: left">ActionDispatch::Response</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::Response</td>
+<td style="text-align: left">ActionDispatch::Response</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::Routing</td>
+<td style="text-align: left">ActionDispatch::Routing</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::Integration</td>
+<td style="text-align: left">ActionDispatch::Integration</td>
+</tr>
+<tr>
+<td style="text-align: left">ActionController::IntegrationTest</td>
+<td style="text-align: left">ActionDispatch::IntegrationTest</td>
+</tr>
+</tbody>
+</table>
+</li>
 </ul>
-<p>  | 移除                               | 采用                            |
-  |:-----------------------------------|:--------------------------------|
-  | ActionController::AbstractRequest  | ActionDispatch::Request         |
-  | ActionController::Request          | ActionDispatch::Request         |
-  | ActionController::AbstractResponse | ActionDispatch::Response        |
-  | ActionController::Response         | ActionDispatch::Response        |
-  | ActionController::Routing          | ActionDispatch::Routing         |
-  | ActionController::Integration      | ActionDispatch::Integration     |
-  | ActionController::IntegrationTest  | ActionDispatch::IntegrationTest |</p><h4 id="action-pack-值得一提的变化">4.2 值得一提的变化</h4>
+<h4 id="action-pack-值得一提的变化">4.2 值得一提的变化</h4>
 <ul>
 <li><p><code>protect_from_forgery</code> 现在也会预防跨站的 <code>&lt;script&gt;</code>。请更新测试，使用 <code>xhr :get, :foo, format: :js</code> 来取代 <code>get :foo, format: :js</code>。<a href="https://github.com/rails/rails/pull/13345">PR#13345</a></p></li>
 <li><p><code>#url_for</code> 接受额外的 options，可将选项打包成 hash，放在数组传入。<a href="https://github.com/rails/rails/pull/9599">PR#9599</a></p></li>
