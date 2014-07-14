@@ -164,14 +164,14 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Ruby on Rails 4.2 发布记</h2><p>Rails 4.2 精华摘要：</p><p>本篇仅记录主要的变化。要了解关于已修复的 Bug、功能变更等，请参考 <a href="https://github.com/rails/rails">Rails GitHub 主页</a>上各个 Gem 的 CHANGELOG 或是 <a href="https://github.com/rails/rails/commits/master">Rails 的提交历史</a>。</p>
+      <h2>Ruby on Rails 4.2 发布记</h2><p>Rails 4.2 精华摘要：</p><p>本篇仅记录主要的变化。要了解关于已修复的 Bug、特性变更等，请参考 <a href="https://github.com/rails/rails">Rails GitHub 主页</a>上各个 Gem 的 CHANGELOG 或是 <a href="https://github.com/rails/rails/commits/master">Rails 的提交历史</a>。</p>
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li><a href="#%E5%8D%87%E7%BA%A7%E8%87%B3-rails-4.2">升级至 Rails 4.2</a></li>
 <li>
-<a href="#%E9%87%8D%E8%A6%81%E6%96%B0%E5%8A%9F%E8%83%BD">重要新功能</a>
+<a href="#%E9%87%8D%E8%A6%81%E6%96%B0%E7%89%B9%E6%80%A7">重要新特性</a>
 
 <ul>
 <li><a href="#%E5%A4%96%E9%94%AE%E6%94%AF%E6%8F%B4">外键支援</a></li>
@@ -182,6 +182,7 @@
 
 <ul>
 <li><a href="#railties-%E7%A7%BB%E9%99%A4">移除</a></li>
+<li><a href="#railties-%E5%BC%83%E7%94%A8">弃用</a></li>
 <li><a href="#railties-%E5%80%BC%E5%BE%97%E4%B8%80%E6%8F%90%E7%9A%84%E5%8F%98%E5%8C%96">值得一提的变化</a></li>
 </ul>
 </li>
@@ -230,7 +231,7 @@
 
 <ul>
 <li><a href="#active-support-%E7%A7%BB%E9%99%A4">移除</a></li>
-<li><a href="#active-support-%E5%BC%83%E7%94%A8">弃用</a></li>
+<li><a href="#%E5%BC%83%E7%94%A8">弃用</a></li>
 <li><a href="#%E5%80%BC%E5%BE%97%E4%B8%80%E6%8F%90%E7%9A%84%E5%8F%98%E5%8C%96">值得一提的变化</a></li>
 </ul>
 </li>
@@ -245,7 +246,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="升级至-rails-4.2">1 升级至 Rails 4.2</h3><p>如果您正试着升级现有的应用程序，最好有广的测试覆盖度。首先应先升级至 4.1，确保应用程序仍正常工作，接着再升上 4.2。升级需要注意的事项在 <a href="upgrading_ruby_on_rails.html#upgrading-from-rails-4-1-to-rails-4-2">Ruby on Rails 升级指南</a>可以找到。</p><h3 id="重要新功能">2 重要新功能</h3><h4 id="外键支援">2.1 外键支援</h4><p>迁移 DSL 现在支援新增、移除外键，也会导出到 <code>schema.rb</code>。目前只有 <code>mysql</code>、<code>mysql2</code> 以及 <code>postgresql</code> 的适配器支援外键。</p><div class="code_container">
+        <h3 id="升级至-rails-4.2">1 升级至 Rails 4.2</h3><p>如果您正试着升级现有的应用程序，最好有广的测试覆盖度。首先应先升级至 4.1，确保应用程序仍正常工作，接着再升上 4.2。升级需要注意的事项在 <a href="upgrading_ruby_on_rails.html#upgrading-from-rails-4-1-to-rails-4-2">Ruby on Rails 升级指南</a>可以找到。</p><h3 id="重要新特性">2 重要新特性</h3><h4 id="外键支援">2.1 外键支援</h4><p>迁移 DSL 现在支援新增、移除外键，也会导出到 <code>schema.rb</code>。目前只有 <code>mysql</code>、<code>mysql2</code> 以及 <code>postgresql</code> 的适配器支援外键。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # add a foreign key to `articles.author_id` referencing `authors.id`
 add_foreign_key :articles, :authors
@@ -263,16 +264,21 @@ remove_foreign_key :accounts, column: :owner_id
 </div>
 <p>完整说明请参考 API 文档：<a href="http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key">add_foreign_key</a> 和 <a href="http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key">remove_foreign_key</a>。</p><h3 id="railties">3 Railties</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/railties/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="railties-移除">3.1 移除</h4>
 <ul>
-<li>移除了 <code>rails application</code> 命令。
+<li>移除 <code>rails application</code> 命令。
 (<a href="https://github.com/rails/rails/pull/11616">Pull Request</a>)</li>
 </ul>
-<h4 id="railties-值得一提的变化">3.2 值得一提的变化</h4>
+<h4 id="railties-弃用">3.2 弃用</h4>
+<ul>
+<li>弃用 <code>Rails::Rack::LogTailer</code>，没有替代方案。
+(<a href="https://github.com/rails/rails/commit/84a13e019e93efaa8994b3f8303d635a7702dbce">Commit</a>)</li>
+</ul>
+<h4 id="railties-值得一提的变化">3.3 值得一提的变化</h4>
 <ul>
 <li><p>导入 <code>bin/setup</code> 脚本来启动应用程序。
 (<a href="https://github.com/rails/rails/pull/15189">Pull Request</a>)</p></li>
 <li><p><code>config.assets.digest</code> 在开发模式的缺省值改为 <code>true</code>。
 (<a href="https://github.com/rails/rails/pull/15155">Pull Request</a>)</p></li>
-<li><p>导入给 <code>rake notes</code> 注册新扩展功能的 API。
+<li><p>导入给 <code>rake notes</code> 注册新扩展特性的 API。
 (<a href="https://github.com/rails/rails/pull/14379">Pull Request</a>)</p></li>
 <li><p>导入 <code>Rails.gem_version</code> 作为返回 <code>Gem::Version.new(Rails.version)</code> 的便捷方法。
 (<a href="https://github.com/rails/rails/pull/14101">Pull Request</a>)</p></li>
@@ -280,7 +286,7 @@ remove_foreign_key :accounts, column: :owner_id
 <h3 id="action-pack">4 Action Pack</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/actionpack/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="action-pack-弃用">4.1 弃用</h4>
 <ul>
 <li>
-<p>弃用路由的 <code>:to</code> 选项里，<code>:to</code> 可以指向符号或不含井号的字串这两个功能。</p>
+<p>弃用路由的 <code>:to</code> 选项里，<code>:to</code> 可以指向符号或不含井号的字串这两个特性。</p>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 get '/posts', to: MyRackApp    =&gt; (No change necessary)
@@ -295,6 +301,11 @@ get '/posts', to: :index       =&gt; get '/posts', action: :index
 </ul>
 <h4 id="action-pack-值得一提的变化">4.2 值得一提的变化</h4>
 <ul>
+<li><p><code>render nothing: true</code> 或渲染 <code>nil</code> 主体不再给响应加一个空白。
+(<a href="https://github.com/rails/rails/pull/14883">Pull Request</a>)</p></li>
+<li><p>导入 <code>always_permitted_parameters</code> 选项，用来设定全局允许赋值的参数。默认值是
+<code>['controller', 'action']</code>。
+(<a href="https://github.com/rails/rails/pull/15933">Pull Request</a>)</p></li>
 <li>
 <p><code>*_filter</code> 方法已经从文档中移除，已经不鼓励使用。偏好使用 <code>*_action</code> 方法：</p>
 <div class="code_container">
@@ -322,7 +333,7 @@ skip_filter           =&gt; skip_action_callback
 </li>
 <li><p>从 RFC-4791 新增 HTTP 方法 <code>MKCALENDAR</code>。
 (<a href="https://github.com/rails/rails/pull/15121">Pull Request</a>)</p></li>
-<li><p><code>*_fragment.action_controller</code> 通知消息的 Payload 现在包含 Controller 与动作名称。
+<li><p><code>*_fragment.action_controller</code> 通知消息的 Payload 现在包含控制器与动作名称。
 (<a href="https://github.com/rails/rails/pull/14137">Pull Request</a>)</p></li>
 <li><p>传入 URL 辅助方法的片段现在会自动 Escaped。
 (<a href="https://github.com/rails/rails/commit/5460591f0226a9d248b7b4f89186bd5553e7768f">Commit</a>)</p></li>
@@ -340,21 +351,36 @@ skip_filter           =&gt; skip_action_callback
 现在参数改用 Hash 传入。
 (<a href="https://github.com/rails/rails/pull/14243">Pull Request</a>)</p></li>
 </ul>
-<h4 id="action-view-值得一提的变化">5.2 值得一提的变化</h4><h3 id="action-mailer">6 Action Mailer</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="action-mailer-值得一提的变化">6.1 值得一提的变化</h4><h3 id="active-record">7 Active Record</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="active-record-移除">7.1 移除</h4>
+<h4 id="action-view-值得一提的变化">5.2 值得一提的变化</h4>
 <ul>
+<li>表单帮助方法针对隐藏栏位不再加上含有行内样式的 <code>&lt;div&gt;</code>。
+(<a href="https://github.com/rails/rails/pull/14738">Pull Request</a>)</li>
+</ul>
+<h3 id="action-mailer">6 Action Mailer</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/actionmailer/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="action-mailer-值得一提的变化">6.1 值得一提的变化</h4>
+<ul>
+<li>添加 <code>show_previews</code> 设定选项，用来在开发环境以外启用 Mailer 预览。
+(<a href="https://github.com/rails/rails/pull/15970">Pull Request</a>)</li>
+</ul>
+<h3 id="active-record">7 Active Record</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/activerecord/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="active-record-移除">7.1 移除</h4>
+<ul>
+<li><p>移除 <code>cache_attributes</code> 以及其它相关的方法，所有的属性现在都会缓存了。
+(<a href="https://github.com/rails/rails/pull/15429">Pull Request</a>)</p></li>
 <li><p>移除已弃用的方法 <code>ActiveRecord::Base.quoted_locking_column</code>.
 (<a href="https://github.com/rails/rails/pull/15612">Pull Request</a>)</p></li>
 <li><p>移除已弃用的方法 <code>ActiveRecord::Migrator.proper_table_name</code>。
 请改用 <code>ActiveRecord::Migration</code> 的实例方法：<code>proper_table_name</code>。
 (<a href="https://github.com/rails/rails/pull/15512">Pull Request</a>)</p></li>
-<li><p>移除 <code>cache_attributes</code> 以及其它相关的方法，所有的属性现在都会快取了。
-(<a href="https://github.com/rails/rails/pull/15429">Pull Request</a>)</p></li>
 <li><p>移除了未使用的 <code>:timestamp</code> 类型。把所有 <code>timestamp</code> 类型都改为 <code>:datetime</code> 的别名。
 修正在 <code>ActiveRecord</code> 之外，栏位类型不一致的问题，譬如 XML 序列化。
 (<a href="https://github.com/rails/rails/pull/15184">Pull Request</a>)</p></li>
 </ul>
 <h4 id="active-record-弃用">7.2 弃用</h4>
 <ul>
+<li><p>弃用对 <code>has_many :through</code> 自动侦测 counter cache 的支持。要自己对 <code>has_many</code> 与
+<code>belongs_to</code> 关联，给 <code>through</code> 的纪录手动设定。
+(<a href="https://github.com/rails/rails/pull/15754">Pull Request</a>)</p></li>
+<li><p>弃用 <code>serialized_attributes</code> without replacement.
+(<a href="https://github.com/rails/rails/pull/15704">Pull Request</a>)</p></li>
 <li><p>弃用了当栏位不存在时，还会从 <code>column_for_attribute</code> 返回 <code>nil</code> 的情况。
 Rails 5.0 将会返回 Null Object。
 (<a href="https://github.com/rails/rails/pull/15878">Pull Request</a>)</p></li>
@@ -370,12 +396,23 @@ Rails 5.0 将会返回 Null Object。
 <p>目前的解决方法是将起始数递增，这是不对的，已经弃用了。关于不知如何递增的子类型（比如没有定义 <code>#succ</code>）会对不包含起始值的抛出 <code>ArgumentError</code>。</p>
 <p>(<a href="https://github.com/rails/rails/commit/91949e48cf41af9f3e4ffba3e5eecf9b0a08bfc3">Commit</a>)</p>
 </li>
-<li><p>弃用对 <code>has_many :through</code> 自动侦测 counter cache 的支持。要自己对 <code>has_many</code> 与
-<code>belongs_to</code> 关联，给 <code>through</code> 的纪录手动设定。
-(<a href="https://github.com/rails/rails/pull/15754">Pull Request</a>)</p></li>
 </ul>
 <h4 id="active-record-值得一提的变化">7.3 值得一提的变化</h4>
 <ul>
+<li><p>单数关联增加 <code>:required</code> 选项，用来定义关联的存在性验证。
+(<a href="https://github.com/rails/rails/pull/16056">Pull Request</a>)</p></li>
+<li><p>导入 <code>ActiveRecord::Base#validate!</code>，若记录不合法时会抛出 <code>RecordInvalid</code>。
+(<a href="https://github.com/rails/rails/pull/8639">Pull Request</a>)</p></li>
+<li><p><code>ActiveRecord::Base#reload</code> 现在的行为同 <code>m = Model.find(m.id)</code>，代表不再给自定的
+<code>select</code> 保存额外的属性。
+(<a href="https://github.com/rails/rails/pull/15866">Pull Request</a>)</p></li>
+<li><p>导入 <code>bin/rake db:purge</code> 任务，用来清空当前环境的数据库。
+(<a href="https://github.com/rails/rails/commit/e2f232aba15937a4b9d14bd91e0392c6d55be58d">Commit</a>)</p></li>
+<li><p><code>ActiveRecord::Dirty</code> 现在会侦测可变数值的变化。序列化过的属性只在有变更时才会保存。
+修复了像是 PostgreSQL 不会侦测到字串或 JSON 栏位改变的问题。
+(Pull Requests <a href="https://github.com/rails/rails/pull/15674">1</a>,
+<a href="https://github.com/rails/rails/pull/15786">2</a>,
+<a href="https://github.com/rails/rails/pull/15788">3</a>)</p></li>
 <li><p>新增 <code>ActiveRecord::Base</code> 对象的 <code>#pretty_print</code> 方法。
 (<a href="https://github.com/rails/rails/pull/15172">Pull Request</a>)</p></li>
 <li><p>PostgreSQL 与 SQLite 适配器不再默认限制字串只能 255 字符。
@@ -394,8 +431,6 @@ Rails 5.0 将会返回 Null Object。
 (<a href="https://github.com/rails/rails/pull/12523">Pull Request</a>)</p></li>
 <li><p>新增 PostgreSQL 适配器的使用自建的范围类型支持。
 (<a href="https://github.com/rails/rails/commit/4cb47167e747e8f9dc12b0ddaf82bdb68c03e032">Commit</a>)</p></li>
-<li><p>单数关联增加 <code>:required</code> 选项，用来定义关联的存在性验证。
-(<a href="https://github.com/rails/rails/pull/16056">Pull Request</a>)</p></li>
 </ul>
 <h3 id="active-model">8 Active Model</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/activemodel/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="active-model-移除">8.1 移除</h4>
 <ul>
@@ -404,8 +439,12 @@ Rails 5.0 将会返回 Null Object。
 </ul>
 <h4 id="active-model-值得一提的变化">8.2 值得一提的变化</h4>
 <ul>
-<li>引入 <code>#validate</code> 作为 <code>#valid?</code> 的别名。
-(<a href="https://github.com/rails/rails/pull/14456">Pull Request</a>)</li>
+<li><p><code>ActiveModel::Dirty</code> 导入 <code>undo_changes</code> 方法，用来恢复变更的属性到先前的数值。
+(<a href="https://github.com/rails/rails/pull/14861">Pull Request</a>)</p></li>
+<li><p>若启用验证，<code>has_secure_password</code> 现在会检查密码是否少于 72 个字符。
+(<a href="https://github.com/rails/rails/pull/15708">Pull Request</a>)</p></li>
+<li><p>引入 <code>#validate</code> 作为 <code>#valid?</code> 的别名。
+(<a href="https://github.com/rails/rails/pull/14456">Pull Request</a>)</p></li>
 </ul>
 <h3 id="active-support">9 Active Support</h3><p>请参考 <a href="https://github.com/rails/rails/blob/4-2-stable/activesupport/CHANGELOG.md">CHANGELOG</a> 来了解更多细节。</p><h4 id="active-support-移除">9.1 移除</h4>
 <ul>
@@ -414,25 +453,23 @@ Rails 5.0 将会返回 Null Object。
 <li><p>移除弃用 <code>ActiveSupport::Callbacks</code> 基于字串的终止符。
 (<a href="https://github.com/rails/rails/pull/15100">Pull Request</a>)</p></li>
 </ul>
-<h4 id="active-support-弃用">9.2 弃用</h4>
+<h4 id="弃用">9.2 弃用</h4>
 <ul>
 <li><p>弃用 <code>Class#superclass_delegating_accessor</code>，请改用 <code>Class#class_attribute</code>。
 (<a href="https://github.com/rails/rails/pull/14271">Pull Request</a>)</p></li>
-<li><p>弃用 <code>ActiveSupport::SafeBuffer#prepend!</code> 请改用 <code>ActiveSupport::SafeBuffer#prepend</code>（两者功能相同）。
+<li><p>弃用 <code>ActiveSupport::SafeBuffer#prepend!</code> 请改用 <code>ActiveSupport::SafeBuffer#prepend</code>（两者特性相同）。
 (<a href="https://github.com/rails/rails/pull/14529">Pull Request</a>)</p></li>
 </ul>
 <h4 id="值得一提的变化">9.3 值得一提的变化</h4>
 <ul>
-<li><p><code>humanize</code> 现在会去掉前面的底线。
-(<a href="https://github.com/rails/rails/commit/daaa21bc7d20f2e4ff451637423a25ff2d5e75c7">Commit</a>)</p></li>
-<li><p>新增 <code>SecureRandom::uuid_v3</code> 和 <code>SecureRandom::uuid_v5</code> 方法。
-(<a href="https://github.com/rails/rails/pull/12016">Pull Request</a>)</p></li>
-<li><p>导入 <code>Concern#class_methods</code> 来取代 <code>module ClassMethods</code> 以及 <code>Kernel#concern</code>，
-来避免使用 <code>module Foo; extend ActiveSupport::Concern; end</code> 这样的样板。
-(<a href="https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad">Commit</a>)</p></li>
 <li><p>新增 <code>Hash#transform_values</code> 与 <code>Hash#transform_values!</code> 方法，来简化 Hash
 值需要更新、但键保留不变这样的常见模式。
 (<a href="https://github.com/rails/rails/pull/15819">Pull Request</a>)</p></li>
+<li><p><code>humanize</code> 现在会去掉前面的底线。
+(<a href="https://github.com/rails/rails/commit/daaa21bc7d20f2e4ff451637423a25ff2d5e75c7">Commit</a>)</p></li>
+<li><p>导入 <code>Concern#class_methods</code> 来取代 <code>module ClassMethods</code> 以及 <code>Kernel#concern</code>，
+来避免使用 <code>module Foo; extend ActiveSupport::Concern; end</code> 这样的样板。
+(<a href="https://github.com/rails/rails/commit/b16c36e688970df2f96f793a759365b248b582ad">Commit</a>)</p></li>
 </ul>
 <h3 id="致谢">10 致谢</h3><p>许多人花费宝贵的时间贡献至 Rails 项目，使 Rails 成为更稳定、更强韧的网络框架，参考<a href="http://contributors.rubyonrails.org/">完整的 Rails 贡献者清单</a>，感谢所有的贡献者！</p>
 
