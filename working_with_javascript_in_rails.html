@@ -366,7 +366,7 @@ $ -&gt;
 
 </pre>
 </div>
-<p>因为生成的就是一个表单，所以 <code>form_for</code> 的全部信息否可使用。</p><h3 id="服务器端处理">4 服务器端处理</h3><p>Ajax 不仅需要编写客户端代码，服务器端也要做处理。Ajax 请求一般不返回 HTML，而是 JSON。下面详细介绍处理过程。</p><h4 id="一个简单的例子">4.1 一个简单的例子</h4><p>假设在网页中要显示一系列用户，还有一个新建用户的表单，控制器的 <code>index</code> 动作如下所示：</p><div class="code_container">
+<p>因为生成的就是一个表单，所以 <code>form_for</code> 的全部信息都适用于这里。</p><h3 id="服务器端处理">4 服务器端处理</h3><p>Ajax 不仅需要编写客户端代码，服务器端也要做处理。Ajax 请求一般不返回 HTML，而是 JSON。下面详细介绍处理过程。</p><h4 id="一个简单的例子">4.1 一个简单的例子</h4><p>假设在网页中要显示一系列用户，还有一个新建用户的表单，控制器的 <code>index</code> 动作如下所示：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class UsersController &lt; ApplicationController
   def index

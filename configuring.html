@@ -181,11 +181,17 @@
 
 <ul>
 <li><a href="#3%E5%B8%B8%E8%A7%84%E9%80%89%E9%A1%B9">3常规选项</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">3设置静态资源</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE%E7%94%9F%E6%88%90%E5%99%A8">3设置生成器</a></li>
 <li><a href="#3%E8%AE%BE%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6">3设置中间件</a></li>
 <li><a href="#3%E8%AE%BE%E7%BD%AE-i18n">3设置 i18n</a></li>
 <li><a href="#3%E8%AE%BE%E7%BD%AE-active-record">3设置 Active Record</a></li>
 <li><a href="#3%E8%AE%BE%E7%BD%AE-action-controller">3设置 Action Controller</a></li>
 <li><a href="#3%E8%AE%BE%E7%BD%AE-action-dispatch">3设置 Action Dispatch</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE-action-view">3设置 Action View</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE-action-mailer">3设置 Action Mailer</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE-active-support">3设置 Active Support</a></li>
+<li><a href="#3%E8%AE%BE%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93">3设置数据库</a></li>
 <li><a href="#3%E8%BF%9E%E6%8E%A5%E8%AE%BE%E7%BD%AE">3连接设置</a></li>
 <li><a href="#3%E6%96%B0%E5%BB%BA-rails-%E7%8E%AF%E5%A2%83">3新建 Rails 环境</a></li>
 <li><a href="#3%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AD%90%E7%9B%AE%E5%BD%95%E4%B8%AD">3部署到子目录中</a></li>
@@ -238,120 +244,87 @@ config.active_record.schema_format = :ruby
 </ul>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-    config.after_initialize do
-      ActionView::Base.sanitized_allowed_tags.delete 'div'
-    end
-    ```
+config.after_initialize do
+  ActionView::Base.sanitized_allowed_tags.delete 'div'
+end
 
-*   `config.asset_host`：设置静态资源的主机。可用于设置静态资源所用的 CDN，或者通过不同的域名绕过浏览器对并发请求数量的限制。是 `config.action_controller.asset_host` 的简化。
+</pre>
+</div>
 
-*   `config.autoload_once_paths`：一个由路径组成的数组，Rails 从这些路径中自动加载常量，且在多次请求之间一直可用。只有 `config.cache_classes` 为 `false`（开发环境中的默认值）时才有效。如果为 `true`，所有自动加载的代码每次请求时都会重新加载。这个数组中的路径必须出现在 `autoload_paths` 设置中。默认为空数组。
+<ul>
+<li><p>  <code>config.asset_host</code>：设置静态资源的主机。可用于设置静态资源所用的 CDN，或者通过不同的域名绕过浏览器对并发请求数量的限制。是 <code>config.action_controller.asset_host</code> 的简化。</p></li>
+<li><p>  <code>config.autoload_once_paths</code>：一个由路径组成的数组，Rails 从这些路径中自动加载常量，且在多次请求之间一直可用。只有 <code>config.cache_classes</code> 为 <code>false</code>（开发环境中的默认值）时才有效。如果为 <code>true</code>，所有自动加载的代码每次请求时都会重新加载。这个数组中的路径必须出现在 <code>autoload_paths</code> 设置中。默认为空数组。</p></li>
+<li><p>  <code>config.autoload_paths</code>：一个由路径组成的数组，Rails 从这些路径中自动加载常量。默认值为 <code>app</code> 文件夹中的所有子文件夹。</p></li>
+<li><p>  <code>config.cache_classes</code>：决定程序中的类和模块在每次请求中是否要重新加载。在开发环境中的默认值是 <code>false</code>，在测试环境和生产环境中的默认值是 <code>true</code>。调用 <code>threadsafe!</code> 方法的作用和设为 <code>true</code> 一样。</p></li>
+<li><p>  <code>config.action_view.cache_template_loading</code>：决定模板是否要在每次请求时重新加载。默认值等于 <code>config.cache_classes</code> 的值。</p></li>
+<li><p>  <code>config.beginning_of_week</code>：设置一周从哪天开始。可使用的值是一周七天名称的符号形式，例如 <code>:monday</code>。</p></li>
+<li><p>  <code>config.cache_store</code>：设置 Rails 缓存的存储方式。可选值有：<code>:memory_store</code>，<code>:file_store</code>，<code>:mem_cache_store</code>，<code>:null_store</code>，以及实现了缓存 API 的对象。如果文件夹 <code>tmp/cache</code> 存在，默认值为 <code>:file_store</code>，否则为 <code>:memory_store</code>。</p></li>
+<li><p>  <code>config.colorize_logging</code>：设定日志信息是否使用 ANSI 颜色代码。默认值为 <code>true</code>。</p></li>
+<li><p>  <code>config.consider_all_requests_local</code>：如果设为 <code>true</code>，在 HTTP 响应中会显示详细的调试信息，而且 <code>Rails::Info</code> 控制器会在地址 <code>/rails/info/properties</code> 上显示程序的运行时上下文。在开发环境和测试环境中默认值为 <code>true</code>，在生产环境中默认值为 <code>false</code>。要想更精确的控制，可以把这个选项设为 <code>false</code>，然后在控制器中实现 <code>local_request?</code> 方法，指定哪些请求要显示调试信息。</p></li>
+<li><p>  <code>config.console</code>：设置执行 <code>rails console</code> 命令时使用哪个类实现控制台，最好在 <code>console</code> 代码块中设置：</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+console do
+  # this block is called only when running console,
+  # so we can safely require pry here
+  require "pry"
+  config.console = Pry
+end
 
-*   `config.autoload_paths`：一个由路径组成的数组，Rails 从这些路径中自动加载常量。默认值为 `app` 文件夹中的所有子文件夹。
+</pre>
+</div>
 
-*   `config.cache_classes`：决定程序中的类和模块在每次请求中是否要重新加载。在开发环境中的默认值是 `false`，在测试环境和生产环境中的默认值是 `true`。调用 `threadsafe!` 方法的作用和设为 `true` 一样。
+<ul>
+<li><p>  <code>config.dependency_loading</code>：设为 <code>false</code> 时禁止自动加载常量。只有 <code>config.cache_classes</code> 为 <code>true</code>（生产环境的默认值）时才有效。<code>config.threadsafe!</code> 为 <code>true</code> 时，这个选项为 <code>false</code>。</p></li>
+<li><p>  <code>config.eager_load</code>：设为 <code>true</code> 是按需加载 <code>config.eager_load_namespaces</code> 中的所有命名空间，包括程序本身、引擎、Rails 框架和其他注册的命名空间。</p></li>
+<li><p>  <code>config.eager_load_namespaces</code>：注册命名空间，<code>config.eager_load</code> 为 <code>true</code> 时按需加载。所有命名空间都要能响应 <code>eager_load!</code> 方法。</p></li>
+<li><p>  <code>config.eager_load_paths</code>：一个由路径组成的数组，<code>config.cache_classes</code> 为 <code>true</code> 时，Rails 启动时按需加载对应的代码。</p></li>
+<li><p>  <code>config.encoding</code>：设置程序全局编码，默认为 UTF-8。</p></li>
+<li><p>  <code>config.exceptions_app</code>：设置抛出异常后中间件 ShowException 调用哪个异常处理程序。默认为 <code>ActionDispatch::PublicExceptions.new(Rails.public_path)</code>。</p></li>
+<li><p>  <code>config.file_watcher</code>：设置监视文件系统上文件变化使用的类，<code>config.reload_classes_only_on_change</code> 为 <code>true</code> 时才有效。指定的类必须符合 <code>ActiveSupport::FileUpdateChecker</code> API。</p></li>
+<li><p>  <code>config.filter_parameters</code>：过滤不想写入日志的参数，例如密码，信用卡卡号。把 <code>config.filter_parameters+=[:password]</code> 加入文件 <code>config/initializers/filter_parameter_logging.rb</code>，可以过滤密码。</p></li>
+<li><p>  <code>config.force_ssl</code>：强制所有请求使用 HTTPS 协议，通过 <code>ActionDispatch::SSL</code> 中间件实现。</p></li>
+<li><p>  <code>config.log_formatter</code>：设置 Rails 日志的格式化工具。在生产环境中默认值为 <code>Logger::Formatter</code>，其他环境默认值为 <code>ActiveSupport::Logger::SimpleFormatter</code>。</p></li>
+<li><p>  <code>config.log_level</code>：设置 Rails 日志等级。在生产环境中默认值为 <code>:info</code>，其他环境默认值为 <code>:debug</code>。</p></li>
+<li><p>  <code>config.log_tags</code>：一组可响应 <code>request</code> 对象的方法。可在日志消息中加入更多信息，例如二级域名和请求 ID，便于调试多用户程序。</p></li>
+<li><p>  <code>config.logger</code>：接受一个实现了 Log4r 接口的类，或者使用默认的 <code>Logger</code> 类。默认值为 <code>ActiveSupport::Logger</code>，在生产环境中关闭了自动冲刷功能。</p></li>
+<li><p>  <code>config.middleware</code>：设置程序使用的中间件。详情参阅“<a href="#configuring-middleware">设置中间件</a>”一节。</p></li>
+<li><p>  <code>config.reload_classes_only_on_change</code>：只当监视的文件变化时才重新加载。默认值为 <code>true</code>，监视 <code>autoload_paths</code> 中所有路径。如果 <code>config.cache_classes</code> 为 <code>true</code>，忽略这个设置。</p></li>
+<li><p>  <code>secrets.secret_key_base</code>：
+指定一个密令，和已知的安全密令比对，防止篡改会话。新建程序时会生成一个随机密令，保存在文件 <code>config/secrets.yml</code> 中。</p></li>
+<li><p>  <code>config.serve_static_assets</code>：让 Rails 伺服静态资源文件。默认值为 <code>true</code>，但在生产环境中为 <code>false</code>，因为应该使用服务器软件（例如 Nginx 或 Apache）伺服静态资源文件。  如果测试程序，或者在生产环境中使用 WEBrick（极力不推荐），应该设为 <code>true</code>，否则无法使用页面缓存，请求 <code>public</code> 文件夹中的文件时也会经由 Rails 处理。</p></li>
+<li><p>  <code>config.session_store</code>：一般在 <code>config/initializers/session_store.rb</code> 文件中设置，指定使用什么方式存储会话。可用值有：<code>:cookie_store</code>（默认），<code>:mem_cache_store</code> 和 <code>:disabled</code>。<code>:disabled</code> 指明不让 Rails 处理会话。当然也可指定自定义的会话存储：</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.session_store :my_custom_store
 
-*   `config.action_view.cache_template_loading`：决定模板是否要在每次请求时重新加载。默认值等于 `config.cache_classes` 的值。
-
-*   `config.beginning_of_week`：设置一周从哪天开始。可使用的值是一周七天名称的符号形式，例如 `:monday`。
-
-*   `config.cache_store`：设置 Rails 缓存的存储方式。可选值有：`:memory_store`，`:file_store`，`:mem_cache_store`，`:null_store`，以及实现了缓存 API 的对象。如果文件夹 `tmp/cache` 存在，默认值为 `:file_store`，否则为 `:memory_store`。
-
-*   `config.colorize_logging`：设定日志信息是否使用 ANSI 颜色代码。默认值为 `true`。
-
-*   `config.consider_all_requests_local`：如果设为 `true`，在 HTTP 响应中会显示详细的调试信息，而且 `Rails::Info` 控制器会在地址 `/rails/info/properties` 上显示程序的运行时上下文。在开发环境和测试环境中默认值为 `true`，在生产环境中默认值为 `false`。要想更精确的控制，可以把这个选项设为 `false`，然后在控制器中实现 `local_request?` 方法，指定哪些请求要显示调试信息。
-
-*   `config.console`：设置执行 `rails console` 命令时使用哪个类实现控制台，最好在 `console` 代码块中设置：
-
-```    ruby
-    console do
-      # this block is called only when running console,
-      # so we can safely require pry here
-      require "pry"
-      config.console = Pry
-    end
-    ```
-
-*   `config.dependency_loading`：设为 `false` 时禁止自动加载常量。只有 `config.cache_classes` 为 `true`（生产环境的默认值）时才有效。`config.threadsafe!` 为 `true` 时，这个选项为 `false`。
-
-*   `config.eager_load`：设为 `true` 是按需加载 `config.eager_load_namespaces` 中的所有命名空间，包括程序本身、引擎、Rails 框架和其他注册的命名空间。
-
-*   `config.eager_load_namespaces`：注册命名空间，`config.eager_load` 为 `true` 时按需加载。所有命名空间都要能响应 `eager_load!` 方法。
-
-*   `config.eager_load_paths`：一个由路径组成的数组，`config.cache_classes` 为 `true` 时，Rails 启动时按需加载对应的代码。
-
-*   `config.encoding`：设置程序全局编码，默认为 UTF-8。
-
-*   `config.exceptions_app`：设置抛出异常后中间件 ShowException 调用哪个异常处理程序。默认为 `ActionDispatch::PublicExceptions.new(Rails.public_path)`。
-
-*   `config.file_watcher`：设置监视文件系统上文件变化使用的类，`config.reload_classes_only_on_change` 为 `true` 时才有效。指定的类必须符合 `ActiveSupport::FileUpdateChecker` API。
-
-*   `config.filter_parameters`：过滤不想写入日志的参数，例如密码，信用卡卡号。把 `config.filter_parameters+=[:password]` 加入文件 `config/initializers/filter_parameter_logging.rb`，可以过滤密码。
-
-*   `config.force_ssl`：强制所有请求使用 HTTPS 协议，通过 `ActionDispatch::SSL` 中间件实现。
-
-*   `config.log_formatter`：设置 Rails 日志的格式化工具。在生产环境中默认值为 `Logger::Formatter`，其他环境默认值为 `ActiveSupport::Logger::SimpleFormatter`。
-
-*   `config.log_level`：设置 Rails 日志等级。在生产环境中默认值为 `:info`，其他环境默认值为 `:debug`。
-
-*   `config.log_tags`：一组可响应 `request` 对象的方法。可在日志消息中加入更多信息，例如二级域名和请求 ID，便于调试多用户程序。
-
-*   `config.logger`：接受一个实现了 Log4r 接口的类，或者使用默认的 `Logger` 类。默认值为 `ActiveSupport::Logger`，在生产环境中关闭了自动冲刷功能。
-
-*   `config.middleware`：设置程序使用的中间件。详情参阅“[设置中间件](#configuring-middleware)”一节。
-
-*   `config.reload_classes_only_on_change`：只当监视的文件变化时才重新加载。默认值为 `true`，监视 `autoload_paths` 中所有路径。如果 `config.cache_classes` 为 `true`，忽略这个设置。
-
-*   `secrets.secret_key_base`：
-指定一个密令，和已知的安全密令比对，防止篡改会话。新建程序时会生成一个随机密令，保存在文件 `config/secrets.yml` 中。
-
-*   `config.serve_static_assets`：让 Rails 伺服静态资源文件。默认值为 `true`，但在生产环境中为 `false`，因为应该使用服务器软件（例如 Nginx 或 Apache）伺服静态资源文件。  如果测试程序，或者在生产环境中使用 WEBrick（极力不推荐），应该设为 `true`，否则无法使用页面缓存，请求 `public` 文件夹中的文件时也会经由 Rails 处理。
-
-*   `config.session_store`：一般在 `config/initializers/session_store.rb` 文件中设置，指定使用什么方式存储会话。可用值有：`:cookie_store`（默认），`:mem_cache_store` 和 `:disabled`。`:disabled` 指明不让 Rails 处理会话。当然也可指定自定义的会话存储：
-
-```    ruby
-    config.session_store :my_custom_store
-    ```
-
-    这个自定义的存储方式必须定义为 `ActionDispatch::Session::MyCustomStore`。
-
-*   `config.time_zone`：设置程序使用的默认时区，也让 Active Record 使用这个时区。
-
-###3设置静态资源
-
-*   `config.assets.enabled`：设置是否启用 Asset Pipeline。默认启用。
-
-*   `config.assets.raise_runtime_errors`：设为 `true`，启用额外的运行时错误检查。建议在 `config/environments/development.rb` 中设置，这样可以尽量减少部署到生产环境后的异常表现。
-
-*   `config.assets.compress`：是否压缩编译后的静态资源文件。在 `config/environments/production.rb` 中为 `true`。
-
-*   `config.assets.css_compressor`：设定使用的 CSS 压缩程序，默认为 `sass-rails`。目前，唯一可用的另一个值是 `:yui`，使用 `yui-compressor` gem 压缩文件。
-
-*   `config.assets.js_compressor`：设定使用的 JavaScript 压缩程序。可用值有：`:closure`，`:uglifier` 和 `:yui`。分别需要安装 `closure-compiler`，`uglifier` 和 `yui-compressor` 这三个 gem。
-
-*   `config.assets.paths`：查找静态资源文件的路径。Rails 会在这个选项添加的路径中查找静态资源文件。
-
-*   `config.assets.precompile`：指定执行 `rake assets:precompile` 任务时除 `application.css` 和 `application.js` 之外要编译的其他资源文件。
-
-*   `config.assets.prefix`：指定伺服静态资源文件时使用的地址前缀，默认为 `/assets`。
-
-*   `config.assets.digest`：在静态资源文件名中加入 MD5 指纹。在 `production.rb` 中默认设为 `true`。
-
-*   `config.assets.debug`：禁止合并和压缩静态资源文件。在 `development.rb` 中默认设为 `true`。
-
-*   `config.assets.cache_store`：设置 Sprockets 使用的缓存方式，默认使用文件存储。
-
-*   `config.assets.version`：生成 MD5 哈希时用到的一个字符串。可用来强制重新编译所有文件。
-
-*   `config.assets.compile`：布尔值，用于在生产环境中启用 Sprockets 实时编译功能。
-
-*   `config.assets.logger`：接受一个实现了 Log4r 接口的类，或者使用默认的 `Logger` 类。默认值等于 `config.logger` 选项的值。把 `config.assets.logger` 设为 `false`，可以关闭静态资源相关的日志。
-
-###3设置生成器
-
-Rails 允许使用 `config.generators` 方法设置使用的生成器。这个方法接受一个代码块：
-
-```ruby
+</pre>
+</div>
+<p>这个自定义的存储方式必须定义为 <code>ActionDispatch::Session::MyCustomStore</code>。</p>
+<ul>
+<li>  <code>config.time_zone</code>：设置程序使用的默认时区，也让 Active Record 使用这个时区。</li>
+</ul>
+<h4 id="3设置静态资源">3.2 3设置静态资源</h4>
+<ul>
+<li><p>  <code>config.assets.enabled</code>：设置是否启用 Asset Pipeline。默认启用。</p></li>
+<li><p>  <code>config.assets.raise_runtime_errors</code>：设为 <code>true</code>，启用额外的运行时错误检查。建议在 <code>config/environments/development.rb</code> 中设置，这样可以尽量减少部署到生产环境后的异常表现。</p></li>
+<li><p>  <code>config.assets.compress</code>：是否压缩编译后的静态资源文件。在 <code>config/environments/production.rb</code> 中为 <code>true</code>。</p></li>
+<li><p>  <code>config.assets.css_compressor</code>：设定使用的 CSS 压缩程序，默认为 <code>sass-rails</code>。目前，唯一可用的另一个值是 <code>:yui</code>，使用 <code>yui-compressor</code> gem 压缩文件。</p></li>
+<li><p>  <code>config.assets.js_compressor</code>：设定使用的 JavaScript 压缩程序。可用值有：<code>:closure</code>，<code>:uglifier</code> 和 <code>:yui</code>。分别需要安装 <code>closure-compiler</code>，<code>uglifier</code> 和 <code>yui-compressor</code> 这三个 gem。</p></li>
+<li><p>  <code>config.assets.paths</code>：查找静态资源文件的路径。Rails 会在这个选项添加的路径中查找静态资源文件。</p></li>
+<li><p>  <code>config.assets.precompile</code>：指定执行 <code>rake assets:precompile</code> 任务时除 <code>application.css</code> 和 <code>application.js</code> 之外要编译的其他资源文件。</p></li>
+<li><p>  <code>config.assets.prefix</code>：指定伺服静态资源文件时使用的地址前缀，默认为 <code>/assets</code>。</p></li>
+<li><p>  <code>config.assets.digest</code>：在静态资源文件名中加入 MD5 指纹。在 <code>production.rb</code> 中默认设为 <code>true</code>。</p></li>
+<li><p>  <code>config.assets.debug</code>：禁止合并和压缩静态资源文件。在 <code>development.rb</code> 中默认设为 <code>true</code>。</p></li>
+<li><p>  <code>config.assets.cache_store</code>：设置 Sprockets 使用的缓存方式，默认使用文件存储。</p></li>
+<li><p>  <code>config.assets.version</code>：生成 MD5 哈希时用到的一个字符串。可用来强制重新编译所有文件。</p></li>
+<li><p>  <code>config.assets.compile</code>：布尔值，用于在生产环境中启用 Sprockets 实时编译功能。</p></li>
+<li><p>  <code>config.assets.logger</code>：接受一个实现了 Log4r 接口的类，或者使用默认的 <code>Logger</code> 类。默认值等于 <code>config.logger</code> 选项的值。把 <code>config.assets.logger</code> 设为 <code>false</code>，可以关闭静态资源相关的日志。</p></li>
+</ul>
+<h4 id="3设置生成器">3.3 3设置生成器</h4><p>Rails 允许使用 <code>config.generators</code> 方法设置使用的生成器。这个方法接受一个代码块：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 config.generators do |g|
   g.orm :active_record
   g.test_framework :test_unit
@@ -388,7 +361,7 @@ end
 <li>
 <code>template_engine</code>：设置使用哪个模板引擎，例如 ERB 或 Haml，默认为 <code>:erb</code>。</li>
 </ul>
-<h4 id="3设置中间件">3.2 3设置中间件</h4><p>每个 Rails 程序都使用了一组标准的中间件，在开发环境中的加载顺序如下：</p>
+<h4 id="3设置中间件">3.4 3设置中间件</h4><p>每个 Rails 程序都使用了一组标准的中间件，在开发环境中的加载顺序如下：</p>
 <ul>
 <li>
 <code>ActionDispatch::SSL</code>：强制使用 HTTPS 协议处理每个请求。<code>config.force_ssl</code> 设为 <code>true</code> 时才可用。<code>config.ssl_options</code> 选项的值会传给这个中间件。</li>
@@ -459,14 +432,14 @@ config.middleware.delete "Rack::MethodOverride"
 
 </pre>
 </div>
-<h4 id="3设置-i18n">3.3 3设置 i18n</h4><p>下述设置项目都针对 <code>I18n</code> 代码库。</p>
+<h4 id="3设置-i18n">3.5 3设置 i18n</h4><p>下述设置项目都针对 <code>I18n</code> 代码库。</p>
 <ul>
 <li><p><code>config.i18n.available_locales</code>：设置程序可用本地语言的白名单。默认值为可在本地化文件中找到的所有本地语言，在新建程序中一般是 <code>:en</code>。</p></li>
 <li><p><code>config.i18n.default_locale</code>：设置程序的默认本地化语言，默认值为 <code>:en</code>。</p></li>
 <li><p><code>config.i18n.enforce_available_locales</code>：确保传给 i18n 的本地语言在 <code>available_locales</code> 列表中，否则抛出 <code>I18n::InvalidLocale</code> 异常。默认值为 <code>true</code>。除非特别需要，不建议禁用这个选项，因为这是一项安全措施，能防止用户提供不可用的本地语言。</p></li>
 <li><p><code>config.i18n.load_path</code>：设置 Rails 搜寻本地化文件的路径。默认为 config/locales/*.{yml,rb}`。</p></li>
 </ul>
-<h4 id="3设置-active-record">3.4 3设置 Active Record</h4><p><code>config.active_record</code> 包含很多设置项：</p>
+<h4 id="3设置-active-record">3.6 3设置 Active Record</h4><p><code>config.active_record</code> 包含很多设置项：</p>
 <ul>
 <li><p><code>config.active_record.logger</code>：接受一个实现了 Log4r 接口的类，或者使用默认的 <code>Logger</code> 类，然后传给新建的数据库连接。在 Active Record 模型类或模型实例上调用 <code>logger</code> 方法可以获取这个日志类。设为 <code>nil</code> 禁用日志。</p></li>
 <li>
@@ -503,7 +476,7 @@ config.middleware.delete "Rack::MethodOverride"
 <li>
 <code>ActiveRecord::SchemaDumper.ignore_tables</code>：指定一个由数据表组成的数组，导出模式时不会出现在模式文件中。仅当 <code>config.active_record.schema_format == :ruby</code> 时才有效。</li>
 </ul>
-<h4 id="3设置-action-controller">3.5 3设置 Action Controller</h4><p><code>config.action_controller</code> 包含以下设置项：</p>
+<h4 id="3设置-action-controller">3.7 3设置 Action Controller</h4><p><code>config.action_controller</code> 包含以下设置项：</p>
 <ul>
 <li><p><code>config.action_controller.asset_host</code>：设置静态资源的主机，不用程序的服务器伺服静态资源，而使用 CDN。</p></li>
 <li><p><code>config.action_controller.perform_caching</code>：设置程序是否要缓存。在开发模式中为 <code>false</code>，生产环境中为 <code>true</code>。</p></li>
@@ -516,150 +489,154 @@ config.middleware.delete "Rack::MethodOverride"
 <li><p><code>config.action_controller.permit_all_parameters</code>：设置默认允许在批量赋值中使用的参数，默认为 <code>false</code>。</p></li>
 <li><p><code>config.action_controller.action_on_unpermitted_parameters</code>：发现禁止使用的参数时，写入日志还是抛出异常（分别设为 <code>:log</code> 和 <code>:raise</code>）。在开发环境和测试环境中的默认值为 <code>:log</code>，在其他环境中的默认值为 <code>false</code>。</p></li>
 </ul>
-<h4 id="3设置-action-dispatch">3.6 3设置 Action Dispatch</h4>
+<h4 id="3设置-action-dispatch">3.8 3设置 Action Dispatch</h4>
 <ul>
 <li><p>  <code>config.action_dispatch.session_store</code>：设置存储会话的方式，默认为 <code>:cookie_store</code>，其他可用值有：<code>:active_record_store</code>，<code>:mem_cache_store</code>，以及自定义类的名字。</p></li>
 <li><p>  <code>config.action_dispatch.default_headers</code>：一个 Hash，设置响应的默认报头。默认设定的报头为：</p></li>
 </ul>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-    config.action_dispatch.default_headers = {
-      'X-Frame-Options' =&gt; 'SAMEORIGIN',
-      'X-XSS-Protection' =&gt; '1; mode=block',
-      'X-Content-Type-Options' =&gt; 'nosniff'
-    }
-    ```
+config.action_dispatch.default_headers = {
+  'X-Frame-Options' =&gt; 'SAMEORIGIN',
+  'X-XSS-Protection' =&gt; '1; mode=block',
+  'X-Content-Type-Options' =&gt; 'nosniff'
+}
 
-*   `config.action_dispatch.tld_length`：设置顶级域名（top-level domain，简称 TLD）的长度，默认为 `1`。
+</pre>
+</div>
 
-*   `config.action_dispatch.http_auth_salt`：设置 HTTP Auth 认证的加盐值，默认为 `'http authentication'`。
+<ul>
+<li><p>  <code>config.action_dispatch.tld_length</code>：设置顶级域名（top-level domain，简称 TLD）的长度，默认为 <code>1</code>。</p></li>
+<li><p>  <code>config.action_dispatch.http_auth_salt</code>：设置 HTTP Auth 认证的加盐值，默认为 <code>'http authentication'</code>。</p></li>
+<li><p>  <code>config.action_dispatch.signed_cookie_salt</code>：设置签名 cookie 的加盐值，默认为 <code>'signed cookie'</code>。</p></li>
+<li><p>  <code>config.action_dispatch.encrypted_cookie_salt</code>：设置加密 cookie 的加盐值，默认为 <code>'encrypted cookie'</code>。</p></li>
+<li><p> <code>config.action_dispatch.encrypted_signed_cookie_salt</code>：设置签名加密 cookie 的加盐值，默认为 <code>'signed encrypted cookie'</code>。</p></li>
+<li><p>  <code>config.action_dispatch.perform_deep_munge</code>：设置是否在参数上调用 <code>deep_munge</code> 方法。详情参阅“<a href="security.html#unsafe-query-generation">Rails 安全指南</a>”一文。默认值为 <code>true</code>。</p></li>
+<li><p>  <code>ActionDispatch::Callbacks.before</code>：设置在处理请求前运行的代码块。</p></li>
+<li><p>  <code>ActionDispatch::Callbacks.to_prepare</code>：设置在 <code>ActionDispatch::Callbacks.before</code> 之后、处理请求之前运行的代码块。这个代码块在开发环境中的每次请求中都会运行，但在生产环境或 <code>cache_classes</code> 设为 <code>true</code> 的环境中只运行一次。</p></li>
+<li><p>  <code>ActionDispatch::Callbacks.after</code>：设置处理请求之后运行的代码块。</p></li>
+</ul>
+<h4 id="3设置-action-view">3.9 3设置 Action View</h4><p><code>config.action_view</code> 包含以下设置项：</p>
+<ul>
+<li>  <code>config.action_view.field_error_proc</code>：设置用于生成 Active Record 表单错误的 HTML，默认为：</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+Proc.new do |html_tag, instance|
+  %Q(&lt;div class="field_with_errors"&gt;#{html_tag}&lt;/div&gt;).html_safe
+end
 
-*   `config.action_dispatch.signed_cookie_salt`：设置签名 cookie 的加盐值，默认为 `'signed cookie'`。
+</pre>
+</div>
 
-*   `config.action_dispatch.encrypted_cookie_salt`：设置加密 cookie 的加盐值，默认为 `'encrypted cookie'`。
+<ul>
+<li><p>  <code>config.action_view.default_form_builder</code>：设置默认使用的表单构造器。默认值为 <code>ActionView::Helpers::FormBuilder</code>。如果想让表单构造器在程序初始化完成后加载（在开发环境中每次请求都会重新加载），可使用字符串形式。</p></li>
+<li><p> <code>config.action_view.logger</code>：接受一个实现了 Log4r 接口的类，或者使用默认的 <code>Logger</code> 类，用于写入来自 Action View 的日志。设为 <code>nil</code> 禁用日志。</p></li>
+<li><p>  <code>config.action_view.erb_trim_mode</code>：设置 ERB 使用的删除空白模式，默认为 <code>'-'</code>，使用 <code>&lt;%= -%&gt;</code> 或 <code>&lt;%= =%&gt;</code> 时，删除行尾的空白和换行。详情参阅 <a href="http://www.kuwata-lab.com/erubis/users-guide.06.html#topics-trimspaces">Erubis 的文档</a>。</p></li>
+<li><p>  <code>config.action_view.embed_authenticity_token_in_remote_forms</code>：设置启用 <code>:remote =&gt; true</code> 选项的表单如何处理 <code>authenticity_token</code> 字段。默认值为 <code>false</code>，即不加入 <code>authenticity_token</code> 字段，有助于使用片段缓存缓存表单。远程表单可从 <code>meta</code> 标签中获取认证权标，因此没必要再加入 <code>authenticity_token</code> 字段，除非要支持没启用 JavaScript 的浏览器。如果要支持没启用 JavaScript 的浏览器，可以在表单的选项中加入 <code>:authenticity_token =&gt; true</code>，或者把这个设置设为 <code>true</code>。</p></li>
+<li><p>  <code>config.action_view.prefix_partial_path_with_controller_namespace</code>：设置渲染命名空间中的控制器时是否要在子文件夹中查找局部视图。例如，控制器名为 <code>Admin::PostsController</code>，渲染了以下视图：</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;%= render @post %&gt;
 
-*  `config.action_dispatch.encrypted_signed_cookie_salt`：设置签名加密 cookie 的加盐值，默认为 `'signed encrypted cookie'`。
+</pre>
+</div>
+<p>这个设置的默认值为 <code>true</code>，渲染的局部视图为 <code>/admin/posts/_post.erb</code>。如果设为 <code>false</code>，就会渲染 <code>/posts/_post.erb</code>，和没加命名空间的控制器（例如 <code>PostsController</code>）行为一致。</p>
+<ul>
+<li>  <code>config.action_view.raise_on_missing_translations</code>：找不到翻译时是否抛出异常。</li>
+</ul>
+<h4 id="3设置-action-mailer">3.10 3设置 Action Mailer</h4><p><code>config.action_mailer</code> 包含以下设置项：</p>
+<ul>
+<li><p>  <code>config.action_mailer.logger</code>：接受一个实现了 Log4r 接口的类，或者使用默认的 <code>Logger</code> 类，用于写入来自 Action Mailer 的日志。设为 <code>nil</code> 禁用日志。</p></li>
+<li>
+<p>  <code>config.action_mailer.smtp_settings</code>：详细设置 <code>:smtp</code> 发送方式。接受一个 Hash，包含以下选项：</p>
+<ul>
+<li>
+<code>:address</code>：设置远程邮件服务器，把默认值 <code>"localhost"</code> 改成所需值即可；</li>
+<li>
+<code>:port</code>：如果邮件服务器不使用端口 25，可通过这个选项修改；</li>
+<li>
+<code>:domain</code>：如果想指定一个 HELO 域名，可通过这个选项修改；</li>
+<li>
+<code>:user_name</code>：如果所用邮件服务器需要身份认证，可通过这个选项设置用户名；</li>
+<li>
+<code>:password</code>：如果所用邮件服务器需要身份认证，可通过这个选项设置密码；</li>
+<li>
+<code>:authentication</code>：如果所用邮件服务器需要身份认证，可通过这个选项指定认证类型，可选值包括：<code>:plain</code>，<code>:login</code>，<code>:cram_md5</code>；</li>
+</ul>
+</li>
+<li>
+<p>  <code>config.action_mailer.sendmail_settings</code>：详细设置 <code>sendmail</code> 发送方式。接受一个 Hash，包含以下选项：</p>
+<ul>
+<li>
+<code>:location</code>：<code>sendmail</code> 可执行文件的位置，默认为 <code>/usr/sbin/sendmail</code>；</li>
+<li>
+<code>:arguments</code>：传入命令行的参数，默认为 <code>-i -t</code>；</li>
+</ul>
+</li>
+<li><p>  <code>config.action_mailer.raise_delivery_errors</code>：如果无法发送邮件，是否抛出异常。默认为 <code>true</code>。</p></li>
+<li><p>  <code>config.action_mailer.delivery_method</code>：设置发送方式，默认为 <code>:smtp</code>。详情参阅“Action Mailer 基础”一文中的“<a href="action_mailer_basics.html#action-mailer-configuration">设置</a>”一节。。</p></li>
+<li><p>  <code>config.action_mailer.perform_deliveries</code>：设置是否真的发送邮件，默认为 <code>true</code>。测试时可设为 <code>false</code>。</p></li>
+<li><p>  <code>config.action_mailer.default_options</code>：设置 Action Mailer 的默认选项。可设置各个邮件发送程序的 <code>from</code> 或 <code>reply_to</code> 等选项。默认值为：</p></li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+mime_version:  "1.0",
+charset:       "UTF-8",
+content_type: "text/plain",
+parts_order:  ["text/plain", "text/enriched", "text/html"]
 
-*   `config.action_dispatch.perform_deep_munge`：设置是否在参数上调用 `deep_munge` 方法。详情参阅“[Rails 安全指南](security.html#unsafe-query-generation)”一文。默认值为 `true`。
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
+设置时要使用 Hash：
 
-*   `ActionDispatch::Callbacks.before`：设置在处理请求前运行的代码块。
+</pre>
+</div>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.default_options = {
+  from: "noreply@example.com"
+}
 
-*   `ActionDispatch::Callbacks.to_prepare`：设置在 `ActionDispatch::Callbacks.before` 之后、处理请求之前运行的代码块。这个代码块在开发环境中的每次请求中都会运行，但在生产环境或 `cache_classes` 设为 `true` 的环境中只运行一次。
+</pre>
+</div>
 
-*   `ActionDispatch::Callbacks.after`：设置处理请求之后运行的代码块。
+<ul>
+<li>  <code>config.action_mailer.observers</code>：注册邮件发送后触发的监控器。</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.observers = ["MailObserver"]
 
-###3设置 Action View
+</pre>
+</div>
 
-`config.action_view` 包含以下设置项：
+<ul>
+<li>  <code>config.action_mailer.interceptors</code>：注册发送邮件前调用的拦截程序。</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+config.action_mailer.interceptors = ["MailInterceptor"]
 
-*   `config.action_view.field_error_proc`：设置用于生成 Active Record 表单错误的 HTML，默认为：
-
-```    ruby
-    Proc.new do |html_tag, instance|
-      %Q(&lt;div class="field_with_errors"&gt;#{html_tag}&lt;/div&gt;).html_safe
-    end
-    ```
-
-*   `config.action_view.default_form_builder`：设置默认使用的表单构造器。默认值为 `ActionView::Helpers::FormBuilder`。如果想让表单构造器在程序初始化完成后加载（在开发环境中每次请求都会重新加载），可使用字符串形式。
-
-*  `config.action_view.logger`：接受一个实现了 Log4r 接口的类，或者使用默认的 `Logger` 类，用于写入来自 Action View 的日志。设为 `nil` 禁用日志。
-
-*   `config.action_view.erb_trim_mode`：设置 ERB 使用的删除空白模式，默认为 `'-'`，使用 `&lt;%= -%&gt;` 或 `&lt;%= =%&gt;` 时，删除行尾的空白和换行。详情参阅 [Erubis 的文档](http://www.kuwata-lab.com/erubis/users-guide.06.html#topics-trimspaces)。
-
-*   `config.action_view.embed_authenticity_token_in_remote_forms`：设置启用 `:remote =&gt; true` 选项的表单如何处理 `authenticity_token` 字段。默认值为 `false`，即不加入 `authenticity_token` 字段，有助于使用片段缓存缓存表单。远程表单可从 `meta` 标签中获取认证权标，因此没必要再加入 `authenticity_token` 字段，除非要支持没启用 JavaScript 的浏览器。如果要支持没启用 JavaScript 的浏览器，可以在表单的选项中加入 `:authenticity_token =&gt; true`，或者把这个设置设为 `true`。
-
-*   `config.action_view.prefix_partial_path_with_controller_namespace`：设置渲染命名空间中的控制器时是否要在子文件夹中查找局部视图。例如，控制器名为 `Admin::PostsController`，渲染了以下视图：
-
-```    erb
-    &lt;%= render @post %&gt;
-    ```
-
-    这个设置的默认值为 `true`，渲染的局部视图为 `/admin/posts/_post.erb`。如果设为 `false`，就会渲染 `/posts/_post.erb`，和没加命名空间的控制器（例如 `PostsController`）行为一致。
-
-*   `config.action_view.raise_on_missing_translations`：找不到翻译时是否抛出异常。
-
-###3设置 Action Mailer
-
-`config.action_mailer` 包含以下设置项：
-
-*   `config.action_mailer.logger`：接受一个实现了 Log4r 接口的类，或者使用默认的 `Logger` 类，用于写入来自 Action Mailer 的日志。设为 `nil` 禁用日志。
-
-*   `config.action_mailer.smtp_settings`：详细设置 `:smtp` 发送方式。接受一个 Hash，包含以下选项：
-    * `:address`：设置远程邮件服务器，把默认值 `"localhost"` 改成所需值即可；
-    * `:port`：如果邮件服务器不使用端口 25，可通过这个选项修改；
-    * `:domain`：如果想指定一个 HELO 域名，可通过这个选项修改；
-    * `:user_name`：如果所用邮件服务器需要身份认证，可通过这个选项设置用户名；
-    * `:password`：如果所用邮件服务器需要身份认证，可通过这个选项设置密码；
-    * `:authentication`：如果所用邮件服务器需要身份认证，可通过这个选项指定认证类型，可选值包括：`:plain`，`:login`，`:cram_md5`；
-
-*   `config.action_mailer.sendmail_settings`：详细设置 `sendmail` 发送方式。接受一个 Hash，包含以下选项：
-    * `:location`：`sendmail` 可执行文件的位置，默认为 `/usr/sbin/sendmail`；
-    * `:arguments`：传入命令行的参数，默认为 `-i -t`；
-
-*   `config.action_mailer.raise_delivery_errors`：如果无法发送邮件，是否抛出异常。默认为 `true`。
-
-*   `config.action_mailer.delivery_method`：设置发送方式，默认为 `:smtp`。详情参阅“Action Mailer 基础”一文中的“[设置](action_mailer_basics.html#action-mailer-configuration)”一节。。
-
-*   `config.action_mailer.perform_deliveries`：设置是否真的发送邮件，默认为 `true`。测试时可设为 `false`。
-
-*   `config.action_mailer.default_options`：设置 Action Mailer 的默认选项。可设置各个邮件发送程序的 `from` 或 `reply_to` 等选项。默认值为：
-
-```    ruby
-    mime_version:  "1.0",
-    charset:       "UTF-8",
-    content_type: "text/plain",
-    parts_order:  ["text/plain", "text/enriched", "text/html"]
-    ```
-
-    设置时要使用 Hash：
-
-```    ruby
-    config.action_mailer.default_options = {
-      from: "noreply@example.com"
-    }
-    ```
-
-*   `config.action_mailer.observers`：注册邮件发送后触发的监控器。
-
-```    ruby
-    config.action_mailer.observers = ["MailObserver"]
-    ```
-
-*   `config.action_mailer.interceptors`：注册发送邮件前调用的拦截程序。
-
-```    ruby
-    config.action_mailer.interceptors = ["MailInterceptor"]
-    ```
-
-###3设置 Active Support
-
-Active Support 包含以下设置项：
-
-* `config.active_support.bare`：启动 Rails 时是否加载 `active_support/all`。默认值为 `nil`，即加载 `active_support/all`。
-
-* `config.active_support.escape_html_entities_in_json`：在 JSON 格式的数据中是否转义 HTML 实体。默认为 `false`。
-
-* `config.active_support.use_standard_json_time_format`：在 JSON 格式的数据中是否把日期转换成 ISO 8601 格式。默认为 `true`。
-
-* `config.active_support.time_precision`：设置 JSON 编码的时间精度，默认为 `3`。
-
-* `ActiveSupport::Logger.silencer`：设为 `false` 可以静默代码块中的日志消息。默认为 `true`。
-
-* `ActiveSupport::Cache::Store.logger`：设置缓存存储中使用的写日志程序。
-
-* `ActiveSupport::Deprecation.behavior`：作用和 `config.active_support.deprecation` 一样，设置是否显示 Rails 废弃提醒。
-
-* `ActiveSupport::Deprecation.silence`：接受一个代码块，静默废弃提醒。
-
-* `ActiveSupport::Deprecation.silenced`：设置是否显示废弃提醒。
-
-###3设置数据库
-
-几乎每个 Rails 程序都要用到数据库。数据库信息可以在环境变量 `ENV['DATABASE_URL']` 中设定，也可在 `config/database.yml` 文件中设置。
-
-在 `config/database.yml` 文件中可以设置连接数据库所需的所有信息：
-
-```yaml
+</pre>
+</div>
+<h4 id="3设置-active-support">3.11 3设置 Active Support</h4><p>Active Support 包含以下设置项：</p>
+<ul>
+<li><p><code>config.active_support.bare</code>：启动 Rails 时是否加载 <code>active_support/all</code>。默认值为 <code>nil</code>，即加载 <code>active_support/all</code>。</p></li>
+<li><p><code>config.active_support.escape_html_entities_in_json</code>：在 JSON 格式的数据中是否转义 HTML 实体。默认为 <code>false</code>。</p></li>
+<li><p><code>config.active_support.use_standard_json_time_format</code>：在 JSON 格式的数据中是否把日期转换成 ISO 8601 格式。默认为 <code>true</code>。</p></li>
+<li><p><code>config.active_support.time_precision</code>：设置 JSON 编码的时间精度，默认为 <code>3</code>。</p></li>
+<li><p><code>ActiveSupport::Logger.silencer</code>：设为 <code>false</code> 可以静默代码块中的日志消息。默认为 <code>true</code>。</p></li>
+<li><p><code>ActiveSupport::Cache::Store.logger</code>：设置缓存存储中使用的写日志程序。</p></li>
+<li><p><code>ActiveSupport::Deprecation.behavior</code>：作用和 <code>config.active_support.deprecation</code> 一样，设置是否显示 Rails 废弃提醒。</p></li>
+<li><p><code>ActiveSupport::Deprecation.silence</code>：接受一个代码块，静默废弃提醒。</p></li>
+<li><p><code>ActiveSupport::Deprecation.silenced</code>：设置是否显示废弃提醒。</p></li>
+</ul>
+<h4 id="3设置数据库">3.12 3设置数据库</h4><p>几乎每个 Rails 程序都要用到数据库。数据库信息可以在环境变量 <code>ENV['DATABASE_URL']</code> 中设定，也可在 <code>config/database.yml</code> 文件中设置。</p><p>在 <code>config/database.yml</code> 文件中可以设置连接数据库所需的所有信息：</p><div class="code_container">
+<pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: postgresql
   database: blog_development
@@ -690,7 +667,7 @@ development:
 
 </pre>
 </div>
-<p><code>config/database.yml</code> 文件中可以包含 ERB 标签 <code>&lt;%= %&gt;</code>。这个标签中的代码被视为 Ruby 代码。使用 ERB 标签可以从环境变量中获取数据，或者计算所需的连接信息。</p><div class="info"><p>你无须手动更新数据库设置信息。查看新建程序生成器，会发现一个名为 <code>--database</code> 的选项。使用这个选项可以从一组常用的关系型数据库中选择想用的数据库。甚至还可重复执行生成器：<code>cd .. &amp;&amp; rails new blog --database=mysql</code>。确认覆盖文件 <code>config/database.yml</code> 后，程序就设置成使用 MySQL，而不是 SQLite。常用数据库的设置如下所示。</p></div><h4 id="3连接设置">3.7 3连接设置</h4><p>既然数据库的连接信息有两种设置方式，就要知道两者之间的关系。</p><p>如果 <code>config/database.yml</code> 文件为空，而且设置了环境变量 <code>ENV['DATABASE_URL']</code>，Rails 就会使用环境变量连接数据库：</p><div class="code_container">
+<p><code>config/database.yml</code> 文件中可以包含 ERB 标签 <code>&lt;%= %&gt;</code>。这个标签中的代码被视为 Ruby 代码。使用 ERB 标签可以从环境变量中获取数据，或者计算所需的连接信息。</p><div class="info"><p>你无须手动更新数据库设置信息。查看新建程序生成器，会发现一个名为 <code>--database</code> 的选项。使用这个选项可以从一组常用的关系型数据库中选择想用的数据库。甚至还可重复执行生成器：<code>cd .. &amp;&amp; rails new blog --database=mysql</code>。确认覆盖文件 <code>config/database.yml</code> 后，程序就设置成使用 MySQL，而不是 SQLite。常用数据库的设置如下所示。</p></div><h4 id="3连接设置">3.13 3连接设置</h4><p>既然数据库的连接信息有两种设置方式，就要知道两者之间的关系。</p><p>如果 <code>config/database.yml</code> 文件为空，而且设置了环境变量 <code>ENV['DATABASE_URL']</code>，Rails 就会使用环境变量连接数据库：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ cat config/database.yml
 
@@ -764,7 +741,7 @@ production:
 
 </pre>
 </div>
-<p>注意，这种设置方式很明确，只使用 <code>ENV['DATABASE_URL']</code> 中的信息。</p><h5 id="4设置-sqlite3-数据库">3.7.1 4设置 SQLite3 数据库</h5><p>Rails 内建支持 <a href="http://www.sqlite.org">SQLite3</a>。SQLite 是个轻量级数据库，无需单独的服务器。大型线上环境可能并不适合使用 SQLite，但在开发环境和测试环境中使用却很便利。新建程序时，Rails 默认使用 SQLite，但可以随时换用其他数据库。</p><p>下面是默认的设置文件（<code>config/database.yml</code>）中针对开发环境的数据库设置：</p><div class="code_container">
+<p>注意，这种设置方式很明确，只使用 <code>ENV['DATABASE_URL']</code> 中的信息。</p><h5 id="4设置-sqlite3-数据库">3.13.1 4设置 SQLite3 数据库</h5><p>Rails 内建支持 <a href="http://www.sqlite.org">SQLite3</a>。SQLite 是个轻量级数据库，无需单独的服务器。大型线上环境可能并不适合使用 SQLite，但在开发环境和测试环境中使用却很便利。新建程序时，Rails 默认使用 SQLite，但可以随时换用其他数据库。</p><p>下面是默认的设置文件（<code>config/database.yml</code>）中针对开发环境的数据库设置：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: sqlite3
@@ -774,7 +751,7 @@ development:
 
 </pre>
 </div>
-<div class="note"><p>Rails 默认使用 SQLite3 存储数据，因为 SQLite3 无需设置即可使用。Rails 还内建支持 MySQL 和 PostgreSQL。还提供了很多插件，支持更多的数据库系统。如果在生产环境中使用了数据库，Rails 很可能已经提供了对应的适配器。</p></div><h5 id="4设置-mysql-数据库">3.7.2 4设置 MySQL 数据库</h5><p>如果不想使用 SQLite3，而是使用 MySQL，<code>config/database.yml</code> 文件的内容会有些不同。下面是针对开发环境的设置：</p><div class="code_container">
+<div class="note"><p>Rails 默认使用 SQLite3 存储数据，因为 SQLite3 无需设置即可使用。Rails 还内建支持 MySQL 和 PostgreSQL。还提供了很多插件，支持更多的数据库系统。如果在生产环境中使用了数据库，Rails 很可能已经提供了对应的适配器。</p></div><h5 id="4设置-mysql-数据库">3.13.2 4设置 MySQL 数据库</h5><p>如果不想使用 SQLite3，而是使用 MySQL，<code>config/database.yml</code> 文件的内容会有些不同。下面是针对开发环境的设置：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: mysql2
@@ -787,7 +764,7 @@ development:
 
 </pre>
 </div>
-<p>如果开发电脑中的 MySQL 使用 root 用户，且没有密码，可以直接使用上述设置。否则就要相应的修改用户名和密码。</p><h5 id="4设置-postgresql-数据库">3.7.3 4设置 PostgreSQL 数据库</h5><p>如果选择使用 PostgreSQL，<code>config/database.yml</code> 会准备好连接 PostgreSQL 数据库的信息：</p><div class="code_container">
+<p>如果开发电脑中的 MySQL 使用 root 用户，且没有密码，可以直接使用上述设置。否则就要相应的修改用户名和密码。</p><h5 id="4设置-postgresql-数据库">3.13.3 4设置 PostgreSQL 数据库</h5><p>如果选择使用 PostgreSQL，<code>config/database.yml</code> 会准备好连接 PostgreSQL 数据库的信息：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: postgresql
@@ -807,7 +784,7 @@ production:
 
 </pre>
 </div>
-<h5 id="4在-jruby-平台上设置-sqlite3-数据库">3.7.4 4在 JRuby 平台上设置 SQLite3 数据库</h5><p>如果在 JRuby 中使用 SQLite3，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
+<h5 id="4在-jruby-平台上设置-sqlite3-数据库">3.13.4 4在 JRuby 平台上设置 SQLite3 数据库</h5><p>如果在 JRuby 中使用 SQLite3，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: jdbcsqlite3
@@ -815,7 +792,7 @@ development:
 
 </pre>
 </div>
-<h5 id="4在-jruby-平台上设置-mysql-数据库">3.7.5 4在 JRuby 平台上设置 MySQL 数据库</h5><p>如果在 JRuby 中使用 MySQL，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
+<h5 id="4在-jruby-平台上设置-mysql-数据库">3.13.5 4在 JRuby 平台上设置 MySQL 数据库</h5><p>如果在 JRuby 中使用 MySQL，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: jdbcmysql
@@ -825,7 +802,7 @@ development:
 
 </pre>
 </div>
-<h5 id="4在-jruby-平台上设置-postgresql-数据库">3.7.6 4在 JRuby 平台上设置 PostgreSQL 数据库</h5><p>如果在 JRuby 中使用 PostgreSQL，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
+<h5 id="4在-jruby-平台上设置-postgresql-数据库">3.13.6 4在 JRuby 平台上设置 PostgreSQL 数据库</h5><p>如果在 JRuby 中使用 PostgreSQL，<code>config/database.yml</code> 文件的内容会有点不同。下面是针对开发环境的设置：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 development:
   adapter: jdbcpostgresql
@@ -836,13 +813,13 @@ development:
 
 </pre>
 </div>
-<p>请相应地修改 <code>development</code> 区中的用户名和密码。</p><h4 id="3新建-rails-环境">3.8 3新建 Rails 环境</h4><p>默认情况下，Rails 提供了三个环境：开发，测试和生产。这三个环境能满足大多数需求，但有时需要更多的环境。</p><p>假设有个服务器镜像了生产环境，但只用于测试。这种服务器一般叫做“交付准备服务器”（staging server）。要想为这个服务器定义一个名为“staging”的环境，新建文件 <code>config/environments/staging.rb</code> 即可。请使用 <code>config/environments</code> 文件夹中的任一文件作为模板，以此为基础修改设置。</p><p>新建的环境和默认提供的环境没什么区别，可以执行 <code>rails server -e staging</code> 命令启动服务器，执行 <code>rails console staging</code> 命令进入控制台，<code>Rails.env.staging?</code> 也可使用。</p><h4 id="3部署到子目录中">3.9 3部署到子目录中</h4><p>默认情况下，Rails 在根目录（例如 <code>/</code>）中运行程序。本节说明如何在子目录中运行程序。</p><p>假设想把网站部署到 <code>/app1</code> 目录中。生成路由时，Rails 要知道这个目录：</p><div class="code_container">
+<p>请相应地修改 <code>development</code> 区中的用户名和密码。</p><h4 id="3新建-rails-环境">3.14 3新建 Rails 环境</h4><p>默认情况下，Rails 提供了三个环境：开发，测试和生产。这三个环境能满足大多数需求，但有时需要更多的环境。</p><p>假设有个服务器镜像了生产环境，但只用于测试。这种服务器一般叫做“交付准备服务器”（staging server）。要想为这个服务器定义一个名为“staging”的环境，新建文件 <code>config/environments/staging.rb</code> 即可。请使用 <code>config/environments</code> 文件夹中的任一文件作为模板，以此为基础修改设置。</p><p>新建的环境和默认提供的环境没什么区别，可以执行 <code>rails server -e staging</code> 命令启动服务器，执行 <code>rails console staging</code> 命令进入控制台，<code>Rails.env.staging?</code> 也可使用。</p><h4 id="3部署到子目录中">3.15 3部署到子目录中</h4><p>默认情况下，Rails 在根目录（例如 <code>/</code>）中运行程序。本节说明如何在子目录中运行程序。</p><p>假设想把网站部署到 <code>/app1</code> 目录中。生成路由时，Rails 要知道这个目录：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 config.relative_url_root = "/app1"
 
 </pre>
 </div>
-<p>或者，设置环境变量 <code>RAILS_RELATIVE_URL_ROOT</code> 也行。</p><p>这样设置之后，Rails 生成的链接都会加上前缀 <code>/app1</code>。</p><h5 id="4使用-passenger">3.9.1 4使用 Passenger</h5><p>使用 Passenger 时，在子目录中运行程序更简单。具体做法参见 <a href="http://www.modrails.com/documentation/Users%20guide%20Apache.html#deploying_rails_to_sub_uri">Passenger 手册</a>。</p><h5 id="4使用反向代理">3.9.2 4使用反向代理</h5><p>TODO</p><h5 id="4部署到子目录时的注意事项">3.9.3 4部署到子目录时的注意事项</h5><p>在生产环境中部署到子目录中会影响 Rails 的多个功能：</p>
+<p>或者，设置环境变量 <code>RAILS_RELATIVE_URL_ROOT</code> 也行。</p><p>这样设置之后，Rails 生成的链接都会加上前缀 <code>/app1</code>。</p><h5 id="4使用-passenger">3.15.1 4使用 Passenger</h5><p>使用 Passenger 时，在子目录中运行程序更简单。具体做法参见 <a href="http://www.modrails.com/documentation/Users%20guide%20Apache.html#deploying_rails_to_sub_uri">Passenger 手册</a>。</p><h5 id="4使用反向代理">3.15.2 4使用反向代理</h5><p>TODO</p><h5 id="4部署到子目录时的注意事项">3.15.3 4部署到子目录时的注意事项</h5><p>在生产环境中部署到子目录中会影响 Rails 的多个功能：</p>
 <ul>
 <li>开发环境</li>
 <li>测试环境</li>
