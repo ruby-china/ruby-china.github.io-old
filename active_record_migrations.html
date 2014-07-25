@@ -249,7 +249,7 @@ end
 
 </pre>
 </div>
-<p>这个迁移创建了一个名为 <code>products</code> 的表，然后在表中创建字符串字段 <code>name</code> 和文本字段 <code>description</code>。名为 <code>id</code> 的主键字段会被自动创建。<code>id</code> 字段是所有 Active Record 模型的默认主键。<code>timestamps</code> 方法创建两个字段：<code>created_at</code> 和 <code>updated_at</code>。如果数据表中有这两个字段，Active Record 会负责操作。</p><p>注意，对数据库的改动按照时间向前 推移。运行迁移之前，数据表还不存在。运行迁移后，才会创建数据表。Active Record 知道如何撤销迁移，如果回滚这次迁移，数据表会被删除。</p><p>在支持事物的数据库中，对模式的改动会在一个事物中执行。如果数据库不支持事物，迁移失败时，成功执行的操作将无法回滚。如要回滚，必须手动改回来。</p><div class="note"><p>某些查询无法在事物中运行。如果适配器支持 DDL 事物，可以在某个迁移中调用 <code>disable_ddl_transaction!</code> 方法禁用。</p></div><p>如果想在迁移中执行 Active Record 不知如何撤销的操作，可以使用 <code>reversible</code> 方法：</p><div class="code_container">
+<p>这个迁移创建了一个名为 <code>products</code> 的表，然后在表中创建字符串字段 <code>name</code> 和文本字段 <code>description</code>。名为 <code>id</code> 的主键字段会被自动创建。<code>id</code> 字段是所有 Active Record 模型的默认主键。<code>timestamps</code> 方法创建两个字段：<code>created_at</code> 和 <code>updated_at</code>。如果数据表中有这两个字段，Active Record 会负责操作。</p><p>注意，对数据库的改动按照时间向前 推移。运行迁移之前，数据表还不存在。运行迁移后，才会创建数据表。Active Record 知道如何撤销迁移，如果回滚这次迁移，数据表会被删除。</p><p>在支持事务的数据库中，对模式的改动会在一个事务中执行。如果数据库不支持事务，迁移失败时，成功执行的操作将无法回滚。如要回滚，必须手动改回来。</p><div class="note"><p>某些查询无法在事务中运行。如果适配器支持 DDL 事务，可以在某个迁移中调用 <code>disable_ddl_transaction!</code> 方法禁用。</p></div><p>如果想在迁移中执行 Active Record 不知如何撤销的操作，可以使用 <code>reversible</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ChangeProductsPrice &lt; ActiveRecord::Migration
   def change

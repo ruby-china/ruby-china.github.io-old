@@ -725,7 +725,7 @@ end
 
 </pre>
 </div>
-<p>此时，<code>LoginsController</code> 的 <code>new</code> 动作和 <code>create</code> 动作就不需要用户先登录。<code>:only</code> 选项的意思是只跳过这些动作。还有个 <code>:except</code> 选项，用法类似。定义过滤器时也可使用这些选项，指定只在选中的动作上运行。</p><h4 id="后置过滤器和环绕过滤器">8.1 后置过滤器和环绕过滤器</h4><p>除了前置过滤器之外，还可以在动作运行之后，或者在动作运行前后执行过滤器。</p><p>后置过滤器类似于前置过滤器，不过因为动作已经运行了，所以可以获取即将发送给客户端的响应数据。显然，后置过滤器无法阻止运行动作。</p><p>环绕过滤器会把动作拉入（yield）过滤器中，工作方式类似 Rack 中间件。</p><p>例如，网站的改动需要经过管理员预览，然后批准。可以把这些操作定义在一个事物中：</p><div class="code_container">
+<p>此时，<code>LoginsController</code> 的 <code>new</code> 动作和 <code>create</code> 动作就不需要用户先登录。<code>:only</code> 选项的意思是只跳过这些动作。还有个 <code>:except</code> 选项，用法类似。定义过滤器时也可使用这些选项，指定只在选中的动作上运行。</p><h4 id="后置过滤器和环绕过滤器">8.1 后置过滤器和环绕过滤器</h4><p>除了前置过滤器之外，还可以在动作运行之后，或者在动作运行前后执行过滤器。</p><p>后置过滤器类似于前置过滤器，不过因为动作已经运行了，所以可以获取即将发送给客户端的响应数据。显然，后置过滤器无法阻止运行动作。</p><p>环绕过滤器会把动作拉入（yield）过滤器中，工作方式类似 Rack 中间件。</p><p>例如，网站的改动需要经过管理员预览，然后批准。可以把这些操作定义在一个事务中：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ChangesController &lt; ApplicationController
   around_action :wrap_in_transaction, only: :show
@@ -745,7 +745,7 @@ end
 
 </pre>
 </div>
-<p>注意，环绕过滤器还包含了渲染操作。在上面的例子中，视图本身是从数据库中读取出来的（例如，通过作用域（scope）），读取视图的操作在事物中完成，然后提供预览数据。</p><p>也可以不拉入动作，自己生成响应，不过这种情况不会运行动作。</p><h4 id="过滤器的其他用法">8.2 过滤器的其他用法</h4><p>一般情况下，过滤器的使用方法是定义私有方法，然后调用相应的 <code>*_action</code> 方法添加过滤器。不过过滤器还有其他两种用法。</p><p>第一种，直接在 <code>*_action</code> 方法中使用代码块。代码块接收控制器作为参数。使用这种方法，前面的 <code>require_login</code> 过滤器可以改写成：</p><div class="code_container">
+<p>注意，环绕过滤器还包含了渲染操作。在上面的例子中，视图本身是从数据库中读取出来的（例如，通过作用域（scope）），读取视图的操作在事务中完成，然后提供预览数据。</p><p>也可以不拉入动作，自己生成响应，不过这种情况不会运行动作。</p><h4 id="过滤器的其他用法">8.2 过滤器的其他用法</h4><p>一般情况下，过滤器的使用方法是定义私有方法，然后调用相应的 <code>*_action</code> 方法添加过滤器。不过过滤器还有其他两种用法。</p><p>第一种，直接在 <code>*_action</code> 方法中使用代码块。代码块接收控制器作为参数。使用这种方法，前面的 <code>require_login</code> 过滤器可以改写成：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ApplicationController &lt; ActionController::Base
   before_action do |controller|
