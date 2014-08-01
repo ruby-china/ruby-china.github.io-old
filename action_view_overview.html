@@ -392,7 +392,7 @@ end
 
 </pre>
 </div>
-<p>像上面这样使用局部视图时，每个局部视图实例都可以通过一个和局部视图同名的变量访问集合中的元素。在上面的例子中，渲染的局部视图是 <code>_product</code>，在局部视图总，可以通过变量 <code>product</code> 访问要渲染的单个产品。</p><p>渲染集合还有个简写形式。假设 <code>@products</code> 是一个 <code>Product</code> 实例集合，可以使用下面的简写形式达到同样目的：</p><div class="code_container">
+<p>像上面这样使用局部视图时，每个局部视图实例都可以通过一个和局部视图同名的变量访问集合中的元素。在上面的例子中，渲染的局部视图是 <code>_product</code>，在局部视图中，可以通过变量 <code>product</code> 访问要渲染的单个产品。</p><p>渲染集合还有个简写形式。假设 <code>@products</code> 是一个 <code>Product</code> 实例集合，可以使用下面的简写形式达到同样目的：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= render @products %&gt;
 
