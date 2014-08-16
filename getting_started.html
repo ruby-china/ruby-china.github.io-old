@@ -262,32 +262,32 @@
         <h3 id="前提条件">1 前提条件</h3><p>本文针对想从零开始开发 Rails 程序的初学者，不需要预先具备任何的 Rails 使用经验。不过，为了能顺利阅读，还是需要事先安装好一些软件：</p>
 <ul>
 <li>
-<a href="http://www.ruby-lang.org/en/downloads">Ruby</a>  1.9.3 及以上版本</li>
-<li>包管理工具 <a href="http://rubygems.org">RubyGems</a>，随 Ruby 1.9+ 安装。想深入了解 RubyGems，请阅读 <a href="http://guides.rubygems.org">RubyGems 指南</a>
+<a href="https://www.ruby-lang.org/en/downloads">Ruby</a>  1.9.3 及以上版本</li>
+<li>包管理工具 <a href="https://rubygems.org">RubyGems</a>，随 Ruby 1.9+ 安装。想深入了解 RubyGems，请阅读 <a href="http://guides.rubygems.org">RubyGems 指南</a>
 </li>
 <li>
-<a href="http://www.sqlite.org">SQLite3</a> 数据库</li>
+<a href="https://www.sqlite.org">SQLite3</a> 数据库</li>
 </ul>
 <p>Rails 是使用 Ruby 语言开发的网页程序框架。如果之前没接触过 Ruby，学习 Rails 可要深下一番功夫。网上有很多资源可以学习 Ruby：</p>
 <ul>
 <li><a href="https://www.ruby-lang.org/zh_cn/documentation/">Ruby 语言官方网站</a></li>
 <li><a href="http://resrc.io/list/10/list-of-free-programming-books/#ruby">reSRC 列出的免费编程书籍</a></li>
 </ul>
-<p>记住，某些资源虽然很好，但肯针对 Ruby 1.8，甚至 1.6，所以没有介绍一些 Rails 日常开发会用到的句法。</p><h3 id="rails-是什么？">2 Rails 是什么？</h3><p>Rails 是使用 Ruby 语言编写的网页程序开发框架，目的是为开发者提供常用组件，简化网页程序的开发。只需编写较少的代码，就能实现其他编程语言或框架难以企及的功能。经验丰富的 Rails 程序员会发现，Rails 让程序开发变得更有乐趣。</p><p>Rails 有自己的一套规则，认为问题总有最好的解决方法，而且建议使用最好的方法，有些情况下甚至不推荐使用其他替代方案。学会如何按照 Rails 的思维开发，能极大提高开发效率。如果坚持在 Rails 开发中使用其他语言中的旧思想，尝试使用别处学来的编程模式，开发过程就不那么有趣了。</p><p>Rails 哲学包含两大指导思想：</p>
+<p>记住，某些资源虽然很好，但是针对 Ruby 1.8，甚至 1.6 编写的，所以没有介绍一些 Rails 日常开发会用到的句法。</p><h3 id="rails-是什么？">2 Rails 是什么？</h3><p>Rails 是使用 Ruby 语言编写的网页程序开发框架，目的是为开发者提供常用组件，简化网页程序的开发。只需编写较少的代码，就能实现其他编程语言或框架难以企及的功能。经验丰富的 Rails 程序员会发现，Rails 让程序开发变得更有乐趣。</p><p>Rails 有自己的一套规则，认为问题总有最好的解决方法，而且建议使用最好的方法，有些情况下甚至不推荐使用其他替代方案。学会如何按照 Rails 的思维开发，能极大提高开发效率。如果坚持在 Rails 开发中使用其他语言中的旧思想，尝试使用别处学来的编程模式，开发过程就不那么有趣了。</p><p>Rails 哲学包含两大指导思想：</p>
 <ul>
 <li>
 <strong>不要自我重复（DRY）：</strong> DRY 是软件开发中的一个原则，“系统中的每个功能都要具有单一、准确、可信的实现。”。不重复表述同一件事，写出的代码才能更易维护，更具扩展性，也更不容易出问题。</li>
 <li>
 <strong>多约定，少配置：</strong> Rails 为网页程序的大多数需求都提供了最好的解决方法，而且默认使用这些约定，不用在长长的配置文件中设置每个细节。</li>
 </ul>
-<h3 id="新建-rails-程序">3 新建 Rails 程序</h3><p>阅读本文时，最好跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。完整的源码可以在<a href="https://github.com/rails/docrails/tree/master/guides/code/getting_started">这里</a>获取。</p><p>本文会新建一个名为 <code>blog</code> 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。</p><div class="info"><p>文中的示例代码使用 <code>$</code> 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 <code>c:\source_code&gt;</code>。</p></div><h4 id="安装-rails">3.1 安装 Rails</h4><p>打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 <code>$</code> 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：</p><div class="info"><p>有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 <a href="http://railsinstaller.org">Rails Installer</a>，Mac OS X 用户可以使用 <a href="http://railsoneclick.com">Rails One Click</a>。</p></div><div class="code_container">
+<h3 id="新建-rails-程序">3 新建 Rails 程序</h3><p>阅读本文时，最好跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。完整的源码可以在<a href="https://github.com/rails/docrails/tree/master/guides/code/getting_started">这里</a>获取。</p><p>本文会新建一个名为 <code>blog</code> 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。</p><div class="info"><p>文中的示例代码使用 <code>$</code> 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 <code>c:\source_code&gt;</code>。</p></div><h4 id="安装-rails">3.1 安装 Rails</h4><p>打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 <code>$</code> 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：</p><div class="info"><p>有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 <a href="http://railsinstaller.org">Rails Installer</a>，Mac OS X 用户可以使用 <a href="https://github.com/tokaido/tokaidoapp">Tokaido</a>。</p></div><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ ruby -v
-ruby 2.0.0p353
+ruby 2.1.2p95
 
 </pre>
 </div>
-<p>如果你还没安装 Ruby，请访问 <a href="https://www.ruby-lang.org/en/downloads/">ruby-lang.org</a>，找到针对所用系统的安装方法。</p><p>很多类 Unix 系统都自带了版本尚新的 SQLite3。Windows 等其他操作系统的用户可以在 <a href="http://www.sqlite.org">SQLite3 的网站</a>上找到安装说明。然后，确认是否在 PATH 中：</p><div class="code_container">
+<p>如果你还没安装 Ruby，请访问 <a href="https://www.ruby-lang.org/en/downloads/">ruby-lang.org</a>，找到针对所用系统的安装方法。</p><p>很多类 Unix 系统都自带了版本尚新的 SQLite3。Windows 等其他操作系统的用户可以在 <a href="https://www.sqlite.org">SQLite3 的网站</a>上找到安装说明。然后，确认是否在 PATH 中：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ sqlite3 --version
 
@@ -348,7 +348,7 @@ $ cd blog
 </tr>
 <tr>
 <td>Gemfile, Gemfile.lock</td>
-<td>这两个文件用来指定程序所需的 gem 依赖件，用于 Bundler gem。关于 Bundler 的详细介绍，请访问 <a href="http://gembundler.com">Bundler 官网</a>。</td>
+<td>这两个文件用来指定程序所需的 gem 依赖件，用于 Bundler gem。关于 Bundler 的详细介绍，请访问 <a href="http://bundler.io">Bundler 官网</a>。</td>
 </tr>
 <tr>
 <td>lib/</td>
@@ -407,8 +407,6 @@ invoke  test_unit
 create    test/controllers/welcome_controller_test.rb
 invoke  helper
 create    app/helpers/welcome_helper.rb
-invoke    test_unit
-create      test/helpers/welcome_helper_test.rb
 invoke  assets
 invoke    coffee
 create      app/assets/javascripts/welcome.js.coffee
@@ -446,7 +444,7 @@ root 'welcome#index'
 </div>
 <p><code>root 'welcome#index'</code> 告知 Rails，访问程序的根路径时，交给 <code>welcome</code> 控制器中的 <code>index</code> 动作处理。<code>get 'welcome/index'</code> 告知 Rails，访问 <a href="http://localhost:3000/welcome/index">http://localhost:3000/welcome/index</a> 时，交给 <code>welcome</code> 控制器中的 <code>index</code> 动作处理。<code>get 'welcome/index'</code> 是运行 <code>rails generate controller welcome index</code> 时生成的。</p><p>如果生成控制器时停止了服务器，请再次启动（<code>rails server</code>），然后在浏览器中访问 <a href="http://localhost:3000">http://localhost:3000</a>。你会看到之前写入 <code>app/views/welcome/index.html.erb</code> 文件的“Hello, Rails!”，说明新定义的路由把根目录交给 <code>WelcomeController</code> 的 <code>index</code> 动作处理了，而且也正确的渲染了视图。</p><div class="info"><p>关于路由的详细介绍，请阅读“<a href="/routing.html">Rails 路由全解</a>”一文。</p></div><h3 id="开始使用">5 开始使用</h3><p>前文已经介绍如何创建控制器、动作和视图，下面我们来创建一些更实质的功能。</p><p>在博客程序中，我们要创建一个新“资源”。资源是指一系列类似的对象，比如文章，人和动物。</p><p>资源可以被创建、读取、更新和删除，这些操作简称 CRUD。</p><p>Rails 提供了一个 <code>resources</code> 方法，可以声明一个符合 REST 架构的资源。创建文章资源后，<code>config/routes.rb</code> 文件的内容如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-Blog::Application.routes.draw do
+Rails.application.routes.draw do
 
   resources :articles
 
@@ -457,7 +455,7 @@ end
 </div>
 <p>执行 <code>rake routes</code> 任务，会看到定义了所有标准的 REST 动作。输出结果中各列的意义稍后会说明，现在只要留意 <code>article</code> 的单复数形式，这在 Rails 中有特殊的含义。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ rake routes
+$ bin/rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -473,7 +471,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 </div>
 <p>下一节，我们会加入新建文章和查看文章的功能。这两个操作分别对应于 CRUD 的 C 和 R，即创建和读取。新建文章的表单如下所示：</p><p><img src="images/getting_started/new_article.png" alt="新建文章表单"></p><p>表单看起来很简陋，不过没关系，后文会加入更多的样式。</p><h4 id="挖地基">5.1 挖地基</h4><p>首先，程序中要有个页面用来新建文章。一个比较好的选择是 <code>/articles/new</code>。这个路由前面已经定义了，可以访问。打开 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a> ，会看到如下的路由错误：</p><p><img src="images/getting_started/routing_error_no_controller.png" alt="路由错误，常量 ArticlesController 未初始化"></p><p>产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 <code>ArticlesController</code> 的控制器。执行下面的命令即可：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ rails g controller articles
+$ bin/rails g controller articles
 
 </pre>
 </div>
@@ -486,7 +484,9 @@ end
 </div>
 <p>控制器就是一个类，继承自 <code>ApplicationController</code>。在这个类中定义的方法就是控制器的动作。动作的作用是处理文章的 CRUD 操作。</p><div class="note"><p>在 Ruby 中，方法分为 <code>public</code>、<code>private</code> 和 <code>protected</code> 三种，只有 <code>public</code> 方法才能作为控制器的动作。详情参阅 <a href="http://www.ruby-doc.org/docs/ProgrammingRuby/">Programming Ruby</a> 一书。</p></div><p>现在刷新 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>，会看到一个新错误：</p><p><img src="images/getting_started/unknown_action_new_for_articles.png" alt="ArticlesController 控制器不知如何处理 new 动作"></p><p>这个错误的意思是，在刚生成的 <code>ArticlesController</code> 控制器中找不到 <code>new</code> 动作。因为在生成控制器时，除非指定要哪些动作，否则不会生成，控制器是空的。</p><p>手动创建动作只需在控制器中定义一个新方法。打开 <code>app/controllers/articles_controller.rb</code> 文件，在 <code>ArticlesController</code> 类中，定义 <code>new</code> 方法，如下所示：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-def new
+class ArticlesController &lt; ApplicationController
+  def new
+  end
 end
 
 </pre>
@@ -531,7 +531,7 @@ Missing template articles/new, application/new with {locale:[:en], formats:[:htm
 </div>
 <p>这里，我们把 <code>:url</code> 选项的值设为 <code>articles_path</code> 帮助方法。要想知道这个方法有什么作用，我们要回过头再看一下 <code>rake routes</code> 的输出：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ rake routes
+$ bin/rake routes
       Prefix Verb   URI Pattern                  Controller#Action
     articles GET    /articles(.:format)          articles#index
              POST   /articles(.:format)          articles#create
@@ -573,7 +573,7 @@ end
 </div>
 <p><code>create</code> 动作把表单提交的参数显示出来了。不过这么做没什么用，看到了参数又怎样，什么都没发生。</p><h4 id="创建-article-模型">5.4 创建 Article 模型</h4><p>在 Rails 中，模型的名字使用单数，对应的数据表名使用复数。Rails 提供了一个生成器用来创建模型，大多数 Rails 开发者创建模型时都会使用。创建模型，请在终端里执行下面的命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ rails generate model Article title:string text:text
+$ bin/rails generate model Article title:string text:text
 
 </pre>
 </div>
@@ -594,7 +594,7 @@ end
 </div>
 <p>在这个迁移中定义了一个名为 <code>change</code> 的方法，在运行迁移时执行。<code>change</code> 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 <code>articles</code> 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。</p><div class="info"><p>关于迁移的详细说明，请参阅“<a href="/migrations.html">Active Record 数据库迁移</a>”一文。</p></div><p>然后，使用 rake 命令运行迁移：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
-$ rake db:migrate
+$ bin/rake db:migrate
 
 </pre>
 </div>
