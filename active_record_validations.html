@@ -275,7 +275,7 @@ Person.create(name: nil).valid? # =&gt; false
 <li>客户端验证很有用，但单独使用时可靠性不高。如果使用 JavaScript 实现，用户在浏览器中禁用 JavaScript 后很容易跳过验证。客户端验证和其他验证方式结合使用，可以为用户提供实时反馈。</li>
 <li>控制器层验证很诱人，但一般都不灵便，难以测试和维护。只要可能，就要保证控制器的代码简洁性，这样才有利于长远发展。</li>
 </ul>
-<p>你可以根据实际的需求选择使用哪种验证方式。Rails 团队认为，模型层数据验证最具普适性。</p><h4 id="什么时候做数据验证？">1.2 什么时候做数据验证？</h4><p>在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 <code>new</code> 方法）还不属于数据库。在对象上调用 <code>save</code> 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 <code>new_record?</code> 判断对象是否已经存入数据库。加入有下面这个简单的 Active Record 类：</p><div class="code_container">
+<p>你可以根据实际的需求选择使用哪种验证方式。Rails 团队认为，模型层数据验证最具普适性。</p><h4 id="什么时候做数据验证？">1.2 什么时候做数据验证？</h4><p>在 Active Record 中对象有两种状态：一种在数据库中有对应的记录，一种没有。新建的对象（例如，使用 <code>new</code> 方法）还不属于数据库。在对象上调用 <code>save</code> 方法后，才会把对象存入相应的数据表。Active Record 使用实例方法 <code>new_record?</code> 判断对象是否已经存入数据库。假如有下面这个简单的 Active Record 类：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Person &lt; ActiveRecord::Base
 end

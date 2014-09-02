@@ -811,59 +811,74 @@ end
 </ul>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-    class ApplicationController &lt; ActionController::Base
-      layout "main"
-    end
-    ```
+class ApplicationController &lt; ActionController::Base
+  layout "main"
+end
 
-*   `posts_controller.rb`
+</pre>
+</div>
 
-```ruby
-    class PostsController &lt; ApplicationController
-    end
-    ```
+<ul>
+<li>  <code>posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class PostsController &lt; ApplicationController
+end
 
-*   `special_posts_controller.rb`
+</pre>
+</div>
 
-```ruby
-    class SpecialPostsController &lt; PostsController
-      layout "special"
-    end
-    ```
+<ul>
+<li>  <code>special_posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class SpecialPostsController &lt; PostsController
+  layout "special"
+end
 
-*   `old_posts_controller.rb`
+</pre>
+</div>
 
-```ruby
-    class OldPostsController &lt; SpecialPostsController
-      layout false
+<ul>
+<li>  <code>old_posts_controller.rb</code>
+</li>
+</ul>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+class OldPostsController &lt; SpecialPostsController
+  layout false
 
-      def show
-        @post = Post.find(params[:id])
-      end
+  def show
+    @post = Post.find(params[:id])
+  end
 
-      def index
-        @old_posts = Post.older
-        render layout: "old"
-      end
-      # ...
-    end
-    ```
+  def index
+    @old_posts = Post.older
+    render layout: "old"
+  end
+  # ...
+end
 
-在这个程序中：
-
-* 一般情况下，视图使用 `main` 布局渲染；
-* `PostsController#index` 使用 `main` 布局；
-* `SpecialPostsController#index` 使用 `special` 布局；
-* `OldPostsController#show` 不用布局；
-* `OldPostsController#index` 使用 `old` 布局；
-
-#### 避免双重渲染错误
-
-大多数 Rails 开发者迟早都会看到一个错误消息：Can only render or redirect once per action（动作只能渲染或重定向一次）。这个提示很烦人，也很容易修正。出现这个错误的原因是，没有理解 `render` 的工作原理。
-
-例如，下面的代码会导致这个错误：
-
-```ruby
+</pre>
+</div>
+<p>在这个程序中：</p>
+<ul>
+<li>一般情况下，视图使用 <code>main</code> 布局渲染；</li>
+<li>
+<code>PostsController#index</code> 使用 <code>main</code> 布局；</li>
+<li>
+<code>SpecialPostsController#index</code> 使用 <code>special</code> 布局；</li>
+<li>
+<code>OldPostsController#show</code> 不用布局；</li>
+<li>
+<code>OldPostsController#index</code> 使用 <code>old</code> 布局；</li>
+</ul>
+<h5 id="避免双重渲染错误">2.2.15 避免双重渲染错误</h5><p>大多数 Rails 开发者迟早都会看到一个错误消息：Can only render or redirect once per action（动作只能渲染或重定向一次）。这个提示很烦人，也很容易修正。出现这个错误的原因是，没有理解 <code>render</code> 的工作原理。</p><p>例如，下面的代码会导致这个错误：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 def show
   @book = Book.find(params[:id])
   if @book.special?
@@ -1040,10 +1055,13 @@ Cache-Control: no-cache
 
 </pre>
 </div>
-<p>Rails 生成的 <code>script</code> 标签如下：</p><p>{:lang="html"}
-<code>
+<p>Rails 生成的 <code>script</code> 标签如下：</p><div class="code_container">
+<pre class="brush: xml; gutter: false; toolbar: false">
 &lt;script src='/assets/main.js'&gt;&lt;/script&gt;
-</code></p><p>对这个静态资源的请求由 Sprockets gem 伺服。</p><p>同时引入 <code>app/assets/javascripts/main.js</code> 和 <code>app/assets/javascripts/columns.js</code> 可以这么做：</p><div class="code_container">
+
+</pre>
+</div>
+<p>对这个静态资源的请求由 Sprockets gem 伺服。</p><p>同时引入 <code>app/assets/javascripts/main.js</code> 和 <code>app/assets/javascripts/columns.js</code> 可以这么做：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= javascript_include_tag "main", "columns" %&gt;
 
