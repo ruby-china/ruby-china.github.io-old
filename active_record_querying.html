@@ -564,7 +564,7 @@ end
 </pre>
 </div>
 <p>但这种方法在数据表很大时就有点不现实了，因为 <code>User.all.each</code> 会一次读取整个数据表，一行记录创建一个模型对象，然后把整个模型对象数组存入内存。如果记录数非常多，可能会用完内存。</p><p>Rails 为了解决这种问题提供了两个方法，把记录分成几个批次，不占用过多内存。第一个方法是 <code>find_each</code>，获取一批记录，然后分别把每个记录传入代码块。第二个方法是 <code>find_in_batches</code>，获取一批记录，然后把整批记录作为数组传入代码块。</p><div class="info"><p><code>find_each</code> 和 <code>find_in_batches</code> 方法的目的是分批处理无法一次载入内存的巨量记录。如果只想遍历几千个记录，更推荐使用常规的查询方法。</p></div><h5 id="find_each">1.3.1 <code>find_each</code>
-</h5><p><code>find_each</code> 方法获取一批记录，然后分别把每个记录传入代码块。在下面的例子中，<code>find_each</code> 获取 1000 各记录，然后把每个记录传入代码块，知道所有记录都处理完为止：</p><div class="code_container">
+</h5><p><code>find_each</code> 方法获取一批记录，然后分别把每个记录传入代码块。在下面的例子中，<code>find_each</code> 获取 1000 个记录，然后把每个记录传入代码块，直到所有记录都处理完为止：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 User.find_each do |user|
   NewsLetter.weekly_deliver(user)

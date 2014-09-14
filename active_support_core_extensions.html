@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Active Support Core Extensions — Ruby on Rails 指南</title>
+<title>Active Support 核心扩展 — Ruby on Rails 指南</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -164,12 +164,12 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Active Support Core Extensions</h2><p>Active Support is the Ruby on Rails component responsible for providing Ruby language extensions, utilities, and other transversal stuff.</p><p>It offers a richer bottom-line at the language level, targeted both at the development of Rails applications, and at the development of Ruby on Rails itself.</p><p>After reading this guide, you will know:</p>
+      <h2>Active Support 核心扩展</h2><p>Active Support 作为 Ruby on Rails 的一个组件，可以用来添加 Ruby 语言扩展、工具集以及其他这类事物。</p><p>它从语言的层面上进行了强化，既可起效于一般 Rails 程序开发，又能增强 Ruby on Rails 框架自身。</p><p>读完本文，你将学到：</p>
 <ul>
-<li>What Core Extensions are.</li>
-<li>How to load all extensions.</li>
-<li>How to cherry-pick just the extensions you want.</li>
-<li>What extensions Active Support provides.</li>
+<li>核心扩展是什么。</li>
+<li>如何加载全部扩展。</li>
+<li>如何恰如其分的选出你需要的扩展。</li>
+<li>Active Support 都提供了哪些功能。</li>
 </ul>
 
 
@@ -177,15 +177,15 @@
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li>
-<a href="#how-to-load-core-extensions">How to Load Core Extensions</a>
+<a href="#%E5%A6%82%E4%BD%95%E5%8A%A0%E8%BD%BD%E6%A0%B8%E5%BF%83%E6%89%A9%E5%B1%95">如何加载核心扩展</a>
 
 <ul>
-<li><a href="#stand-alone-active-support">Stand-Alone Active Support</a></li>
-<li><a href="#active-support-within-a-ruby-on-rails-application">Active Support Within a Ruby on Rails Application</a></li>
+<li><a href="#%E5%8D%95%E7%8B%AC%E7%9A%84-active-support">单独的 Active Support</a></li>
+<li><a href="#ruby-on-rails-%E7%A8%8B%E5%BA%8F%E9%87%8C%E7%9A%84-active-support">Ruby on Rails 程序里的 Active Support</a></li>
 </ul>
 </li>
 <li>
-<a href="#extensions-to-all-objects">Extensions to All Objects</a>
+<a href="#%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E9%83%BD%E5%8F%AF%E7%94%A8%E7%9A%84%E6%89%A9%E5%B1%95">所有对象都可用的扩展</a>
 
 <ul>
 <li><a href="#blank-questionmark-and-present-questionmark"><code>blank?</code> and <code>present?</code></a></li>
@@ -198,20 +198,20 @@
 <li><a href="#to_param"><code>to_param</code></a></li>
 <li><a href="#to_query"><code>to_query</code></a></li>
 <li><a href="#with_options"><code>with_options</code></a></li>
-<li><a href="#json-support">JSON support</a></li>
-<li><a href="#instance-variables">Instance Variables</a></li>
-<li><a href="#silencing-warnings,-streams,-and-exceptions">Silencing Warnings, Streams, and Exceptions</a></li>
+<li><a href="#json-%E6%94%AF%E6%8C%81">JSON 支持</a></li>
+<li><a href="#%E5%AE%9E%E4%BE%8B%E5%8F%98%E9%87%8F">实例变量</a></li>
+<li><a href="#silencing-warnings,-streams,-%E5%92%8C-exceptions">Silencing Warnings, Streams, 和 Exceptions</a></li>
 <li><a href="#in-questionmark"><code>in?</code></a></li>
 </ul>
 </li>
 <li>
-<a href="#extensions-to-module">Extensions to <code>Module</code></a>
+<a href="#%E5%AF%B9module%E7%9A%84%E6%89%A9%E5%B1%95">对<code>Module</code>的扩展</a>
 
 <ul>
 <li><a href="#alias_method_chain"><code>alias_method_chain</code></a></li>
-<li><a href="#attributes">Attributes</a></li>
-<li><a href="#extensions-to-module-parents">Parents</a></li>
-<li><a href="#constants">Constants</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7">属性</a></li>
+<li><a href="#%E5%AF%B9module%E7%9A%84%E6%89%A9%E5%B1%95-parents">Parents</a></li>
+<li><a href="#%E5%B8%B8%E9%87%8F">常量</a></li>
 <li><a href="#reachable">Reachable</a></li>
 <li><a href="#anonymous">Anonymous</a></li>
 <li><a href="#method-delegation">Method Delegation</a></li>
@@ -387,48 +387,48 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="how-to-load-core-extensions">1 How to Load Core Extensions</h3><h4 id="stand-alone-active-support">1.1 Stand-Alone Active Support</h4><p>In order to have a near-zero default footprint, Active Support does not load anything by default. It is broken in small pieces so that you can load just what you need, and also has some convenience entry points to load related extensions in one shot, even everything.</p><p>Thus, after a simple require like:</p><div class="code_container">
+        <h3 id="如何加载核心扩展">1 如何加载核心扩展</h3><h4 id="单独的-active-support">1.1 单独的 Active Support</h4><p>为了使初始空间尽可能干净，默认情况下 Active Support 什么都不加载。它被拆分成许多小组建，这样一来你便可以只加载自己需要的那部分，同时它也提供了一系列便捷入口使你很容易加载相关的扩展，甚至把全部扩展都加载进来。</p><p>因而，像下面这样只简单用一个 require：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 
 </pre>
 </div>
-<p>objects do not even respond to <code>blank?</code>. Let's see how to load its definition.</p><h5 id="cherry-picking-a-definition">1.1.1 Cherry-picking a Definition</h5><p>The most lightweight way to get <code>blank?</code> is to cherry-pick the file that defines it.</p><p>For every single method defined as a core extension this guide has a note that says where such a method is defined. In the case of <code>blank?</code> the note reads:</p><div class="note"><p>Defined in <code>active_support/core_ext/object/blank.rb</code>.</p></div><p>That means that you can require it like this:</p><div class="code_container">
+<p>对象会连<code>blank?</code>都没法响应。让我们来看下该如何加载它的定义。</p><h5 id="选出合适的定义">1.1.1 选出合适的定义</h5><p>找到<code>blank?</code>最轻便的方法就是直接找出定义它的那个文件。</p><p>对于每一个定义在核心扩展里的方法，本指南都会注明此方法定义于何处。例如这里提到的<code>blank?</code>，会像这样注明：</p><div class="note"><p>定义于 <code>active_support/core_ext/object/blank.rb</code>。</p></div><p>这意味着你可以像下面这样 require 它：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 require 'active_support/core_ext/object/blank'
 
 </pre>
 </div>
-<p>Active Support has been carefully revised so that cherry-picking a file loads only strictly needed dependencies, if any.</p><h5 id="loading-grouped-core-extensions">1.1.2 Loading Grouped Core Extensions</h5><p>The next level is to simply load all extensions to <code>Object</code>. As a rule of thumb, extensions to <code>SomeClass</code> are available in one shot by loading <code>active_support/core_ext/some_class</code>.</p><p>Thus, to load all extensions to <code>Object</code> (including <code>blank?</code>):</p><div class="code_container">
+<p>Active Support 经过了严格的修订，确保选定的文件只会加载必要的依赖，若没有则不加载。</p><h5 id="加载一组核心扩展">1.1.2 加载一组核心扩展</h5><p>接下来加载<code>Object</code>下的全部扩展。一般来说，想加载<code>SomeClass</code>下的全部可用扩展，只需加载<code>active_support/core_ext/some_class</code>即可。</p><p>所以，若要加载<code>Object</code>下的全部扩展（包含<code>blank?</code>）：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 require 'active_support/core_ext/object'
 
 </pre>
 </div>
-<h5 id="loading-all-core-extensions">1.1.3 Loading All Core Extensions</h5><p>You may prefer just to load all core extensions, there is a file for that:</p><div class="code_container">
+<h5 id="加载全部核心扩展">1.1.3 加载全部核心扩展</h5><p>你可能更倾向于加载全部核心扩展，有一个文件能办到：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 require 'active_support/core_ext'
 
 </pre>
 </div>
-<h5 id="loading-all-active-support">1.1.4 Loading All Active Support</h5><p>And finally, if you want to have all Active Support available just issue:</p><div class="code_container">
+<h5 id="加载全部-active-support">1.1.4 加载全部 Active Support</h5><p>最后，如果你想要 Active Support 的全部内容，只需：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support/all'
 
 </pre>
 </div>
-<p>That does not even put the entire Active Support in memory upfront indeed, some stuff is configured via <code>autoload</code>, so it is only loaded if used.</p><h4 id="active-support-within-a-ruby-on-rails-application">1.2 Active Support Within a Ruby on Rails Application</h4><p>A Ruby on Rails application loads all Active Support unless <code>config.active_support.bare</code> is true. In that case, the application will only load what the framework itself cherry-picks for its own needs, and can still cherry-pick itself at any granularity level, as explained in the previous section.</p><h3 id="extensions-to-all-objects">2 Extensions to All Objects</h3><h4 id="blank-questionmark-and-present-questionmark">2.1 <code>blank?</code> and <code>present?</code>
-</h4><p>The following values are considered to be blank in a Rails application:</p>
+<p>这样做并不会把整个 Active Support 预加载到内存里，鉴于<code>autoload</code>的机制，其只有在真正用到时才会加载。</p><h4 id="ruby-on-rails-程序里的-active-support">1.2 Ruby on Rails 程序里的 Active Support</h4><p>除非把<code>config.active_support.bare</code>设置为 true, 否则 Ruby on Rails 的程序会加载全部的 Active Support。如此一来，程序只会加载框架为自身需要挑选出来的扩展，同时也可像上文所示，可以从任何级别加载特定扩展。</p><h3 id="所有对象都可用的扩展">2 所有对象都可用的扩展</h3><h4 id="blank-questionmark-and-present-questionmark">2.1 <code>blank?</code> and <code>present?</code>
+</h4><p>以下各值在 Rails 程序里都看作 blank。</p>
 <ul>
-<li><p><code>nil</code> and <code>false</code>,</p></li>
-<li><p>strings composed only of whitespace (see note below),</p></li>
-<li><p>empty arrays and hashes, and</p></li>
-<li><p>any other object that responds to <code>empty?</code> and is empty.</p></li>
+<li><p><code>nil</code> 和 <code>false</code>，</p></li>
+<li><p>只包含空白的字符串(参照下文注释),</p></li>
+<li><p>空的数组和散列表</p></li>
+<li><p>任何其他能响应 <code>empty?</code> 方法且为空的对象。</p></li>
 </ul>
-<div class="info"><p>The predicate for strings uses the Unicode-aware character class <code>[:space:]</code>, so for example U+2029 (paragraph separator) is considered to be whitespace.</p></div><div class="warning"><p>Note that numbers are not mentioned. In particular, 0 and 0.0 are <strong>not</strong> blank.</p></div><p>For example, this method from <code>ActionController::HttpAuthentication::Token::ControllerMethods</code> uses <code>blank?</code> for checking whether a token is present:</p><div class="code_container">
+<div class="info"><p>判断字符串是否为空依据了 Unicode-aware 字符类 <code>[:space:]</code>，所以例如 U+2029（段落分隔符）这种会被当作空白。</p></div><div class="warning"><p>注意这里没有提到数字。通常来说，0和0.0都<strong>不是</strong>blank。</p></div><p>例如，<code>ActionController::HttpAuthentication::Token::ControllerMethods</code>里的一个方法使用了<code>blank?</code>来检验 token 是否存在。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def authenticate(controller, &amp;login_procedure)
   token, options = token_and_options(controller.request)
@@ -439,7 +439,7 @@ end
 
 </pre>
 </div>
-<p>The method <code>present?</code> is equivalent to <code>!blank?</code>. This example is taken from <code>ActionDispatch::Http::Cache::Response</code>:</p><div class="code_container">
+<p><code>present?</code> 方法等同于 <code>!blank?</code>， 下面的例子出自<code>ActionDispatch::Http::Cache::Response</code>：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def set_conditional_cache_control!
   return if self["Cache-Control"].present?
@@ -448,35 +448,36 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/blank.rb</code>.</p></div><h4 id="presence">2.2 <code>presence</code>
-</h4><p>The <code>presence</code> method returns its receiver if <code>present?</code>, and <code>nil</code> otherwise. It is useful for idioms like this:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/blank.rb</code>.</p></div><h4 id="presence">2.2 <code>presence</code>
+</h4><p><code>presence</code>方法如果满足<code>present?</code>则返回调用者，否则返回<code>nil</code>。它适用于下面这种情况：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 host = config[:host].presence || 'localhost'
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/blank.rb</code>.</p></div><h4 id="duplicable-questionmark">2.3 <code>duplicable?</code>
-</h4><p>A few fundamental objects in Ruby are singletons. For example, in the whole life of a program the integer 1 refers always to the same instance:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/blank.rb</code>.</p></div><h4 id="duplicable-questionmark">2.3 <code>duplicable?</code>
+</h4><p>A few fundamental objects in Ruby are singletons. For example, in the whole life of a program the integer 1 refers always to the same instance:
+Ruby 里有些基本对象是单例的。比如，在整个程序的生命周期里，数字1永远指向同一个实例。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 1.object_id                 # =&gt; 3
 Math.cos(0).to_i.object_id  # =&gt; 3
 
 </pre>
 </div>
-<p>Hence, there's no way these objects can be duplicated through <code>dup</code> or <code>clone</code>:</p><div class="code_container">
+<p>因而，这些对象永远没法用<code>dup</code>或<code>clone</code>复制。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 true.dup  # =&gt; TypeError: can't dup TrueClass
 
 </pre>
 </div>
-<p>Some numbers which are not singletons are not duplicable either:</p><div class="code_container">
+<p>有些数字虽然不是单例的，但也同样无法复制：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 0.0.clone        # =&gt; allocator undefined for Float
 (2**1024).clone  # =&gt; allocator undefined for Bignum
 
 </pre>
 </div>
-<p>Active Support provides <code>duplicable?</code> to programmatically query an object about this property:</p><div class="code_container">
+<p>Active Support 提供了 <code>duplicable?</code> 方法来判断一个对象是否能够被复制:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "foo".duplicable? # =&gt; true
 "".duplicable?    # =&gt; true
@@ -485,27 +486,27 @@ false.duplicable? # =&gt; false
 
 </pre>
 </div>
-<p>By definition all objects are <code>duplicable?</code> except <code>nil</code>, <code>false</code>, <code>true</code>, symbols, numbers, class, and module objects.</p><div class="warning"><p>Any class can disallow duplication by removing <code>dup</code> and <code>clone</code> or raising exceptions from them. Thus only <code>rescue</code> can tell whether a given arbitrary object is duplicable. <code>duplicable?</code> depends on the hard-coded list above, but it is much faster than <code>rescue</code>. Use it only if you know the hard-coded list is enough in your use case.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/object/duplicable.rb</code>.</p></div><h4 id="deep_dup">2.4 <code>deep_dup</code>
-</h4><p>The <code>deep_dup</code> method returns deep copy of a given object. Normally, when you <code>dup</code> an object that contains other objects, Ruby does not <code>dup</code> them, so it creates a shallow copy of the object. If you have an array with a string, for example, it will look like this:</p><div class="code_container">
+<p>根据定义，所有的对象的<code>duplicated?</code>的，除了：<code>nil</code>、<code>false</code>、 <code>true</code>、 符号、 数字、 类和模块。</p><div class="warning"><p>任何的类都可以通过移除<code>dup</code>和<code>clone</code>方法，或者在其中抛出异常，来禁用其复制功能。虽然<code>duplicable?</code>方法是基于上面的硬编码列表，但是它比用<code>rescue</code>快的多。确保仅在你的情况合乎上面的硬编码列表时候再使用它。</p></div><div class="note"><p>定义于 <code>active_support/core_ext/object/duplicable.rb</code>.</p></div><h4 id="deep_dup">2.4 <code>deep_dup</code>
+</h4><p><code>deep_dup</code>方法返回一个对象的深度拷贝。一般来说，当你<code>dup</code>一个包含其他对象的对象时，Ruby 并不会把被包含的对象一同<code>dup</code>，它只会创建一个对象的浅表拷贝。假如你有一个字符串数组，如下例所示：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 array     = ['string']
 duplicate = array.dup
 
 duplicate.push 'another-string'
 
-# the object was duplicated, so the element was added only to the duplicate
+# 对象被复制了，所以只有 duplicate 的数组元素有所增加 
 array     # =&gt; ['string']
 duplicate # =&gt; ['string', 'another-string']
 
 duplicate.first.gsub!('string', 'foo')
 
-# first element was not duplicated, it will be changed in both arrays
+# 第一个数组元素并未被复制，所以两个数组都发生了变化
 array     # =&gt; ['foo']
 duplicate # =&gt; ['foo', 'another-string']
 
 </pre>
 </div>
-<p>As you can see, after duplicating the <code>Array</code> instance, we got another object, therefore we can modify it and the original object will stay unchanged. This is not true for array's elements, however. Since <code>dup</code> does not make deep copy, the string inside the array is still the same object.</p><p>If you need a deep copy of an object, you should use <code>deep_dup</code>. Here is an example:</p><div class="code_container">
+<p>如你所见，对<code>Array</code>实例进行复制后，我们得到了另一个对象，因而我们修改它时，原始对象并未跟着有所变化。不过对数组元素而言，情况却有所不同。因为<code>dup</code>不会创建深度拷贝，所以数组里的字符串依然是同一个对象。</p><p>如果你需要一个对象的深度拷贝，就应该使用<code>deep_dup</code>。我们再来看下面这个例子：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 array     = ['string']
 duplicate = array.deep_dup
@@ -517,7 +518,7 @@ duplicate # =&gt; ['foo']
 
 </pre>
 </div>
-<p>If the object is not duplicable, <code>deep_dup</code> will just return it:</p><div class="code_container">
+<p>如果一个对象是不可复制的，<code>deep_dup</code>会返回其自身：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 number = 1
 duplicate = number.deep_dup
@@ -525,20 +526,20 @@ number.object_id == duplicate.object_id   # =&gt; true
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="try">2.5 <code>try</code>
-</h4><p>When you want to call a method on an object only if it is not <code>nil</code>, the simplest way to achieve it is with conditional statements, adding unnecessary clutter. The alternative is to use <code>try</code>. <code>try</code> is like <code>Object#send</code> except that it returns <code>nil</code> if sent to <code>nil</code>.</p><p>Here is an example:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="try">2.5 <code>try</code>
+</h4><p>如果你想在一个对象不为<code>nil</code>时，对其调用一个方法，最简单的办法就是使用条件从句，但这么做也会使代码变得乱七八糟。另一个选择就是使用<code>try</code>。<code>try</code>就好比<code>Object#send</code>，只不过如果接收者为<code>nil</code>，那么返回值也会是<code>nil</code>。</p><p>看下这个例子：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-# without try
+# 不使用 try
 unless @number.nil?
   @number.next
 end
 
-# with try
+# 使用 try
 @number.try(:next)
 
 </pre>
 </div>
-<p>Another example is this code from <code>ActiveRecord::ConnectionAdapters::AbstractAdapter</code> where <code>@logger</code> could be <code>nil</code>. You can see that the code uses <code>try</code> and avoids an unnecessary check.</p><div class="code_container">
+<p>接下来的这个例子，代码出自<code>ActiveRecord::ConnectionAdapters::AbstractAdapter</code>，这里的<code>@logger</code>有可能为<code>nil</code>。能够看到，代码里使用了<code>try</code>来避免不必要的检查。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def log_info(sql, name, ms)
   if @logger.try(:debug?)
@@ -549,14 +550,15 @@ end
 
 </pre>
 </div>
-<p><code>try</code> can also be called without arguments but a block, which will only be executed if the object is not nil:</p><div class="code_container">
+<p>调用<code>try</code>时也可以不传参数而是用代码快，其中的代码只有在对象不为<code>nil</code>时才会执行：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 @person.try { |p| "#{p.first_name} #{p.last_name}" }
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/try.rb</code>.</p></div><h4 id="class_eval(*args,-&amp;block)">2.6 <code>class_eval(*args, &amp;block)</code>
-</h4><p>You can evaluate code in the context of any object's singleton class using <code>class_eval</code>:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/try.rb</code>.</p></div><h4 id="class_eval(*args,-&amp;block)">2.6 <code>class_eval(*args, &amp;block)</code>
+</h4><p>You can evaluate code in the context of any object's singleton class using <code>class_eval</code>:
+使用<code>class_eval</code>，可以使代码在对象的单件类的上下文里执行：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Proc
   def bind(object)
@@ -573,40 +575,40 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/kernel/singleton_class.rb</code>.</p></div><h4 id="acts_like-questionmark(duck)">2.7 <code>acts_like?(duck)</code>
-</h4><p>The method <code>acts_like?</code> provides a way to check whether some class acts like some other class based on a simple convention: a class that provides the same interface as <code>String</code> defines</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/kernel/singleton_class.rb</code>.</p></div><h4 id="acts_like-questionmark(duck)">2.7 <code>acts_like?(duck)</code>
+</h4><p><code>acts_like?</code>方法可以用来判断某个类与另一个类是否有相同的行为，它基于一个简单的惯例：这个类是否提供了与<code>String</code>相同的接口：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def acts_like_string?
 end
 
 </pre>
 </div>
-<p>which is only a marker, its body or return value are irrelevant. Then, client code can query for duck-type-safeness this way:</p><div class="code_container">
+<p>上述代码只是一个标识，它的方法体或返回值都是不相关的。之后，就可以像下述代码那样判断其代码是否为“鸭子类型安全”的代码了：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 some_klass.acts_like?(:string)
 
 </pre>
 </div>
-<p>Rails has classes that act like <code>Date</code> or <code>Time</code> and follow this contract.</p><div class="note"><p>Defined in <code>active_support/core_ext/object/acts_like.rb</code>.</p></div><h4 id="to_param">2.8 <code>to_param</code>
-</h4><p>All objects in Rails respond to the method <code>to_param</code>, which is meant to return something that represents them as values in a query string, or as URL fragments.</p><p>By default <code>to_param</code> just calls <code>to_s</code>:</p><div class="code_container">
+<p>Rails 里的许多类，例如<code>Date</code>和<code>Time</code>，都遵循上述约定。</p><div class="note"><p>定义于 <code>active_support/core_ext/object/acts_like.rb</code>.</p></div><h4 id="to_param">2.8 <code>to_param</code>
+</h4><p>所有 Rails 对象都可以响应<code>to_param</code>方法，它会把对象的值转换为查询字符串，或者 URL 片段，并返回该值。</p><p>默认情况下，<code>to_param</code>仅仅调用了<code>to_s</code>：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 7.to_param # =&gt; "7"
 
 </pre>
 </div>
-<p>The return value of <code>to_param</code> should <strong>not</strong> be escaped:</p><div class="code_container">
+<p><strong>不要</strong>对<code>to_param</code>方法的返回值进行转义：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Tom &amp; Jerry".to_param # =&gt; "Tom &amp; Jerry"
 
 </pre>
 </div>
-<p>Several classes in Rails overwrite this method.</p><p>For example <code>nil</code>, <code>true</code>, and <code>false</code> return themselves. <code>Array#to_param</code> calls <code>to_param</code> on the elements and joins the result with "/":</p><div class="code_container">
+<p>Rails 里的许多类重写了这个方法。</p><p>例如<code>nil</code>、<code>true</code>和<code>false</code>会返回其自身。<code>Array#to_param</code>会对数组元素调用<code>to_param</code>并把结果用"/"连接成字符串：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 [0, true, String].to_param # =&gt; "0/true/String"
 
 </pre>
 </div>
-<p>Notably, the Rails routing system calls <code>to_param</code> on models to get a value for the <code>:id</code> placeholder. <code>ActiveRecord::Base#to_param</code> returns the <code>id</code> of a model, but you can redefine that method in your models. For example, given</p><div class="code_container">
+<p>需要注意的是， Rails 的路由系统会在模型上调用<code>to_param</code>并把结果作为<code>:id</code>占位符。<code>ActiveRecord::Base#to_param</code>会返回模型的<code>id</code>，但是你也可以在自己模型里重新定义它。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User
   def to_param
@@ -616,14 +618,14 @@ end
 
 </pre>
 </div>
-<p>we get:</p><div class="code_container">
+<p>会得到：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 user_path(@user) # =&gt; "/users/357-john-smith"
 
 </pre>
 </div>
-<div class="warning"><p>Controllers need to be aware of any redefinition of <code>to_param</code> because when a request like that comes in "357-john-smith" is the value of <code>params[:id]</code>.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/object/to_param.rb</code>.</p></div><h4 id="to_query">2.9 <code>to_query</code>
-</h4><p>Except for hashes, given an unescaped <code>key</code> this method constructs the part of a query string that would map such key to what <code>to_param</code> returns. For example, given</p><div class="code_container">
+<div class="warning"><p>控制器里需要注意被重定义过的<code>to_param</code>，因为一个类似上述的请求里，会把"357-john-smith"当作<code>params[:id]</code>的值。</p></div><div class="note"><p>定义于 <code>active_support/core_ext/object/to_param.rb</code>.</p></div><h4 id="to_query">2.9 <code>to_query</code>
+</h4><p>除了散列表之外，给定一个未转义的<code>key</code>，这个方法就会基于这个键和<code>to_param</code>的返回值，构造出一个新的查询字符串。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User
   def to_param
@@ -633,41 +635,41 @@ end
 
 </pre>
 </div>
-<p>we get:</p><div class="code_container">
+<p>会得到：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-current_user.to_query('user') # =&gt; user=357-john-smith
+current_user.to_query('user') # =&gt; "user=357-john-smith"
 
 </pre>
 </div>
-<p>This method escapes whatever is needed, both for the key and the value:</p><div class="code_container">
+<p>无论对于键还是值，本方法都会根据需要进行转义：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 account.to_query('company[name]')
 # =&gt; "company%5Bname%5D=Johnson+%26+Johnson"
 
 </pre>
 </div>
-<p>so its output is ready to be used in a query string.</p><p>Arrays return the result of applying <code>to_query</code> to each element with <code>_key_[]</code> as key, and join the result with "&amp;":</p><div class="code_container">
+<p>所以它的输出已经完全适合于用作查询字符串。</p><p>对于数组，会对其中每个元素以<code>_key_[]</code>为键执行<code>to_query</code>方法，并把结果用"&amp;"连接为字符串：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 [3.4, -45.6].to_query('sample')
 # =&gt; "sample%5B%5D=3.4&amp;sample%5B%5D=-45.6"
 
 </pre>
 </div>
-<p>Hashes also respond to <code>to_query</code> but with a different signature. If no argument is passed a call generates a sorted series of key/value assignments calling <code>to_query(key)</code> on its values. Then it joins the result with "&amp;":</p><div class="code_container">
+<p>哈系表也可以响应<code>to_query</code>方法但是用法有所不同。如果调用时没传参数，会先生成一系列排过序的键值对并在值上调用<code>to_query(键)</code>。然后把所得结果用"&amp;"连接为字符串：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {c: 3, b: 2, a: 1}.to_query # =&gt; "a=1&amp;b=2&amp;c=3"
 
 </pre>
 </div>
-<p>The method <code>Hash#to_query</code> accepts an optional namespace for the keys:</p><div class="code_container">
+<p><code>Hash#to_query</code>方法也可接受一个可选的命名空间作为键：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {id: 89, name: "John Smith"}.to_query('user')
 # =&gt; "user%5Bid%5D=89&amp;user%5Bname%5D=John+Smith"
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/to_query.rb</code>.</p></div><h4 id="with_options">2.10 <code>with_options</code>
-</h4><p>The method <code>with_options</code> provides a way to factor out common options in a series of method calls.</p><p>Given a default options hash, <code>with_options</code> yields a proxy object to a block. Within the block, methods called on the proxy are forwarded to the receiver with their options merged. For example, you get rid of the duplication in:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/to_query.rb</code>.</p></div><h4 id="with_options">2.10 <code>with_options</code>
+</h4><p><code>with_options</code>方法可以为一组方法调用提取出共有的选项。</p><p>假定有一个默认的散列表选项，<code>with_options</code>方法会引入一个代理对象到代码块。在代码块内部，代理对象上的方法调用，会连同被混入的选项一起，被转发至原方法接收者。例如，若要去除下述代码的重复内容：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Account &lt; ActiveRecord::Base
   has_many :customers, dependent: :destroy
@@ -678,7 +680,7 @@ end
 
 </pre>
 </div>
-<p>this way:</p><div class="code_container">
+<p>可按此法书写：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Account &lt; ActiveRecord::Base
   with_options dependent: :destroy do |assoc|
@@ -691,7 +693,8 @@ end
 
 </pre>
 </div>
-<p>That idiom may convey <em>grouping</em> to the reader as well. For example, say you want to send a newsletter whose language depends on the user. Somewhere in the mailer you could group locale-dependent bits like this:</p><div class="code_container">
+<h2>TODO: clear this after totally understanding what these statnances means...</h2><p>That idiom may convey <em>grouping</em> to the reader as well. For example, say you want to send a newsletter whose language depends on the user. Somewhere in the mailer you could group locale-dependent bits like this:
+上述写法也可用于对读取器进行分组。例如，假设你要发一份新闻通讯，通讯所用语言取决于用户。便可以利用如下例所示代码，对用户按照地区依赖进行分组：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 I18n.with_options locale: user.locale, scope: "newsletter" do |i18n|
   subject i18n.t :subject
@@ -700,9 +703,8 @@ end
 
 </pre>
 </div>
-<div class="info"><p>Since <code>with_options</code> forwards calls to its receiver they can be nested. Each nesting level will merge inherited defaults in addition to their own.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/object/with_options.rb</code>.</p></div><h4 id="json-support">2.11 JSON support</h4><p>Active Support provides a better implementation of <code>to_json</code> than the <code>json</code> gem ordinarily provides for Ruby objects. This is because some classes, like <code>Hash</code>, <code>OrderedHash</code> and <code>Process::Status</code> need special handling in order to provide a proper JSON representation.</p><div class="note"><p>Defined in <code>active_support/core_ext/object/json.rb</code>.</p></div><h4 id="instance-variables">2.12 Instance Variables</h4><p>Active Support provides several methods to ease access to instance variables.</p><h5 id="instance_values">2.12.1 <code>instance_values</code>
-</h5><p>The method <code>instance_values</code> returns a hash that maps instance variable names without "@" to their
-corresponding values. Keys are strings:</p><div class="code_container">
+<div class="info"><p>由于<code>with_options</code>会把方法调用转发给其自身的接收者，所以可以进行嵌套。每层嵌套都会把继承来的默认值混入到自身的默认值里。</p></div><div class="note"><p>定义于 <code>active_support/core_ext/object/with_options.rb</code>.</p></div><h4 id="json-支持">2.11 JSON 支持</h4><p>相较于 <code>json</code> gem 为 Ruby 对象提供的<code>to_json</code>方法，Active Support 给出了一个更好的实现。因为有许多类，诸如<code>Hash</code>、<code>OrderedHash</code>和<code>Process::Status</code>，都需要做特殊处理才能到适合的 JSON 替换。</p><div class="note"><p>定义于 <code>active_support/core_ext/object/json.rb</code>.</p></div><h4 id="实例变量">2.12 实例变量</h4><p>Active Support 提供了若干方法以简化对实例变量的访问。</p><h5 id="instance_values">2.12.1 <code>instance_values</code>
+</h5><p><code>instance_values</code>方法返回一个散列表，其中会把实例变量名去掉"@"作为键，把相应的实例变量值作为值。键全部是字符串：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class C
   def initialize(x, y)
@@ -714,8 +716,8 @@ C.new(0, 1).instance_values # =&gt; {"x" =&gt; 0, "y" =&gt; 1}
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/instance_variables.rb</code>.</p></div><h5 id="instance_variable_names">2.12.2 <code>instance_variable_names</code>
-</h5><p>The method <code>instance_variable_names</code> returns an array.  Each name includes the "@" sign.</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/instance_variables.rb</code>.</p></div><h5 id="instance_variable_names">2.12.2 <code>instance_variable_names</code>
+</h5><p><code>instance_variable_names</code>方法返回一个数组。数组中所有的实例变量名都带有"@"标志。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class C
   def initialize(x, y)
@@ -727,27 +729,28 @@ C.new(0, 1).instance_variable_names # =&gt; ["@x", "@y"]
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/instance_variables.rb</code>.</p></div><h4 id="silencing-warnings,-streams,-and-exceptions">2.13 Silencing Warnings, Streams, and Exceptions</h4><p>The methods <code>silence_warnings</code> and <code>enable_warnings</code> change the value of <code>$VERBOSE</code> accordingly for the duration of their block, and reset it afterwards:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/instance_variables.rb</code>.</p></div><h4 id="silencing-warnings,-streams,-和-exceptions">2.13 Silencing Warnings, Streams, 和 Exceptions</h4><p><code>silence_warnings</code>和<code>enable_warnings</code>方法都可以在其代码块里改变<code>$VERBOSE</code>的值，并在之后把值重置：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 
 </pre>
 </div>
-<p>You can silence any stream while a block runs with <code>silence_stream</code>:</p><div class="code_container">
+<p>You can silence any stream while a block runs with <code>silence_stream</code>:
+在通过<code>silence_stream</code>执行的代码块里，可以使任意流安静的运行：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 silence_stream(STDOUT) do
-  # STDOUT is silent here
+  # 这里的代码不会输出到 STDOUT 
 end
 
 </pre>
 </div>
-<p>The <code>quietly</code> method addresses the common use case where you want to silence STDOUT and STDERR, even in subprocesses:</p><div class="code_container">
+<p><code>quietly</code>方法可以使 STDOUT 和 STDERR 保持安静，即便在子进程里也如此：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 quietly { system 'bundle install' }
 
 </pre>
 </div>
-<p>For example, the railties test suite uses that one in a few places to prevent command messages from being echoed intermixed with the progress status.</p><p>Silencing exceptions is also possible with <code>suppress</code>. This method receives an arbitrary number of exception classes. If an exception is raised during the execution of the block and is <code>kind_of?</code> any of the arguments, <code>suppress</code> captures it and returns silently. Otherwise the exception is reraised:</p><div class="code_container">
+<p>例如，railties 测试组件会用到上述方法，来阻止普通消息与进度状态混到一起。</p><p>也可以用<code>suppress</code>方法来使异常保持安静。方法接收任意数量的异常类。如果代码块的代码执行时报出异常，并且该异常<code>kind_of?</code>满足任一参数，<code>suppress</code>便会将异其捕获并安静的返回。否则会重新抛出该异常：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # If the user is locked the increment is lost, no big deal.
 suppress(ActiveRecord::StaleObjectError) do
@@ -756,8 +759,8 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/kernel/reporting.rb</code>.</p></div><h4 id="in-questionmark">2.14 <code>in?</code>
-</h4><p>The predicate <code>in?</code> tests if an object is included in another object. An <code>ArgumentError</code> exception will be raised if the argument passed does not respond to <code>include?</code>.</p><p>Examples of <code>in?</code>:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/kernel/reporting.rb</code>.</p></div><h4 id="in-questionmark">2.14 <code>in?</code>
+</h4><p>判断式<code>in?</code>用于测试一个对象是否被包含在另一个对象里。当传入的参数无法响应<code>include?</code>时，会抛出<code>ArgumentError</code>异常。</p><p>使用<code>in?</code>的例子：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 1.in?([1,2])        # =&gt; true
 "lo".in?("hello")   # =&gt; true
@@ -766,9 +769,8 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/inclusion.rb</code>.</p></div><h3 id="extensions-to-module">3 Extensions to <code>Module</code>
-</h3><h4 id="alias_method_chain">3.1 <code>alias_method_chain</code>
-</h4><p>Using plain Ruby you can wrap methods with other methods, that's called <em>alias chaining</em>.</p><p>For example, let's say you'd like params to be strings in functional tests, as they are in real requests, but still want the convenience of assigning integers and other kind of values. To accomplish that you could wrap <code>ActionController::TestCase#process</code> this way in <code>test/test_helper.rb</code>:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/object/inclusion.rb</code>.</p></div><h3 id="对module的扩展">3 对<code>Module</code>的扩展</h3><h4 id="alias_method_chain">3.1 <code>alias_method_chain</code>
+</h4><p>使用纯 Ruby 可以用方法环绕其他的方法，这种做法被称为环绕别名。</p><p>例如，我们假设在功能测试里你希望参数都是字符串，就如同真实的请求中那样，但是同时你也希望对于数字和其他类型的值能够很方便的赋值。为了做到这点，你可以把<code>test/test_helper.rb</code>里的<code>ActionController::TestCase#process</code>方法像下面这样环绕：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 ActionController::TestCase.class_eval do
   # save a reference to the original process method
@@ -783,7 +785,7 @@ end
 
 </pre>
 </div>
-<p>That's the method <code>get</code>, <code>post</code>, etc., delegate the work to.</p><p>That technique has a risk, it could be the case that <code>:original_process</code> was taken. To try to avoid collisions people choose some label that characterizes what the chaining is about:</p><div class="code_container">
+<p><code>get</code>、<code>post</code>等最终会通过此方法执行。</p><p>这么做有一定风险，<code>:original_process</code>有可能已经被占用了。为了避免方法名发生碰撞，通常会添加标签来表明这是个关于什么的别名：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 ActionController::TestCase.class_eval do
   def process_with_stringified_params(...)
@@ -796,7 +798,7 @@ end
 
 </pre>
 </div>
-<p>The method <code>alias_method_chain</code> provides a shortcut for that pattern:</p><div class="code_container">
+<p><code>alias_method_chain</code>为上述技巧提供了一个便捷之法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 ActionController::TestCase.class_eval do
   def process_with_stringified_params(...)
@@ -808,8 +810,8 @@ end
 
 </pre>
 </div>
-<p>Rails uses <code>alias_method_chain</code> all over the code base. For example validations are added to <code>ActiveRecord::Base#save</code> by wrapping the method that way in a separate module specialized in validations.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/aliasing.rb</code>.</p></div><h4 id="attributes">3.2 Attributes</h4><h5 id="alias_attribute">3.2.1 <code>alias_attribute</code>
-</h5><p>Model attributes have a reader, a writer, and a predicate. You can alias a model attribute having the corresponding three methods defined for you in one shot. As in other aliasing methods, the new name is the first argument, and the old name is the second (one mnemonic is that they go in the same order as if you did an assignment):</p><div class="code_container">
+<p>Rails 源代码中随处可见<code>alias_method_chain</code>。例如<code>ActiveRecord::Base#save</code>里，就通过这种方式对方法进行环绕，从 validations 下一个专门的模块里为其增加了验证。</p><div class="note"><p>定义于 <code>active_support/core_ext/module/aliasing.rb</code>.</p></div><h4 id="属性">3.2 属性</h4><h5 id="alias_attribute">3.2.1 <code>alias_attribute</code>
+</h5><p>模型属性包含读取器、写入器和判断式。只需添加一行代码，就可以为模型属性添加一个包含以上三个方法的别名。与其他别名方法一样，新名称充当第一个参数，原有名称是第二个参数（为了方便记忆，可以类比下赋值时的书写顺序）。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User &lt; ActiveRecord::Base
   # You can refer to the email column as "login".
@@ -819,7 +821,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/module/aliasing.rb</code>.</p></div><h5 id="internal-attributes">3.2.2 Internal Attributes</h5><p>When you are defining an attribute in a class that is meant to be subclassed, name collisions are a risk. That's remarkably important for libraries.</p><p>Active Support defines the macros <code>attr_internal_reader</code>, <code>attr_internal_writer</code>, and <code>attr_internal_accessor</code>. They behave like their Ruby built-in <code>attr_*</code> counterparts, except they name the underlying instance variable in a way that makes collisions less likely.</p><p>The macro <code>attr_internal</code> is a synonym for <code>attr_internal_accessor</code>:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/module/aliasing.rb</code>.</p></div><h5 id="内部属性">3.2.2 内部属性</h5><p>当你在一个被继承的类里定义一条属性时，属性名称有可能会发生碰撞。这一点对许多库而言尤为重要。</p><p>Active Support 定义了<code>attr_internal_reader</code>、<code>attr_internal_writer</code>和<code>attr_internal_accessor</code>这些类宏。它们的作用与 Ruby 内建的<code>attr_*</code>相当，只不过实例变量名多了下划线以避免碰撞。</p><p>类宏<code>attr_internal</code>与<code>attr_internal_accessor</code>是同义：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # library
 class ThirdPartyLibrary::Crawler
@@ -833,7 +835,7 @@ end
 
 </pre>
 </div>
-<p>In the previous example it could be the case that <code>:log_level</code> does not belong to the public interface of the library and it is only used for development. The client code, unaware of the potential conflict, subclasses and defines its own <code>:log_level</code>. Thanks to <code>attr_internal</code> there's no collision.</p><p>By default the internal instance variable is named with a leading underscore, <code>@_log_level</code> in the example above. That's configurable via <code>Module.attr_internal_naming_format</code> though, you can pass any <code>sprintf</code>-like format string with a leading <code>@</code> and a <code>%s</code> somewhere, which is where the name will be placed. The default is <code>"@_%s"</code>.</p><p>Rails uses internal attributes in a few spots, for examples for views:</p><div class="code_container">
+<p>上述例子里的情况可能是，<code>:log_level</code>并不属于库的公共接口，而是只用于开发。而在客户代码里，由于不知道可能出现的冲突，便在子类里又定义了<code>:log_level</code>。多亏了<code>attr_internal</code>才没有出项碰撞。</p><p>默认情况下，内部实例变量名以下划线开头，如上例中即为<code>@_log_level</code>。不过这点可以通过<code>Module.attr_internal_naming_format</code>进行配置，你可以传入任何<code>sprintf</code>这一类的格式化字符串，并在开头加上<code>@</code>，同时还要加上<code>%s</code>表示变量名称的位置。默认值为<code>"@_%s"</code>。</p><p>Rails 在若干地方使用了内部属性，比如在视图层：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module ActionView
   class Base
@@ -845,7 +847,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/module/attr_internal.rb</code>.</p></div><h5 id="module-attributes">3.2.3 Module Attributes</h5><p>The macros <code>mattr_reader</code>, <code>mattr_writer</code>, and <code>mattr_accessor</code> are the same as the <code>cattr_*</code> macros defined for class. In fact, the <code>cattr_*</code> macros are just aliases for the <code>mattr_*</code> macros. Check <a href="#class-attributes">Class Attributes</a>.</p><p>For example, the dependencies mechanism uses them:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/module/attr_internal.rb</code>.</p></div><h5 id="module-attributes">3.2.3 Module Attributes</h5><p>类宏<code>mattr_reader</code>、<code>mattr_writer</code>和<code>mattr_accessor</code>与为类定义的<code>cattr_*</code>是相同的。实际上，<code>cattr_*</code>系列的类宏只不过是<code>mattr_*</code>这些类宏的别名。详见<a href="#class-attributes">Class Attributes</a>。</p><p>例如，依赖性机制就用到了它们：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module ActiveSupport
   module Dependencies
@@ -866,8 +868,8 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/module/attribute_accessors.rb</code>.</p></div><h4 id="extensions-to-module-parents">3.3 Parents</h4><h5 id="parent">3.3.1 <code>parent</code>
-</h5><p>The <code>parent</code> method on a nested named module returns the module that contains its corresponding constant:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/module/attribute_accessors.rb</code>.</p></div><h4 id="对module的扩展-parents">3.3 Parents</h4><h5 id="parent">3.3.1 <code>parent</code>
+</h5><p>对一个嵌套的模块调用<code>parent</code>方法，会返回其相应的常量：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module X
   module Y
@@ -882,8 +884,8 @@ M.parent       # =&gt; X::Y
 
 </pre>
 </div>
-<p>If the module is anonymous or belongs to the top-level, <code>parent</code> returns <code>Object</code>.</p><div class="warning"><p>Note that in that case <code>parent_name</code> returns <code>nil</code>.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="parent_name">3.3.2 <code>parent_name</code>
-</h5><p>The <code>parent_name</code> method on a nested named module returns the fully-qualified name of the module that contains its corresponding constant:</p><div class="code_container">
+<p>如果这个模块是匿名的或者属于顶级作用域， <code>parent</code>会返回<code>Object</code>。</p><div class="warning"><p>若有上述情况，则<code>parent_name</code>会返回<code>nil</code>。</p></div><div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="parent_name">3.3.2 <code>parent_name</code>
+</h5><p>对一个嵌套的模块调用<code>parent_name</code>方法，会返回其相应常量的完全限定名：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module X
   module Y
@@ -898,8 +900,8 @@ M.parent_name       # =&gt; "X::Y"
 
 </pre>
 </div>
-<p>For top-level or anonymous modules <code>parent_name</code> returns <code>nil</code>.</p><div class="warning"><p>Note that in that case <code>parent</code> returns <code>Object</code>.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="extensions-to-module-parents-parents">3.3.3 <code>parents</code>
-</h5><p>The method <code>parents</code> calls <code>parent</code> on the receiver and upwards until <code>Object</code> is reached. The chain is returned in an array, from bottom to top:</p><div class="code_container">
+<p>定义在顶级作用域里的模块或匿名的模块，<code>parent_name</code>会返回<code>nil</code>。</p><div class="warning"><p>若有上述情况，则<code>parent</code>返回<code>Object</code>。</p></div><div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="对module的扩展-parents-parents">3.3.3 <code>parents</code>
+</h5><p><code>parents</code>方法会对接收者调用<code>parent</code>，并向上追溯直至<code>Object</code>。之后所得结果链按由低到高顺序组成一个数组被返回。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module X
   module Y
@@ -914,8 +916,8 @@ M.parents       # =&gt; [X::Y, X, Object]
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h4 id="constants">3.4 Constants</h4><p>The method <code>local_constants</code> returns the names of the constants that have been
-defined in the receiver module:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h4 id="常量">3.4 常量</h4><p>defined in the receiver module:
+<code>local_constants</code>方法返回在接收者模块中定义的常量。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module X
   X1 = 1
@@ -931,11 +933,9 @@ X::Y.local_constants # =&gt; [:Y1, :X1]
 
 </pre>
 </div>
-<p>The names are returned as symbols.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="qualified-constant-names">3.4.1 Qualified Constant Names</h5><p>The standard methods <code>const_defined?</code>, <code>const_get</code> , and <code>const_set</code> accept
-bare constant names. Active Support extends this API to be able to pass
-relative qualified constant names.</p><p>The new methods are <code>qualified_const_defined?</code>, <code>qualified_const_get</code>, and
-<code>qualified_const_set</code>. Their arguments are assumed to be qualified constant
-names relative to their receiver:</p><div class="code_container">
+<p>常量名会作为符号被返回。</p><div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="限定常量名">3.4.1 限定常量名</h5><p>标准方法<code>const_defined?</code>、<code>const_get</code>和<code>const_set</code>接受裸常量名。<br>
+Active Support 扩展了这些API使其可以接受相对限定常量名。</p><p>新的方法名是<code>qualified_const_defined?</code>，<code>qualified_const_get</code>和<code>qualified_const_set</code>。
+它们的参数被假定为相对于其接收者的限定常量名：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Object.qualified_const_defined?("Math::PI")       # =&gt; true
 Object.qualified_const_get("Math::PI")            # =&gt; 3.141592653589793
@@ -943,7 +943,7 @@ Object.qualified_const_set("Math::Phi", 1.618034) # =&gt; 1.618034
 
 </pre>
 </div>
-<p>Arguments may be bare constant names:</p><div class="code_container">
+<p>参数可以使用裸常量名：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Math.qualified_const_get("E") # =&gt; 2.718281828459045
 
@@ -953,7 +953,8 @@ Math.qualified_const_get("E") # =&gt; 2.718281828459045
 <code>qualified_constant_defined?</code> accepts an optional second argument to be
 able to say whether you want the predicate to look in the ancestors.
 This flag is taken into account for each constant in the expression while
-walking down the path.</p><p>For example, given</p><div class="code_container">
+walking down the path.
+这些方法与其内建的对应方法很类似。尤为值得一提的是，<code>qualified_constant_defined?</code>接收一个可选的第二参数，以此来标明你是否要在祖先链中进行查找。</p><p>例如，假定：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module M
   X = 1
@@ -967,7 +968,7 @@ end
 
 </pre>
 </div>
-<p><code>qualified_const_defined?</code> behaves this way:</p><div class="code_container">
+<p><code>qualified_const_defined?</code>会这样执行：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 N.qualified_const_defined?("C::X", false) # =&gt; false
 N.qualified_const_defined?("C::X", true)  # =&gt; true
@@ -977,7 +978,7 @@ N.qualified_const_defined?("C::X")        # =&gt; true
 </div>
 <p>As the last example implies, the second argument defaults to true,
 as in <code>const_defined?</code>.</p><p>For coherence with the built-in methods only relative paths are accepted.
-Absolute qualified constant names like <code>::Math::PI</code> raise <code>NameError</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/qualified_const.rb</code>.</p></div><h4 id="reachable">3.5 Reachable</h4><p>A named module is reachable if it is stored in its corresponding constant. It means you can reach the module object via the constant.</p><p>That is what ordinarily happens, if a module is called "M", the <code>M</code> constant exists and holds it:</p><div class="code_container">
+Absolute qualified constant names like <code>::Math::PI</code> raise <code>NameError</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/module/qualified_const.rb</code>.</p></div><h4 id="reachable">3.5 Reachable</h4><p>A named module is reachable if it is stored in its corresponding constant. It means you can reach the module object via the constant.</p><p>That is what ordinarily happens, if a module is called "M", the <code>M</code> constant exists and holds it:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module M
 end
@@ -1009,7 +1010,7 @@ orphan.reachable? # =&gt; false
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/module/reachable.rb</code>.</p></div><h4 id="anonymous">3.6 Anonymous</h4><p>A module may or may not have a name:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/module/reachable.rb</code>.</p></div><h4 id="anonymous">3.6 Anonymous</h4><p>A module may or may not have a name:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 module M
 end
@@ -1044,7 +1045,7 @@ m.anonymous? # =&gt; false
 
 </pre>
 </div>
-<p>though an anonymous module is unreachable by definition.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/anonymous.rb</code>.</p></div><h4 id="method-delegation">3.7 Method Delegation</h4><p>The macro <code>delegate</code> offers an easy way to forward methods.</p><p>Let's imagine that users in some application have login information in the <code>User</code> model but name and other data in a separate <code>Profile</code> model:</p><div class="code_container">
+<p>though an anonymous module is unreachable by definition.</p><div class="note"><p>定义于 <code>active_support/core_ext/module/anonymous.rb</code>.</p></div><h4 id="method-delegation">3.7 Method Delegation</h4><p>The macro <code>delegate</code> offers an easy way to forward methods.</p><p>Let's imagine that users in some application have login information in the <code>User</code> model but name and other data in a separate <code>Profile</code> model:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User &lt; ActiveRecord::Base
   has_one :profile
@@ -1108,7 +1109,7 @@ delegate :size, to: :attachment, prefix: :avatar
 
 </pre>
 </div>
-<p>In the previous example the macro generates <code>avatar_size</code> rather than <code>size</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/delegation.rb</code></p></div><h4 id="redefining-methods">3.8 Redefining Methods</h4><p>There are cases where you need to define a method with <code>define_method</code>, but don't know whether a method with that name already exists. If it does, a warning is issued if they are enabled. No big deal, but not clean either.</p><p>The method <code>redefine_method</code> prevents such a potential warning, removing the existing method before if needed.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/remove_method.rb</code></p></div><h3 id="extensions-to-class">4 Extensions to <code>Class</code>
+<p>In the previous example the macro generates <code>avatar_size</code> rather than <code>size</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/module/delegation.rb</code></p></div><h4 id="redefining-methods">3.8 Redefining Methods</h4><p>There are cases where you need to define a method with <code>define_method</code>, but don't know whether a method with that name already exists. If it does, a warning is issued if they are enabled. No big deal, but not clean either.</p><p>The method <code>redefine_method</code> prevents such a potential warning, removing the existing method before if needed.</p><div class="note"><p>定义于 <code>active_support/core_ext/module/remove_method.rb</code></p></div><h3 id="extensions-to-class">4 Extensions to <code>Class</code>
 </h3><h4 id="class-attributes">4.1 Class Attributes</h4><h5 id="class_attribute">4.1.1 <code>class_attribute</code>
 </h5><p>The method <code>class_attribute</code> declares one or more inheritable class attributes that can be overridden at any level down the hierarchy.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -1180,7 +1181,7 @@ A.new.x = 1 # NoMethodError
 
 </pre>
 </div>
-<p>For convenience <code>class_attribute</code> also defines an instance predicate which is the double negation of what the instance reader returns. In the examples above it would be called <code>x?</code>.</p><p>When <code>:instance_reader</code> is <code>false</code>, the instance predicate returns a <code>NoMethodError</code> just like the reader method.</p><p>If you do not want the instance predicate, pass <code>instance_predicate: false</code> and it will not be defined.</p><div class="note"><p>Defined in <code>active_support/core_ext/class/attribute.rb</code></p></div><h5 id="cattr_reader,-cattr_writer,-and-cattr_accessor">4.1.2 <code>cattr_reader</code>, <code>cattr_writer</code>, and <code>cattr_accessor</code>
+<p>For convenience <code>class_attribute</code> also defines an instance predicate which is the double negation of what the instance reader returns. In the examples above it would be called <code>x?</code>.</p><p>When <code>:instance_reader</code> is <code>false</code>, the instance predicate returns a <code>NoMethodError</code> just like the reader method.</p><p>If you do not want the instance predicate, pass <code>instance_predicate: false</code> and it will not be defined.</p><div class="note"><p>定义于 <code>active_support/core_ext/class/attribute.rb</code></p></div><h5 id="cattr_reader,-cattr_writer,-and-cattr_accessor">4.1.2 <code>cattr_reader</code>, <code>cattr_writer</code>, and <code>cattr_accessor</code>
 </h5><p>The macros <code>cattr_reader</code>, <code>cattr_writer</code>, and <code>cattr_accessor</code> are analogous to their <code>attr_*</code> counterparts but for classes. They initialize a class variable to <code>nil</code> unless it already exists, and generate the corresponding class methods to access it:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class MysqlAdapter &lt; AbstractAdapter
@@ -1226,7 +1227,7 @@ end
 
 </pre>
 </div>
-<p>A model may find it useful to set <code>:instance_accessor</code> to <code>false</code> as a way to prevent mass-assignment from setting the attribute.</p><div class="note"><p>Defined in <code>active_support/core_ext/module/attribute_accessors.rb</code>.</p></div><h4 id="subclasses-&amp;-descendants">4.2 Subclasses &amp; Descendants</h4><h5 id="subclasses">4.2.1 <code>subclasses</code>
+<p>A model may find it useful to set <code>:instance_accessor</code> to <code>false</code> as a way to prevent mass-assignment from setting the attribute.</p><div class="note"><p>定义于 <code>active_support/core_ext/module/attribute_accessors.rb</code>.</p></div><h4 id="subclasses-&amp;-descendants">4.2 Subclasses &amp; Descendants</h4><h5 id="subclasses">4.2.1 <code>subclasses</code>
 </h5><p>The <code>subclasses</code> method returns the subclasses of the receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class C; end
@@ -1243,7 +1244,7 @@ C.subclasses # =&gt; [B, D]
 
 </pre>
 </div>
-<p>The order in which these classes are returned is unspecified.</p><div class="note"><p>Defined in <code>active_support/core_ext/class/subclasses.rb</code>.</p></div><h5 id="descendants">4.2.2 <code>descendants</code>
+<p>The order in which these classes are returned is unspecified.</p><div class="note"><p>定义于 <code>active_support/core_ext/class/subclasses.rb</code>.</p></div><h5 id="descendants">4.2.2 <code>descendants</code>
 </h5><p>The <code>descendants</code> method returns all classes that are <code>&lt;</code> than its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class C; end
@@ -1260,8 +1261,8 @@ C.descendants # =&gt; [B, A, D]
 
 </pre>
 </div>
-<p>The order in which these classes are returned is unspecified.</p><div class="note"><p>Defined in <code>active_support/core_ext/class/subclasses.rb</code>.</p></div><h3 id="extensions-to-string">5 Extensions to <code>String</code>
-</h3><h4 id="output-safety">5.1 Output Safety</h4><h5 id="motivation">5.1.1 Motivation</h5><p>Inserting data into HTML templates needs extra care. For example, you can't just interpolate <code>@review.title</code> verbatim into an HTML page. For one thing, if the review title is "Flanagan &amp; Matz rules!" the output won't be well-formed because an ampersand has to be escaped as "&amp;amp;". What's more, depending on the application, that may be a big security hole because users can inject malicious HTML setting a hand-crafted review title. Check out the section about cross-site scripting in the <a href="security.html#cross-site-scripting-xss">Security guide</a> for further information about the risks.</p><h5 id="safe-strings">5.1.2 Safe Strings</h5><p>Active Support has the concept of <i>(html) safe</i> strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.</p><p>Strings are considered to be <i>unsafe</i> by default:</p><div class="code_container">
+<p>The order in which these classes are returned is unspecified.</p><div class="note"><p>定义于 <code>active_support/core_ext/class/subclasses.rb</code>.</p></div><h3 id="extensions-to-string">5 Extensions to <code>String</code>
+</h3><h4 id="output-safety">5.1 Output Safety</h4><h5 id="motivation">5.1.1 Motivation</h5><p>Inserting data into HTML templates needs extra care. For example, you can't just interpolate <code>@review.title</code> verbatim into an HTML page. For one thing, if the review title is "Flanagan &amp; Matz rules!" the output won't be well-formed because an ampersand has to be escaped as "&amp;amp;". What's more, depending on the application, that may be a big security hole because users can inject malicious HTML setting a hand-crafted review title. Check out the section about cross-site scripting in the <a href="security.html#cross-site-scripting-xss">Security guide</a> for further information about the risks.</p><h5 id="safe-strings">5.1.2 Safe Strings</h5><p>Active Support has the concept of <em>(html) safe</em> strings. A safe string is one that is marked as being insertable into HTML as is. It is trusted, no matter whether it has been escaped or not.</p><p>Strings are considered to be <em>unsafe</em> by default:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "".html_safe? # =&gt; false
 
@@ -1320,21 +1321,21 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/output_safety.rb</code>.</p></div><h5 id="transformation">5.1.3 Transformation</h5><p>As a rule of thumb, except perhaps for concatenation as explained above, any method that may change a string gives you an unsafe string. These are <code>downcase</code>, <code>gsub</code>, <code>strip</code>, <code>chomp</code>, <code>underscore</code>, etc.</p><p>In the case of in-place transformations like <code>gsub!</code> the receiver itself becomes unsafe.</p><div class="info"><p>The safety bit is lost always, no matter whether the transformation actually changed something.</p></div><h5 id="conversion-and-coercion">5.1.4 Conversion and Coercion</h5><p>Calling <code>to_s</code> on a safe string returns a safe string, but coercion with <code>to_str</code> returns an unsafe string.</p><h5 id="copying">5.1.5 Copying</h5><p>Calling <code>dup</code> or <code>clone</code> on safe strings yields safe strings.</p><h4 id="remove">5.2 <code>remove</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/output_safety.rb</code>.</p></div><h5 id="transformation">5.1.3 Transformation</h5><p>As a rule of thumb, except perhaps for concatenation as explained above, any method that may change a string gives you an unsafe string. These are <code>downcase</code>, <code>gsub</code>, <code>strip</code>, <code>chomp</code>, <code>underscore</code>, etc.</p><p>In the case of in-place transformations like <code>gsub!</code> the receiver itself becomes unsafe.</p><div class="info"><p>The safety bit is lost always, no matter whether the transformation actually changed something.</p></div><h5 id="conversion-and-coercion">5.1.4 Conversion and Coercion</h5><p>Calling <code>to_s</code> on a safe string returns a safe string, but coercion with <code>to_str</code> returns an unsafe string.</p><h5 id="copying">5.1.5 Copying</h5><p>Calling <code>dup</code> or <code>clone</code> on safe strings yields safe strings.</p><h4 id="remove">5.2 <code>remove</code>
 </h4><p>The method <code>remove</code> will remove all occurrences of the pattern:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Hello World".remove(/Hello /) =&gt; "World"
 
 </pre>
 </div>
-<p>There's also the destructive version <code>String#remove!</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="squish">5.3 <code>squish</code>
+<p>There's also the destructive version <code>String#remove!</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="squish">5.3 <code>squish</code>
 </h4><p>The method <code>squish</code> strips leading and trailing whitespace, and substitutes runs of whitespace with a single space each:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 " \n  foo\n\r \t bar \n".squish # =&gt; "foo bar"
 
 </pre>
 </div>
-<p>There's also the destructive version <code>String#squish!</code>.</p><p>Note that it handles both ASCII and Unicode whitespace like mongolian vowel separator (U+180E).</p><div class="note"><p>Defined in <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="truncate">5.4 <code>truncate</code>
+<p>There's also the destructive version <code>String#squish!</code>.</p><p>Note that it handles both ASCII and Unicode whitespace like mongolian vowel separator (U+180E).</p><div class="note"><p>定义于 <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="truncate">5.4 <code>truncate</code>
 </h4><p>The method <code>truncate</code> returns a copy of its receiver truncated after a given <code>length</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Oh dear! Oh dear! I shall be late!".truncate(20)
@@ -1365,7 +1366,7 @@ end
 
 </pre>
 </div>
-<p>In above examples "dear" gets cut first, but then <code>:separator</code> prevents it.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="inquiry">5.5 <code>inquiry</code>
+<p>In above examples "dear" gets cut first, but then <code>:separator</code> prevents it.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/filters.rb</code>.</p></div><h4 id="inquiry">5.5 <code>inquiry</code>
 </h4><p>The <code>inquiry</code> method converts a string into a <code>StringInquirer</code> object making equality checks prettier.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "production".inquiry.production? # =&gt; true
@@ -1381,7 +1382,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/starts_ends_with.rb</code>.</p></div><h4 id="strip_heredoc">5.7 <code>strip_heredoc</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/starts_ends_with.rb</code>.</p></div><h4 id="strip_heredoc">5.7 <code>strip_heredoc</code>
 </h4><p>The method <code>strip_heredoc</code> strips indentation in heredocs.</p><p>For example in</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 if options[:usage]
@@ -1397,7 +1398,7 @@ end
 </pre>
 </div>
 <p>the user would see the usage message aligned against the left margin.</p><p>Technically, it looks for the least indented line in the whole string, and removes
-that amount of leading whitespace.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/strip.rb</code>.</p></div><h4 id="indent">5.8 <code>indent</code>
+that amount of leading whitespace.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/strip.rb</code>.</p></div><h4 id="indent">5.8 <code>indent</code>
 </h4><p>Indents the lines in the receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 &lt;&lt;EOS.indent(2)
@@ -1427,7 +1428,7 @@ EOS
 
 </pre>
 </div>
-<p>The <code>indent!</code> method performs indentation in-place.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/indent.rb</code>.</p></div><h4 id="access">5.9 Access</h4><h5 id="at(position)">5.9.1 <code>at(position)</code>
+<p>The <code>indent!</code> method performs indentation in-place.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/indent.rb</code>.</p></div><h4 id="access">5.9 Access</h4><h5 id="at(position)">5.9.1 <code>at(position)</code>
 </h5><p>Returns the character of the string at position <code>position</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "hello".at(0)  # =&gt; "h"
@@ -1437,7 +1438,7 @@ EOS
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="from(position)">5.9.2 <code>from(position)</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="from(position)">5.9.2 <code>from(position)</code>
 </h5><p>Returns the substring of the string starting at position <code>position</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "hello".from(0)  # =&gt; "hello"
@@ -1447,7 +1448,7 @@ EOS
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="to(position)">5.9.3 <code>to(position)</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="to(position)">5.9.3 <code>to(position)</code>
 </h5><p>Returns the substring of the string up to position <code>position</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "hello".to(0)  # =&gt; "h"
@@ -1457,9 +1458,9 @@ EOS
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="first(limit-=-1)">5.9.4 <code>first(limit = 1)</code>
-</h5><p>The call <code>str.first(n)</code> is equivalent to <code>str.to(n-1)</code> if <code>n</code> &gt; 0, and returns an empty string for <code>n</code> == 0.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="last(limit-=-1)">5.9.5 <code>last(limit = 1)</code>
-</h5><p>The call <code>str.last(n)</code> is equivalent to <code>str.from(-n)</code> if <code>n</code> &gt; 0, and returns an empty string for <code>n</code> == 0.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/access.rb</code>.</p></div><h4 id="inflections">5.10 Inflections</h4><h5 id="pluralize">5.10.1 <code>pluralize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="first(limit-=-1)">5.9.4 <code>first(limit = 1)</code>
+</h5><p>The call <code>str.first(n)</code> is equivalent to <code>str.to(n-1)</code> if <code>n</code> &gt; 0, and returns an empty string for <code>n</code> == 0.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/access.rb</code>.</p></div><h5 id="last(limit-=-1)">5.9.5 <code>last(limit = 1)</code>
+</h5><p>The call <code>str.last(n)</code> is equivalent to <code>str.from(-n)</code> if <code>n</code> &gt; 0, and returns an empty string for <code>n</code> == 0.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/access.rb</code>.</p></div><h4 id="inflections">5.10 Inflections</h4><h5 id="pluralize">5.10.1 <code>pluralize</code>
 </h5><p>The method <code>pluralize</code> returns the plural of its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "table".pluralize     # =&gt; "tables"
@@ -1486,7 +1487,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="singularize">5.10.2 <code>singularize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="singularize">5.10.2 <code>singularize</code>
 </h5><p>The inverse of <code>pluralize</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "tables".singularize    # =&gt; "table"
@@ -1506,7 +1507,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="camelize">5.10.3 <code>camelize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="camelize">5.10.3 <code>camelize</code>
 </h5><p>The method <code>camelize</code> returns its receiver in camel case:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "product".camelize    # =&gt; "Product"
@@ -1547,7 +1548,7 @@ end
 
 </pre>
 </div>
-<p><code>camelize</code> is aliased to <code>camelcase</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="underscore">5.10.4 <code>underscore</code>
+<p><code>camelize</code> is aliased to <code>camelcase</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="underscore">5.10.4 <code>underscore</code>
 </h5><p>The method <code>underscore</code> goes the other way around, from camel case to paths:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Product".underscore   # =&gt; "product"
@@ -1579,7 +1580,7 @@ end
 
 </pre>
 </div>
-<div class="info"><p>As a rule of thumb you can think of <code>underscore</code> as the inverse of <code>camelize</code>, though there are cases where that does not hold. For example, <code>"SSLError".underscore.camelize</code> gives back <code>"SslError"</code>.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="titleize">5.10.5 <code>titleize</code>
+<div class="info"><p>As a rule of thumb you can think of <code>underscore</code> as the inverse of <code>camelize</code>, though there are cases where that does not hold. For example, <code>"SSLError".underscore.camelize</code> gives back <code>"SslError"</code>.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="titleize">5.10.5 <code>titleize</code>
 </h5><p>The method <code>titleize</code> capitalizes the words in the receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "alice in wonderland".titleize # =&gt; "Alice In Wonderland"
@@ -1587,7 +1588,7 @@ end
 
 </pre>
 </div>
-<p><code>titleize</code> is aliased to <code>titlecase</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="dasherize">5.10.6 <code>dasherize</code>
+<p><code>titleize</code> is aliased to <code>titlecase</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="dasherize">5.10.6 <code>dasherize</code>
 </h5><p>The method <code>dasherize</code> replaces the underscores in the receiver with dashes:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "name".dasherize         # =&gt; "name"
@@ -1605,7 +1606,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="demodulize">5.10.7 <code>demodulize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="demodulize">5.10.7 <code>demodulize</code>
 </h5><p>Given a string with a qualified constant name, <code>demodulize</code> returns the very constant name, that is, the rightmost part of it:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Product".demodulize                        # =&gt; "Product"
@@ -1630,7 +1631,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="deconstantize">5.10.8 <code>deconstantize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="deconstantize">5.10.8 <code>deconstantize</code>
 </h5><p>Given a string with a qualified constant reference expression, <code>deconstantize</code> removes the rightmost segment, generally leaving the name of the constant's container:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Product".deconstantize                        # =&gt; ""
@@ -1652,7 +1653,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="parameterize">5.10.9 <code>parameterize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="parameterize">5.10.9 <code>parameterize</code>
 </h5><p>The method <code>parameterize</code> normalizes its receiver in a way that can be used in pretty URLs.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "John Smith".parameterize # =&gt; "john-smith"
@@ -1660,7 +1661,7 @@ end
 
 </pre>
 </div>
-<p>In fact, the result string is wrapped in an instance of <code>ActiveSupport::Multibyte::Chars</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="tableize">5.10.10 <code>tableize</code>
+<p>In fact, the result string is wrapped in an instance of <code>ActiveSupport::Multibyte::Chars</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="tableize">5.10.10 <code>tableize</code>
 </h5><p>The method <code>tableize</code> is <code>underscore</code> followed by <code>pluralize</code>.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Person".tableize      # =&gt; "people"
@@ -1669,7 +1670,7 @@ end
 
 </pre>
 </div>
-<p>As a rule of thumb, <code>tableize</code> returns the table name that corresponds to a given model for simple cases. The actual implementation in Active Record is not straight <code>tableize</code> indeed, because it also demodulizes the class name and checks a few options that may affect the returned string.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="classify">5.10.11 <code>classify</code>
+<p>As a rule of thumb, <code>tableize</code> returns the table name that corresponds to a given model for simple cases. The actual implementation in Active Record is not straight <code>tableize</code> indeed, because it also demodulizes the class name and checks a few options that may affect the returned string.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="classify">5.10.11 <code>classify</code>
 </h5><p>The method <code>classify</code> is the inverse of <code>tableize</code>. It gives you the class name corresponding to a table name:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "people".classify        # =&gt; "Person"
@@ -1684,7 +1685,7 @@ end
 
 </pre>
 </div>
-<p>Note that <code>classify</code> returns a class name as a string. You can get the actual class object invoking <code>constantize</code> on it, explained next.</p><div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="constantize">5.10.12 <code>constantize</code>
+<p>Note that <code>classify</code> returns a class name as a string. You can get the actual class object invoking <code>constantize</code> on it, explained next.</p><div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="constantize">5.10.12 <code>constantize</code>
 </h5><p>The method <code>constantize</code> resolves the constant reference expression in its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "Fixnum".constantize # =&gt; Fixnum
@@ -1720,7 +1721,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="humanize">5.10.13 <code>humanize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="humanize">5.10.13 <code>humanize</code>
 </h5><p>The method <code>humanize</code> tweaks an attribute name for display to end users.</p><p>Specifically performs these transformations:</p>
 <ul>
 <li>Applies human inflection rules to the argument.</li>
@@ -1765,7 +1766,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="foreign_key">5.10.14 <code>foreign_key</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h5 id="foreign_key">5.10.14 <code>foreign_key</code>
 </h5><p>The method <code>foreign_key</code> gives a foreign key column name from a class name. To do so it demodulizes, underscores, and adds "_id":</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "User".foreign_key           # =&gt; "user_id"
@@ -1787,7 +1788,7 @@ foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h4 id="extensions-to-string-conversions">5.11 Conversions</h4><h5 id="to_date,-to_time,-to_datetime">5.11.1 <code>to_date</code>, <code>to_time</code>, <code>to_datetime</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/string/inflections.rb</code>.</p></div><h4 id="extensions-to-string-conversions">5.11 Conversions</h4><h5 id="to_date,-to_time,-to_datetime">5.11.1 <code>to_date</code>, <code>to_time</code>, <code>to_datetime</code>
 </h5><p>The methods <code>to_date</code>, <code>to_time</code>, and <code>to_datetime</code> are basically convenience wrappers around <code>Date._parse</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 "2010-07-27".to_date              # =&gt; Tue, 27 Jul 2010
@@ -1803,7 +1804,7 @@ foreign_key = options[:foreign_key] || reflection.active_record.name.foreign_key
 
 </pre>
 </div>
-<p>Default is <code>:utc</code>.</p><p>Please refer to the documentation of <code>Date._parse</code> for further details.</p><div class="info"><p>The three of them return <code>nil</code> for blank receivers.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/string/conversions.rb</code>.</p></div><h3 id="extensions-to-numeric">6 Extensions to <code>Numeric</code>
+<p>Default is <code>:utc</code>.</p><p>Please refer to the documentation of <code>Date._parse</code> for further details.</p><div class="info"><p>The three of them return <code>nil</code> for blank receivers.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/string/conversions.rb</code>.</p></div><h3 id="extensions-to-numeric">6 Extensions to <code>Numeric</code>
 </h3><h4 id="bytes">6.1 Bytes</h4><p>All numbers respond to these methods:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 bytes
@@ -1831,7 +1832,7 @@ exabytes
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/numeric/bytes.rb</code>.</p></div><h4 id="time">6.2 Time</h4><p>Enables the use of time calculations and declarations, like <code>45.minutes + 2.hours + 4.years</code>.</p><p>These methods use Time#advance for precise date calculations when using from_now, ago, etc.
+<div class="note"><p>定义于 <code>active_support/core_ext/numeric/bytes.rb</code>.</p></div><h4 id="time">6.2 Time</h4><p>Enables the use of time calculations and declarations, like <code>45.minutes + 2.hours + 4.years</code>.</p><p>These methods use Time#advance for precise date calculations when using from_now, ago, etc.
 as well as adding or subtracting their results from a Time object. For example:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # equivalent to Time.current.advance(months: 1)
@@ -1859,7 +1860,7 @@ converted before use:</p><div class="code_container">
 </div>
 <p>In such cases, Ruby's core <a href="http://ruby-doc.org/stdlib/libdoc/date/rdoc/Date.html">Date</a> and
 <a href="http://ruby-doc.org/stdlib/libdoc/time/rdoc/Time.html">Time</a> should be used for precision
-date and time arithmetic.</p><div class="note"><p>Defined in <code>active_support/core_ext/numeric/time.rb</code>.</p></div><h4 id="formatting">6.3 Formatting</h4><p>Enables the formatting of numbers in a variety of ways.</p><p>Produce a string representation of a number as a telephone number:</p><div class="code_container">
+date and time arithmetic.</p><div class="note"><p>定义于 <code>active_support/core_ext/numeric/time.rb</code>.</p></div><h4 id="formatting">6.3 Formatting</h4><p>Enables the formatting of numbers in a variety of ways.</p><p>Produce a string representation of a number as a telephone number:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 5551234.to_s(:phone)
 # =&gt; 555-1234
@@ -1940,7 +1941,7 @@ date and time arithmetic.</p><div class="note"><p>Defined in <code>active_suppor
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/numeric/conversions.rb</code>.</p></div><h3 id="extensions-to-integer">7 Extensions to <code>Integer</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/numeric/conversions.rb</code>.</p></div><h3 id="extensions-to-integer">7 Extensions to <code>Integer</code>
 </h3><h4 id="multiple_of-questionmark">7.1 <code>multiple_of?</code>
 </h4><p>The method <code>multiple_of?</code> tests whether an integer is multiple of the argument:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -1949,7 +1950,7 @@ date and time arithmetic.</p><div class="note"><p>Defined in <code>active_suppor
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/integer/multiple.rb</code>.</p></div><h4 id="ordinal">7.2 <code>ordinal</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/integer/multiple.rb</code>.</p></div><h4 id="ordinal">7.2 <code>ordinal</code>
 </h4><p>The method <code>ordinal</code> returns the ordinal suffix string corresponding to the receiver integer:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 1.ordinal    # =&gt; "st"
@@ -1961,7 +1962,7 @@ date and time arithmetic.</p><div class="note"><p>Defined in <code>active_suppor
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/integer/inflections.rb</code>.</p></div><h4 id="ordinalize">7.3 <code>ordinalize</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/integer/inflections.rb</code>.</p></div><h4 id="ordinalize">7.3 <code>ordinalize</code>
 </h4><p>The method <code>ordinalize</code> returns the ordinal string corresponding to the receiver integer. In comparison, note that the <code>ordinal</code> method returns <strong>only</strong> the suffix string.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 1.ordinalize    # =&gt; "1st"
@@ -1973,7 +1974,7 @@ date and time arithmetic.</p><div class="note"><p>Defined in <code>active_suppor
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/integer/inflections.rb</code>.</p></div><h3 id="extensions-to-bigdecimal">8 Extensions to <code>BigDecimal</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/integer/inflections.rb</code>.</p></div><h3 id="extensions-to-bigdecimal">8 Extensions to <code>BigDecimal</code>
 </h3><h4 id="extensions-to-bigdecimal-to_s">8.1 <code>to_s</code>
 </h4><p>The method <code>to_s</code> is aliased to <code>to_formatted_s</code>. This provides a convenient way to display a BigDecimal value in floating-point notation:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -2037,7 +2038,7 @@ BigDecimal.new(5.00, 6).to_formatted_s("e")  # =&gt; "0.5E1"
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="index_by">9.2 <code>index_by</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="index_by">9.2 <code>index_by</code>
 </h4><p>The method <code>index_by</code> generates a hash with the elements of an enumerable indexed by some key.</p><p>It iterates through the collection and passes each element to a block. The element will be keyed by the value returned by the block:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 invoices.index_by(&amp;:number)
@@ -2045,7 +2046,7 @@ invoices.index_by(&amp;:number)
 
 </pre>
 </div>
-<div class="warning"><p>Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="many-questionmark">9.3 <code>many?</code>
+<div class="warning"><p>Keys should normally be unique. If the block returns the same value for different elements no collection is built for that key. The last item will win.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="many-questionmark">9.3 <code>many?</code>
 </h4><p>The method <code>many?</code> is shorthand for <code>collection.size &gt; 1</code>:</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;% if pages.many? %&gt;
@@ -2060,14 +2061,14 @@ invoices.index_by(&amp;:number)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="exclude-questionmark">9.4 <code>exclude?</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/enumerable.rb</code>.</p></div><h4 id="exclude-questionmark">9.4 <code>exclude?</code>
 </h4><p>The predicate <code>exclude?</code> tests whether a given object does <strong>not</strong> belong to the collection. It is the negation of the built-in <code>include?</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 to_visit &lt;&lt; node if visited.exclude?(node)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/enumerable.rb</code>.</p></div><h3 id="extensions-to-array">10 Extensions to <code>Array</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/enumerable.rb</code>.</p></div><h3 id="extensions-to-array">10 Extensions to <code>Array</code>
 </h3><h4 id="accessing">10.1 Accessing</h4><p>Active Support augments the API of arrays to ease certain ways of accessing them. For example, <code>to</code> returns the subarray of elements up to the one at the passed index:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 %w(a b c d).to(2) # =&gt; %w(a b c)
@@ -2090,7 +2091,7 @@ to_visit &lt;&lt; node if visited.exclude?(node)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/array/access.rb</code>.</p></div><h4 id="adding-elements">10.2 Adding Elements</h4><h5 id="prepend">10.2.1 <code>prepend</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/array/access.rb</code>.</p></div><h4 id="adding-elements">10.2 Adding Elements</h4><h5 id="prepend">10.2.1 <code>prepend</code>
 </h5><p>This method is an alias of <code>Array#unshift</code>.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 %w(a b c d).prepend('e')  # =&gt; %w(e a b c d)
@@ -2098,7 +2099,7 @@ to_visit &lt;&lt; node if visited.exclude?(node)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/array/prepend_and_append.rb</code>.</p></div><h5 id="append">10.2.2 <code>append</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/array/prepend_and_append.rb</code>.</p></div><h5 id="append">10.2.2 <code>append</code>
 </h5><p>This method is an alias of <code>Array#&lt;&lt;</code>.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 %w(a b c d).append('e')  # =&gt; %w(a b c d e)
@@ -2106,7 +2107,7 @@ to_visit &lt;&lt; node if visited.exclude?(node)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/array/prepend_and_append.rb</code>.</p></div><h4 id="options-extraction">10.3 Options Extraction</h4><p>When the last argument in a method call is a hash, except perhaps for a <code>&amp;block</code> argument, Ruby allows you to omit the brackets:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/array/prepend_and_append.rb</code>.</p></div><h4 id="options-extraction">10.3 Options Extraction</h4><p>When the last argument in a method call is a hash, except perhaps for a <code>&amp;block</code> argument, Ruby allows you to omit the brackets:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 User.exists?(email: params[:email])
 
@@ -2122,7 +2123,7 @@ end
 
 </pre>
 </div>
-<p>This method receives an arbitrary number of action names, and an optional hash of options as last argument. With the call to <code>extract_options!</code> you obtain the options hash and remove it from <code>actions</code> in a simple and explicit way.</p><div class="note"><p>Defined in <code>active_support/core_ext/array/extract_options.rb</code>.</p></div><h4 id="extensions-to-array-conversions">10.4 Conversions</h4><h5 id="to_sentence">10.4.1 <code>to_sentence</code>
+<p>This method receives an arbitrary number of action names, and an optional hash of options as last argument. With the call to <code>extract_options!</code> you obtain the options hash and remove it from <code>actions</code> in a simple and explicit way.</p><div class="note"><p>定义于 <code>active_support/core_ext/array/extract_options.rb</code>.</p></div><h4 id="extensions-to-array-conversions">10.4 Conversions</h4><h5 id="to_sentence">10.4.1 <code>to_sentence</code>
 </h5><p>The method <code>to_sentence</code> turns an array into a string containing a sentence that enumerates its items:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 %w().to_sentence                # =&gt; ""
@@ -2164,7 +2165,7 @@ end
 </tr>
 </tbody>
 </table>
-<div class="note"><p>Defined in <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h5 id="extensions-to-array-conversions-to_formatted_s">10.4.2 <code>to_formatted_s</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h5 id="extensions-to-array-conversions-to_formatted_s">10.4.2 <code>to_formatted_s</code>
 </h5><p>The method <code>to_formatted_s</code> acts like <code>to_s</code> by default.</p><p>If the array contains items that respond to <code>id</code>, however, the symbol
 <code>:db</code> may be passed as argument. That's typically used with
 collections of Active Record objects. Returned strings are:</p><div class="code_container">
@@ -2175,7 +2176,7 @@ invoice.lines.to_formatted_s(:db) # =&gt; "23,567,556,12"
 
 </pre>
 </div>
-<p>Integers in the example above are supposed to come from the respective calls to <code>id</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h5 id="extensions-to-array-conversions-to_xml">10.4.3 <code>to_xml</code>
+<p>Integers in the example above are supposed to come from the respective calls to <code>id</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h5 id="extensions-to-array-conversions-to_xml">10.4.3 <code>to_xml</code>
 </h5><p>The method <code>to_xml</code> returns a string containing an XML representation of its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Contributor.limit(2).order(:rank).to_xml
@@ -2265,7 +2266,7 @@ Contributor.limit(2).order(:rank).to_xml(skip_types: true)
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h4 id="wrapping">10.5 Wrapping</h4><p>The method <code>Array.wrap</code> wraps its argument in an array unless it is already an array (or array-like).</p><p>Specifically:</p>
+<div class="note"><p>定义于 <code>active_support/core_ext/array/conversions.rb</code>.</p></div><h4 id="wrapping">10.5 Wrapping</h4><p>The method <code>Array.wrap</code> wraps its argument in an array unless it is already an array (or array-like).</p><p>Specifically:</p>
 <ul>
 <li>If the argument is <code>nil</code> an empty list is returned.</li>
 <li>Otherwise, if the argument responds to <code>to_ary</code> it is invoked, and if the value of <code>to_ary</code> is not <code>nil</code>, it is returned.</li>
@@ -2298,7 +2299,7 @@ Array(foo: :bar)      # =&gt; [[:foo, :bar]]
 
 </pre>
 </div>
-<p>which in Ruby 1.8 returns <code>[nil]</code> for <code>nil</code>, and calls to <code>Array(object)</code> otherwise. (Please if you know the exact behavior in 1.9 contact fxn.)</p><p>Thus, in this case the behavior is different for <code>nil</code>, and the differences with <code>Kernel#Array</code> explained above apply to the rest of <code>object</code>s.</p><div class="note"><p>Defined in <code>active_support/core_ext/array/wrap.rb</code>.</p></div><h4 id="duplicating">10.6 Duplicating</h4><p>The method <code>Array.deep_dup</code> duplicates itself and all objects inside
+<p>which in Ruby 1.8 returns <code>[nil]</code> for <code>nil</code>, and calls to <code>Array(object)</code> otherwise. (Please if you know the exact behavior in 1.9 contact fxn.)</p><p>Thus, in this case the behavior is different for <code>nil</code>, and the differences with <code>Kernel#Array</code> explained above apply to the rest of <code>object</code>s.</p><div class="note"><p>定义于 <code>active_support/core_ext/array/wrap.rb</code>.</p></div><h4 id="duplicating">10.6 Duplicating</h4><p>The method <code>Array.deep_dup</code> duplicates itself and all objects inside
 recursively with Active Support method <code>Object#deep_dup</code>. It works like <code>Array#map</code> with sending <code>deep_dup</code> method to each object inside.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 array = [1, [2, 3]]
@@ -2308,7 +2309,7 @@ array[1][2] == nil   # =&gt; true
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="grouping">10.7 Grouping</h4><h5 id="in_groups_of(number,-fill_with-=-nil)">10.7.1 <code>in_groups_of(number, fill_with = nil)</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="grouping">10.7 Grouping</h4><h5 id="in_groups_of(number,-fill_with-=-nil)">10.7.1 <code>in_groups_of(number, fill_with = nil)</code>
 </h5><p>The method <code>in_groups_of</code> splits an array into consecutive groups of a certain size. It returns an array with the groups:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 [1, 2, 3].in_groups_of(2) # =&gt; [[1, 2], [3, nil]]
@@ -2339,7 +2340,7 @@ array[1][2] == nil   # =&gt; true
 
 </pre>
 </div>
-<p>As a consequence <code>false</code> can't be a used as a padding value.</p><div class="note"><p>Defined in <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h5 id="in_groups(number,-fill_with-=-nil)">10.7.2 <code>in_groups(number, fill_with = nil)</code>
+<p>As a consequence <code>false</code> can't be a used as a padding value.</p><div class="note"><p>定义于 <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h5 id="in_groups(number,-fill_with-=-nil)">10.7.2 <code>in_groups(number, fill_with = nil)</code>
 </h5><p>The method <code>in_groups</code> splits an array into a certain number of groups. The method returns an array with the groups:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 %w(1 2 3 4 5 6 7).in_groups(3)
@@ -2370,7 +2371,7 @@ array[1][2] == nil   # =&gt; true
 
 </pre>
 </div>
-<p>As a consequence <code>false</code> can't be a used as a padding value.</p><div class="note"><p>Defined in <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h5 id="split(value-=-nil)">10.7.3 <code>split(value = nil)</code>
+<p>As a consequence <code>false</code> can't be a used as a padding value.</p><div class="note"><p>定义于 <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h5 id="split(value-=-nil)">10.7.3 <code>split(value = nil)</code>
 </h5><p>The method <code>split</code> divides an array by a separator and returns the resulting chunks.</p><p>If a block is passed the separators are those elements of the array for which the block returns true:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 (-5..5).to_a.split { |i| i.multiple_of?(4) }
@@ -2385,7 +2386,7 @@ array[1][2] == nil   # =&gt; true
 
 </pre>
 </div>
-<div class="info"><p>Observe in the previous example that consecutive separators result in empty arrays.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h3 id="extensions-to-hash">11 Extensions to <code>Hash</code>
+<div class="info"><p>Observe in the previous example that consecutive separators result in empty arrays.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/array/grouping.rb</code>.</p></div><h3 id="extensions-to-hash">11 Extensions to <code>Hash</code>
 </h3><h4 id="extensions-to-hash-conversions">11.1 Conversions</h4><h5 id="conversions-to_xml">11.1.1 <code>to_xml</code>
 </h5><p>The method <code>to_xml</code> returns a string containing an XML representation of its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -2424,7 +2425,7 @@ XML_TYPE_NAMES = {
 
 </pre>
 </div>
-<p>By default the root node is "hash", but that's configurable via the <code>:root</code> option.</p><p>The default XML builder is a fresh instance of <code>Builder::XmlMarkup</code>. You can configure your own builder with the <code>:builder</code> option. The method also accepts options like <code>:dasherize</code> and friends, they are forwarded to the builder.</p><div class="note"><p>Defined in <code>active_support/core_ext/hash/conversions.rb</code>.</p></div><h4 id="merging">11.2 Merging</h4><p>Ruby has a built-in method <code>Hash#merge</code> that merges two hashes:</p><div class="code_container">
+<p>By default the root node is "hash", but that's configurable via the <code>:root</code> option.</p><p>The default XML builder is a fresh instance of <code>Builder::XmlMarkup</code>. You can configure your own builder with the <code>:builder</code> option. The method also accepts options like <code>:dasherize</code> and friends, they are forwarded to the builder.</p><div class="note"><p>定义于 <code>active_support/core_ext/hash/conversions.rb</code>.</p></div><h4 id="merging">11.2 Merging</h4><p>Ruby has a built-in method <code>Hash#merge</code> that merges two hashes:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1, b: 1}.merge(a: 0, c: 2)
 # =&gt; {:a=&gt;0, :b=&gt;1, :c=&gt;2}
@@ -2450,8 +2451,8 @@ options.reverse_merge!(length: 30, omission: "...")
 
 </pre>
 </div>
-<div class="warning"><p>Take into account that <code>reverse_merge!</code> may change the hash in the caller, which may or may not be a good idea.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/hash/reverse_merge.rb</code>.</p></div><h5 id="reverse_update">11.2.2 <code>reverse_update</code>
-</h5><p>The method <code>reverse_update</code> is an alias for <code>reverse_merge!</code>, explained above.</p><div class="warning"><p>Note that <code>reverse_update</code> has no bang.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/hash/reverse_merge.rb</code>.</p></div><h5 id="deep_merge-and-deep_merge-bang">11.2.3 <code>deep_merge</code> and <code>deep_merge!</code>
+<div class="warning"><p>Take into account that <code>reverse_merge!</code> may change the hash in the caller, which may or may not be a good idea.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/hash/reverse_merge.rb</code>.</p></div><h5 id="reverse_update">11.2.2 <code>reverse_update</code>
+</h5><p>The method <code>reverse_update</code> is an alias for <code>reverse_merge!</code>, explained above.</p><div class="warning"><p>Note that <code>reverse_update</code> has no bang.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/hash/reverse_merge.rb</code>.</p></div><h5 id="deep_merge-and-deep_merge-bang">11.2.3 <code>deep_merge</code> and <code>deep_merge!</code>
 </h5><p>As you can see in the previous example if a key is found in both hashes the value in the one in the argument wins.</p><p>Active Support defines <code>Hash#deep_merge</code>. In a deep merge, if a key is found in both hashes and their values are hashes in turn, then their <em>merge</em> becomes the value in the resulting hash:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: {b: 1}}.deep_merge(a: {c: 2})
@@ -2459,7 +2460,7 @@ options.reverse_merge!(length: 30, omission: "...")
 
 </pre>
 </div>
-<p>The method <code>deep_merge!</code> performs a deep merge in place.</p><div class="note"><p>Defined in <code>active_support/core_ext/hash/deep_merge.rb</code>.</p></div><h4 id="deep-duplicating">11.3 Deep duplicating</h4><p>The method <code>Hash.deep_dup</code> duplicates itself and all keys and values
+<p>The method <code>deep_merge!</code> performs a deep merge in place.</p><div class="note"><p>定义于 <code>active_support/core_ext/hash/deep_merge.rb</code>.</p></div><h4 id="deep-duplicating">11.3 Deep duplicating</h4><p>The method <code>Hash.deep_dup</code> duplicates itself and all keys and values
 inside recursively with Active Support method <code>Object#deep_dup</code>. It works like <code>Enumerator#each_with_object</code> with sending <code>deep_dup</code> method to each pair inside.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 hash = { a: 1, b: { c: 2, d: [3, 4] } }
@@ -2473,7 +2474,7 @@ hash[:b][:d] == [3, 4]   # =&gt; true
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="working-with-keys">11.4 Working with Keys</h4><h5 id="except-and-except-bang">11.4.1 <code>except</code> and <code>except!</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/object/deep_dup.rb</code>.</p></div><h4 id="working-with-keys">11.4 Working with Keys</h4><h5 id="except-and-except-bang">11.4.1 <code>except</code> and <code>except!</code>
 </h5><p>The method <code>except</code> returns a hash with the keys in the argument list removed, if present:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1, b: 2}.except(:a) # =&gt; {:b=&gt;2}
@@ -2487,7 +2488,7 @@ hash[:b][:d] == [3, 4]   # =&gt; true
 
 </pre>
 </div>
-<p>There's also the bang variant <code>except!</code> that removes keys in the very receiver.</p><div class="note"><p>Defined in <code>active_support/core_ext/hash/except.rb</code>.</p></div><h5 id="transform_keys-and-transform_keys-bang">11.4.2 <code>transform_keys</code> and <code>transform_keys!</code>
+<p>There's also the bang variant <code>except!</code> that removes keys in the very receiver.</p><div class="note"><p>定义于 <code>active_support/core_ext/hash/except.rb</code>.</p></div><h5 id="transform_keys-and-transform_keys-bang">11.4.2 <code>transform_keys</code> and <code>transform_keys!</code>
 </h5><p>The method <code>transform_keys</code> accepts a block and returns a hash that has applied the block operations to each of the keys in the receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {nil =&gt; nil, 1 =&gt; 1, a: :a}.transform_keys { |key| key.to_s.upcase }
@@ -2524,7 +2525,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="stringify_keys-and-stringify_keys-bang">11.4.3 <code>stringify_keys</code> and <code>stringify_keys!</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="stringify_keys-and-stringify_keys-bang">11.4.3 <code>stringify_keys</code> and <code>stringify_keys!</code>
 </h5><p>The method <code>stringify_keys</code> returns a hash that has a stringified version of the keys in the receiver. It does so by sending <code>to_s</code> to them:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {nil =&gt; nil, 1 =&gt; 1, a: :a}.stringify_keys
@@ -2559,7 +2560,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="symbolize_keys-and-symbolize_keys-bang">11.4.4 <code>symbolize_keys</code> and <code>symbolize_keys!</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="symbolize_keys-and-symbolize_keys-bang">11.4.4 <code>symbolize_keys</code> and <code>symbolize_keys!</code>
 </h5><p>The method <code>symbolize_keys</code> returns a hash that has a symbolized version of the keys in the receiver, where possible. It does so by sending <code>to_sym</code> to them:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {nil =&gt; nil, 1 =&gt; 1, "a" =&gt; "a"}.symbolize_keys
@@ -2594,8 +2595,8 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="to_options-and-to_options-bang">11.4.5 <code>to_options</code> and <code>to_options!</code>
-</h5><p>The methods <code>to_options</code> and <code>to_options!</code> are respectively aliases of <code>symbolize_keys</code> and <code>symbolize_keys!</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="assert_valid_keys">11.4.6 <code>assert_valid_keys</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="to_options-and-to_options-bang">11.4.5 <code>to_options</code> and <code>to_options!</code>
+</h5><p>The methods <code>to_options</code> and <code>to_options!</code> are respectively aliases of <code>symbolize_keys</code> and <code>symbolize_keys!</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h5 id="assert_valid_keys">11.4.6 <code>assert_valid_keys</code>
 </h5><p>The method <code>assert_valid_keys</code> receives an arbitrary number of arguments, and checks whether the receiver has any key outside that white list. If it does <code>ArgumentError</code> is raised.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1}.assert_valid_keys(:a)  # passes
@@ -2603,7 +2604,7 @@ end
 
 </pre>
 </div>
-<p>Active Record does not accept unknown options when building associations, for example. It implements that control via <code>assert_valid_keys</code>.</p><div class="note"><p>Defined in <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h4 id="slicing">11.5 Slicing</h4><p>Ruby has built-in support for taking slices out of strings and arrays. Active Support extends slicing to hashes:</p><div class="code_container">
+<p>Active Record does not accept unknown options when building associations, for example. It implements that control via <code>assert_valid_keys</code>.</p><div class="note"><p>定义于 <code>active_support/core_ext/hash/keys.rb</code>.</p></div><h4 id="slicing">11.5 Slicing</h4><p>Ruby has built-in support for taking slices out of strings and arrays. Active Support extends slicing to hashes:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1, b: 2, c: 3}.slice(:a, :c)
 # =&gt; {:c=&gt;3, :a=&gt;1}
@@ -2628,7 +2629,7 @@ hash                   # =&gt; {:a=&gt;1}
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/slice.rb</code>.</p></div><h4 id="extracting">11.6 Extracting</h4><p>The method <code>extract!</code> removes and returns the key/value pairs matching the given keys.</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/slice.rb</code>.</p></div><h4 id="extracting">11.6 Extracting</h4><p>The method <code>extract!</code> removes and returns the key/value pairs matching the given keys.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 hash = {a: 1, b: 2}
 rest = hash.extract!(:a) # =&gt; {:a=&gt;1}
@@ -2644,19 +2645,19 @@ rest = hash.extract!(:a).class
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/slice.rb</code>.</p></div><h4 id="indifferent-access">11.7 Indifferent Access</h4><p>The method <code>with_indifferent_access</code> returns an <code>ActiveSupport::HashWithIndifferentAccess</code> out of its receiver:</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/slice.rb</code>.</p></div><h4 id="indifferent-access">11.7 Indifferent Access</h4><p>The method <code>with_indifferent_access</code> returns an <code>ActiveSupport::HashWithIndifferentAccess</code> out of its receiver:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1}.with_indifferent_access["a"] # =&gt; 1
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/indifferent_access.rb</code>.</p></div><h4 id="compacting">11.8 Compacting</h4><p>The methods <code>compact</code> and <code>compact!</code> return a Hash without items with <code>nil</code> value.</p><div class="code_container">
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/indifferent_access.rb</code>.</p></div><h4 id="compacting">11.8 Compacting</h4><p>The methods <code>compact</code> and <code>compact!</code> return a Hash without items with <code>nil</code> value.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 {a: 1, b: 2, c: nil}.compact # =&gt; {a: 1, b: 2}
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/hash/compact.rb</code>.</p></div><h3 id="extensions-to-regexp">12 Extensions to <code>Regexp</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/hash/compact.rb</code>.</p></div><h3 id="extensions-to-regexp">12 Extensions to <code>Regexp</code>
 </h3><h4 id="multiline-questionmark">12.1 <code>multiline?</code>
 </h4><p>The method <code>multiline?</code> says whether a regexp has the <code>/m</code> flag set, that is, whether the dot matches newlines.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -2680,7 +2681,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/regexp.rb</code>.</p></div><h3 id="extensions-to-range">13 Extensions to <code>Range</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/regexp.rb</code>.</p></div><h3 id="extensions-to-range">13 Extensions to <code>Range</code>
 </h3><h4 id="extensions-to-range-to_s">13.1 <code>to_s</code>
 </h4><p>Active Support extends the method <code>Range#to_s</code> so that it understands an optional format argument. As of this writing the only supported non-default format is <code>:db</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -2692,7 +2693,7 @@ end
 
 </pre>
 </div>
-<p>As the example depicts, the <code>:db</code> format generates a <code>BETWEEN</code> SQL clause. That is used by Active Record in its support for range values in conditions.</p><div class="note"><p>Defined in <code>active_support/core_ext/range/conversions.rb</code>.</p></div><h4 id="include-questionmark">13.2 <code>include?</code>
+<p>As the example depicts, the <code>:db</code> format generates a <code>BETWEEN</code> SQL clause. That is used by Active Record in its support for range values in conditions.</p><div class="note"><p>定义于 <code>active_support/core_ext/range/conversions.rb</code>.</p></div><h4 id="include-questionmark">13.2 <code>include?</code>
 </h4><p>The methods <code>Range#include?</code> and <code>Range#===</code> say whether some value falls between the ends of a given instance:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 (2..3).include?(Math::E) # =&gt; true
@@ -2713,7 +2714,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/range/include_range.rb</code>.</p></div><h4 id="overlaps-questionmark">13.3 <code>overlaps?</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/range/include_range.rb</code>.</p></div><h4 id="overlaps-questionmark">13.3 <code>overlaps?</code>
 </h4><p>The method <code>Range#overlaps?</code> says whether any two given ranges have non-void intersection:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 (1..10).overlaps?(7..11)  # =&gt; true
@@ -2722,7 +2723,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/range/overlaps.rb</code>.</p></div><h3 id="extensions-to-proc">14 Extensions to <code>Proc</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/range/overlaps.rb</code>.</p></div><h3 id="extensions-to-proc">14 Extensions to <code>Proc</code>
 </h3><h4 id="bind">14.1 <code>bind</code>
 </h4><p>As you surely know Ruby has an <code>UnboundMethod</code> class whose instances are methods that belong to the limbo of methods without a self. The method <code>Module#instance_method</code> returns an unbound method for example:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -2760,7 +2761,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/proc.rb</code>.</p></div><h3 id="extensions-to-date">15 Extensions to <code>Date</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/proc.rb</code>.</p></div><h3 id="extensions-to-date">15 Extensions to <code>Date</code>
 </h3><h4 id="extensions-to-date-calculations">15.1 Calculations</h4><div class="note"><p>All the following methods are defined in <code>active_support/core_ext/date/calculations.rb</code>.</p></div><div class="info"><p>The following calculation methods have edge cases in October 1582, since days 5..14 just do not exist. This guide does not document their behavior around those days for brevity, but it is enough to say that they do what you would expect. That is, <code>Date.new(1582, 10, 4).tomorrow</code> returns <code>Date.new(1582, 10, 15)</code> and so on. Please check <code>test/core_ext/date_ext_test.rb</code> in the Active Support test suite for expected behavior.</p></div><h5 id="date.current">15.1.1 <code>Date.current</code>
 </h5><p>Active Support defines <code>Date.current</code> to be today in the current time zone. That's like <code>Date.today</code>, except that it honors the user time zone, if defined. It also defines <code>Date.yesterday</code> and <code>Date.tomorrow</code>, and the instance predicates <code>past?</code>, <code>today?</code>, and <code>future?</code>, all of them relative to <code>Date.current</code>.</p><p>When making Date comparisons using methods which honor the user time zone, make sure to use <code>Date.current</code> and not <code>Date.today</code>. There are cases where the user time zone might be in the future compared to the system time zone, which <code>Date.today</code> uses by default. This means <code>Date.today</code> may equal <code>Date.yesterday</code>.</p><h5 id="named-dates">15.1.2 Named dates</h5><h6 id="prev_year,-next_year">15.1.2.1 <code>prev_year</code>, <code>next_year</code>
 </h6><p>In Ruby 1.9 <code>prev_year</code> and <code>next_year</code> return a date with the same day/month in the last or next year:</p><div class="code_container">
@@ -3260,7 +3261,7 @@ t.advance(seconds: 1)
 <li>If <code>since</code> or <code>ago</code> jump to a time that can't be expressed with <code>Time</code> a <code>DateTime</code> object is returned instead.</li>
 </ul>
 <h5 id="time.current">17.1.1 <code>Time.current</code>
-</h5><p>Active Support defines <code>Time.current</code> to be today in the current time zone. That's like <code>Time.now</code>, except that it honors the user time zone, if defined. It also defines <code>Time.yesterday</code> and <code>Time.tomorrow</code>, and the instance predicates <code>past?</code>, <code>today?</code>, and <code>future?</code>, all of them relative to <code>Time.current</code>.</p><p>When making Time comparisons using methods which honor the user time zone, make sure to use <code>Time.current</code> and not <code>Time.now</code>. There are cases where the user time zone might be in the future compared to the system time zone, which <code>Time.today</code> uses by default. This means <code>Time.now</code> may equal <code>Time.yesterday</code>.</p><h5 id="all_day,-all_week,-all_month,-all_quarter-and-all_year">17.1.2 <code>all_day</code>, <code>all_week</code>, <code>all_month</code>, <code>all_quarter</code> and <code>all_year</code>
+</h5><p>Active Support defines <code>Time.current</code> to be today in the current time zone. That's like <code>Time.now</code>, except that it honors the user time zone, if defined. It also defines the instance predicates <code>past?</code>, <code>today?</code>, and <code>future?</code>, all of them relative to <code>Time.current</code>.</p><p>When making Time comparisons using methods which honor the user time zone, make sure to use <code>Time.current</code> instead of <code>Time.now</code>. There are cases where the user time zone might be in the future compared to the system time zone, which <code>Time.now</code> uses by default. This means <code>Time.now.to_date</code> may equal <code>Date.yesterday</code>.</p><h5 id="all_day,-all_week,-all_month,-all_quarter-and-all_year">17.1.2 <code>all_day</code>, <code>all_week</code>, <code>all_month</code>, <code>all_quarter</code> and <code>all_year</code>
 </h5><p>The method <code>all_day</code> returns a range representing the whole day of the current time.</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 now = Time.current
@@ -3324,7 +3325,7 @@ end
 
 </pre>
 </div>
-<p>To accomplish this <code>atomic_write</code> creates a temporary file. That's the file the code in the block actually writes to. On completion, the temporary file is renamed, which is an atomic operation on POSIX systems. If the target file exists <code>atomic_write</code> overwrites it and keeps owners and permissions. However there are a few cases where <code>atomic_write</code> cannot change the file ownership or permissions, this error is caught and skipped over trusting in the user/filesystem to ensure the file is accessible to the processes that need it.</p><div class="note"><p>Due to the chmod operation <code>atomic_write</code> performs, if the target file has an ACL set on it this ACL will be recalculated/modified.</p></div><div class="warning"><p>Note you can't append with <code>atomic_write</code>.</p></div><p>The auxiliary file is written in a standard directory for temporary files, but you can pass a directory of your choice as second argument.</p><div class="note"><p>Defined in <code>active_support/core_ext/file/atomic.rb</code>.</p></div><h3 id="extensions-to-marshal">19 Extensions to <code>Marshal</code>
+<p>To accomplish this <code>atomic_write</code> creates a temporary file. That's the file the code in the block actually writes to. On completion, the temporary file is renamed, which is an atomic operation on POSIX systems. If the target file exists <code>atomic_write</code> overwrites it and keeps owners and permissions. However there are a few cases where <code>atomic_write</code> cannot change the file ownership or permissions, this error is caught and skipped over trusting in the user/filesystem to ensure the file is accessible to the processes that need it.</p><div class="note"><p>Due to the chmod operation <code>atomic_write</code> performs, if the target file has an ACL set on it this ACL will be recalculated/modified.</p></div><div class="warning"><p>Note you can't append with <code>atomic_write</code>.</p></div><p>The auxiliary file is written in a standard directory for temporary files, but you can pass a directory of your choice as second argument.</p><div class="note"><p>定义于 <code>active_support/core_ext/file/atomic.rb</code>.</p></div><h3 id="extensions-to-marshal">19 Extensions to <code>Marshal</code>
 </h3><h4 id="load">19.1 <code>load</code>
 </h4><p>Active Support adds constant autoloading support to <code>load</code>.</p><p>For example, the file cache store deserializes this way:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -3332,7 +3333,7 @@ File.open(file_name) { |f| Marshal.load(f) }
 
 </pre>
 </div>
-<p>If the cached data refers to a constant that is unknown at that point, the autoloading mechanism is triggered and if it succeeds the deserialization is retried transparently.</p><div class="warning"><p>If the argument is an <code>IO</code> it needs to respond to <code>rewind</code> to be able to retry. Regular files respond to <code>rewind</code>.</p></div><div class="note"><p>Defined in <code>active_support/core_ext/marshal.rb</code>.</p></div><h3 id="extensions-to-logger">20 Extensions to <code>Logger</code>
+<p>If the cached data refers to a constant that is unknown at that point, the autoloading mechanism is triggered and if it succeeds the deserialization is retried transparently.</p><div class="warning"><p>If the argument is an <code>IO</code> it needs to respond to <code>rewind</code> to be able to retry. Regular files respond to <code>rewind</code>.</p></div><div class="note"><p>定义于 <code>active_support/core_ext/marshal.rb</code>.</p></div><h3 id="extensions-to-logger">20 Extensions to <code>Logger</code>
 </h3><h4 id="around_[level]">20.1 <code>around_[level]</code>
 </h4><p>Takes two arguments, a <code>before_message</code> and <code>after_message</code> and calls the current level method on the <code>Logger</code> instance, passing in the <code>before_message</code>, then the specified message, then the <code>after_message</code>:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
@@ -3369,7 +3370,7 @@ logger.info("&lt;- is the current time")
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/logger.rb</code>.</p></div><h3 id="extensions-to-nameerror">21 Extensions to <code>NameError</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/logger.rb</code>.</p></div><h3 id="extensions-to-nameerror">21 Extensions to <code>NameError</code>
 </h3><p>Active Support adds <code>missing_name?</code> to <code>NameError</code>, which tests whether the exception was raised because of the name passed as argument.</p><p>The name may be given as a symbol or string. A symbol is tested against the bare constant name, a string is against the fully-qualified constant name.</p><div class="info"><p>A symbol can represent a fully-qualified constant name as in <code>:"ActiveRecord::Base"</code>, so the behavior for symbols is defined for convenience, not because it has to be that way technically.</p></div><p>For example, when an action of <code>ArticlesController</code> is called Rails tries optimistically to use <code>ArticlesHelper</code>. It is OK that the helper module does not exist, so if an exception for that constant name is raised it should be silenced. But it could be the case that <code>articles_helper.rb</code> raises a <code>NameError</code> due to an actual unknown constant. That should be reraised. The method <code>missing_name?</code> provides a way to distinguish both cases:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def default_helper_module!
@@ -3384,7 +3385,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/name_error.rb</code>.</p></div><h3 id="extensions-to-loaderror">22 Extensions to <code>LoadError</code>
+<div class="note"><p>定义于 <code>active_support/core_ext/name_error.rb</code>.</p></div><h3 id="extensions-to-loaderror">22 Extensions to <code>LoadError</code>
 </h3><p>Active Support adds <code>is_missing?</code> to <code>LoadError</code>, and also assigns that class to the constant <code>MissingSourceFile</code> for backwards compatibility.</p><p>Given a path name <code>is_missing?</code> tests whether the exception was raised due to that particular file (except perhaps for the ".rb" extension).</p><p>For example, when an action of <code>ArticlesController</code> is called Rails tries to load <code>articles_helper.rb</code>, but that file may not exist. That's fine, the helper module is not mandatory so Rails silences a load error. But it could be the case that the helper module does exist and in turn requires another library that is missing. In that case Rails must reraise the exception. The method <code>is_missing?</code> provides a way to distinguish both cases:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def default_helper_module!
@@ -3399,7 +3400,7 @@ end
 
 </pre>
 </div>
-<div class="note"><p>Defined in <code>active_support/core_ext/load_error.rb</code>.</p></div>
+<div class="note"><p>定义于 <code>active_support/core_ext/load_error.rb</code>.</p></div>
 
         <h3>反馈</h3>
         <p>
