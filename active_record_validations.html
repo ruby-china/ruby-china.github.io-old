@@ -368,7 +368,7 @@ end
 </pre>
 </div>
 <p><code>invalid?</code> 是 <code>valid?</code> 的逆测试，会触发数据验证，如果找到错误就返回 <code>true</code>，否则返回 <code>false</code>。</p><h4 id="数据验证简介-errors[]">1.5 <code>errors[]</code>
-</h4><p>要检查对象的某个属性是否合法，可以使用 <code>errors[:attribute]</code>。<code>errors[:attribute]</code> 中包含 <code>:attribute</code> 的所有错误。如果某个属性没有错误，就会返回空数组。</p><p>这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。而且，和前面介绍的 <code>ActiveRecord::Base#invalid?</code> 方法不一样，因为 <code>errors[:attribute]</code> 不会验证整个对象，值检查对象的某个属性是否出错。</p><div class="code_container">
+</h4><p>要检查对象的某个属性是否合法，可以使用 <code>errors[:attribute]</code>。<code>errors[:attribute]</code> 中包含 <code>:attribute</code> 的所有错误。如果某个属性没有错误，就会返回空数组。</p><p>这个方法只在数据验证之后才能使用，因为它只是用来收集错误信息的，并不会触发验证。而且，和前面介绍的 <code>ActiveRecord::Base#invalid?</code> 方法不一样，因为 <code>errors[:attribute]</code> 不会验证整个对象，只检查对象的某个属性是否出错。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Person &lt; ActiveRecord::Base
   validates :name, presence: true
@@ -828,7 +828,7 @@ end
 
 </pre>
 </div>
-<p>如上面的代码所示，可以同时使用内建的验证方法和自定义的验证类。</p><h4 id="自定义验证使用的方法">6.2 自定义验证使用的方法</h4><p>还可以自定义方法验证模型的状态，如果验证失败，向 <code>erros</code> 集合添加错误消息。然后还要使用类方法 <code>validate</code> 注册这些方法，传入自定义验证方法名的 Symbol 形式。</p><p>类方法可以接受多个 Symbol，自定义的验证方法会按照注册的顺序执行。</p><div class="code_container">
+<p>如上面的代码所示，可以同时使用内建的验证方法和自定义的验证类。</p><h4 id="自定义验证使用的方法">6.2 自定义验证使用的方法</h4><p>还可以自定义方法验证模型的状态，如果验证失败，向 <code>errors</code> 集合添加错误消息。然后还要使用类方法 <code>validate</code> 注册这些方法，传入自定义验证方法名的 Symbol 形式。</p><p>类方法可以接受多个 Symbol，自定义的验证方法会按照注册的顺序执行。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Invoice &lt; ActiveRecord::Base
   validate :expiration_date_cannot_be_in_the_past,
