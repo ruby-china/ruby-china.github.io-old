@@ -175,7 +175,7 @@
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A3%B0%E6%98%8E%E5%91%A8%E6%9C%9F">对象的声明周期</a></li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">对象的生命周期</a></li>
 <li>
 <a href="#%E5%9B%9E%E8%B0%83%E7%AE%80%E4%BB%8B">回调简介</a>
 
@@ -220,7 +220,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="对象的声明周期">1 对象的声明周期</h3><p>在 Rails 程序运行过程中，对象可以被创建、更新和销毁。Active Record 为对象的生命周期提供了很多钩子，让你控制程序及其数据。</p><p>回调可以在对象的状态改变之前或之后触发指定的逻辑操作。</p><h3 id="回调简介">2 回调简介</h3><p>回调是在对象生命周期的特定时刻执行的方法。回调方法可以在 Active Record 对象创建、保存、更新、删除、验证或从数据库中读出时执行。</p><h4 id="注册回调">2.1 注册回调</h4><p>在使用回调之前，要先注册。回调方法的定义和普通的方法一样，然后使用类方法注册：</p><div class="code_container">
+        <h3 id="对象的生命周期">1 对象的生命周期</h3><p>在 Rails 程序运行过程中，对象可以被创建、更新和销毁。Active Record 为对象的生命周期提供了很多钩子，让你控制程序及其数据。</p><p>回调可以在对象的状态改变之前或之后触发指定的逻辑操作。</p><h3 id="回调简介">2 回调简介</h3><p>回调是在对象生命周期的特定时刻执行的方法。回调方法可以在 Active Record 对象创建、保存、更新、删除、验证或从数据库中读出时执行。</p><h4 id="注册回调">2.1 注册回调</h4><p>在使用回调之前，要先注册。回调方法的定义和普通的方法一样，然后使用类方法注册：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class User &lt; ActiveRecord::Base
   validates :login, :email, presence: true
