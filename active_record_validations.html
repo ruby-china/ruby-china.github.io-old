@@ -305,7 +305,7 @@ $ rails console
 <li><code>update</code></li>
 <li><code>update!</code></li>
 </ul>
-<p>爆炸方法（例如 <code>save!</code>）会在验证失败后抛出异常。验证失败后，非爆炸方法不会抛出异常，<code>save</code> 和 <code>update</code> 返回 <code>false</code>，<code>create</code> 返回对象本身。</p><h4 id="跳过验证">1.3 跳过验证</h4><p>下列方法会跳过验证，不过验证是否通过都会把对象存入数据库，使用时要特别留意。</p>
+<p>爆炸方法（例如 <code>save!</code>）会在验证失败后抛出异常。验证失败后，非爆炸方法不会抛出异常，<code>save</code> 和 <code>update</code> 返回 <code>false</code>，<code>create</code> 返回对象本身。</p><h4 id="跳过验证">1.3 跳过验证</h4><p>下列方法会跳过验证，不管验证是否通过都会把对象存入数据库，使用时要特别留意。</p>
 <ul>
 <li><code>decrement!</code></li>
 <li><code>decrement_counter</code></li>

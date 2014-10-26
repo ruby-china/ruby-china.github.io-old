@@ -843,7 +843,7 @@ end
 
 </pre>
 </div>
-<h3 id="集成测试">5 集成测试</h3><p>继承测试用来测试多个控制器之间的交互，一般用来测试程序中重要的工作流程。</p><p>与单元测试和功能测试不同，集成测试必须单独生成，保存在 <code>test/integration</code> 文件夹中。Rails 提供了一个生成器用来生成集成测试骨架。</p><div class="code_container">
+<h3 id="集成测试">5 集成测试</h3><p>集成测试用来测试多个控制器之间的交互，一般用来测试程序中重要的工作流程。</p><p>与单元测试和功能测试不同，集成测试必须单独生成，保存在 <code>test/integration</code> 文件夹中。Rails 提供了一个生成器用来生成集成测试骨架。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails generate integration_test user_flows
       exists  test/integration/
@@ -1011,7 +1011,7 @@ end
 <tbody>
 <tr>
 <td><code>rake test</code></td>
-<td>运行所有单元测试，功能测试和继承测试。还可以直接运行 <code>rake</code>，因为默认的 Rake 任务就是运行所有测试。</td>
+<td>运行所有单元测试，功能测试和集成测试。还可以直接运行 <code>rake</code>，因为默认的 Rake 任务就是运行所有测试。</td>
 </tr>
 <tr>
 <td><code>rake test:controllers</code></td>
