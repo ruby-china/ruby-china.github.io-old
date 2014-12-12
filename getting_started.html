@@ -545,7 +545,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 </pre>
 </div>
-<p><code>articles_path</code> 帮助方法告诉 Rails，对应的地址是 <code>/articels</code>，默认情况下，这个表单会向这个路由发起 <code>POST</code> 请求。这个路由对应于 <code>ArticlesController</code> 控制器的 <code>create</code> 动作。</p><p>表单写好了，路由也定义了，现在可以填写表单，然后点击提交按钮新建文章了。请实际操作一下。提交表单后，会看到一个熟悉的错误：</p><p><img src="images/getting_started/unknown_action_create_for_articles.png" alt="ArticlesController 控制器不知如何处理 create 动作"></p><p>解决这个错误，要在 <code>ArticlesController</code> 控制器中定义 <code>create</code> 动作。</p><h4 id="创建文章">5.3 创建文章</h4><p>要解决前一节出现的错误，可以在 <code>ArticlesController</code> 类中定义 <code>create</code> 方法。在 <code>app/controllers/articles_controller.rb</code> 文件中 <code>new</code> 方法后面添加以下代码：</p><div class="code_container">
+<p><code>articles_path</code> 帮助方法告诉 Rails，对应的地址是 <code>/articles</code>，默认情况下，这个表单会向这个路由发起 <code>POST</code> 请求。这个路由对应于 <code>ArticlesController</code> 控制器的 <code>create</code> 动作。</p><p>表单写好了，路由也定义了，现在可以填写表单，然后点击提交按钮新建文章了。请实际操作一下。提交表单后，会看到一个熟悉的错误：</p><p><img src="images/getting_started/unknown_action_create_for_articles.png" alt="ArticlesController 控制器不知如何处理 create 动作"></p><p>解决这个错误，要在 <code>ArticlesController</code> 控制器中定义 <code>create</code> 动作。</p><h4 id="创建文章">5.3 创建文章</h4><p>要解决前一节出现的错误，可以在 <code>ArticlesController</code> 类中定义 <code>create</code> 方法。在 <code>app/controllers/articles_controller.rb</code> 文件中 <code>new</code> 方法后面添加以下代码：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ArticlesController &lt; ApplicationController
   def new
