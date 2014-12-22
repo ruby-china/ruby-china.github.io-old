@@ -192,8 +192,7 @@
 <li><a href="#%E5%BC%82%E6%AD%A5%E9%82%AE%E4%BB%B6">异步邮件</a></li>
 <li><a href="#adequate-record">Adequate Record</a></li>
 <li><a href="#web-%E7%BB%88%E7%AB%AF">Web 终端</a></li>
-<li><a href="#%E9%87%8D%E8%A6%81%E6%96%B0%E7%89%B9%E6%80%A7-%E5%A4%96%E9%94%AE%E6%94%AF%E6%8C%81">外键支持</a></li>
-<li><a href="#%E9%87%8D%E8%A6%81%E6%96%B0%E7%89%B9%E6%80%A7-%E5%A4%96%E9%94%AE%E6%94%AF%E6%8C%81">外键支持</a></li>
+<li><a href="#%E5%A4%96%E9%94%AE%E6%94%AF%E6%8C%81">外键支持</a></li>
 </ul>
 </li>
 <li>
@@ -327,23 +326,7 @@ post.comments(true)
 
 </pre>
 </div>
-<h4 id="web-终端">2.4 Web 终端</h4><p>用 Rails 4.2 新产生的应用程序，缺省搭载了 <a href="https://github.com/rails/web-console">Web 终端</a>。Web 终端给错误页面添加了一个互动式 Ruby 终端，并提供视图帮助方法 <code>console</code>，以及一些控制器帮助方法。</p><p>错误页面的互动式的终端，让你可以在异常发生的地方执行代码。插入 <code>console</code> 视图帮助方法到任何页面，便可以在页面的上下文里，在页面渲染结束后启动一个互动式的终端。</p><p>最后，可以执行 <code>rails console</code> 来启动一个 VT100 终端。若需要建立或修改测试资料，可以直接从浏览器里执行。</p><h4 id="重要新特性-外键支持">2.5 外键支持</h4><p>迁移 DSL 现在支持新增、移除外键，外键也会导出到 <code>schema.rb</code>。目前只有 <code>mysql</code>、<code>mysql2</code> 以及 <code>postgresql</code> 的适配器支持外键。</p><div class="code_container">
-<pre class="brush: ruby; gutter: false; toolbar: false">
-# add a foreign key to `articles.author_id` referencing `authors.id`
-add_foreign_key :articles, :authors
-
-# add a foreign key to `articles.author_id` referencing `users.lng_id`
-add_foreign_key :articles, :users, column: :author_id, primary_key: "lng_id"
-
-# remove the foreign key on `accounts.branch_id`
-remove_foreign_key :accounts, :branches
-
-# remove the foreign key on `accounts.owner_id`
-remove_foreign_key :accounts, column: :owner_id
-
-</pre>
-</div>
-<p>完整说明请参考 API 文档：<a href="http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-add_foreign_key">add_foreign_key</a> 和 <a href="http://api.rubyonrails.org/v4.2.0/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html#method-i-remove_foreign_key">remove_foreign_key</a>。</p><h4 id="重要新特性-外键支持">2.6 外键支持</h4><p>迁移 DSL 现在支持新增、移除外键，也会导出到 <code>schema.rb</code>。目前只有 <code>mysql</code>、<code>mysql2</code> 以及 <code>postgresql</code> 的适配器支持外键。</p><div class="code_container">
+<h4 id="web-终端">2.4 Web 终端</h4><p>用 Rails 4.2 新产生的应用程序，缺省搭载了 <a href="https://github.com/rails/web-console">Web 终端</a>。Web 终端给错误页面添加了一个互动式 Ruby 终端，并提供视图帮助方法 <code>console</code>，以及一些控制器帮助方法。</p><p>错误页面的互动式的终端，让你可以在异常发生的地方执行代码。插入 <code>console</code> 视图帮助方法到任何页面，便可以在页面的上下文里，在页面渲染结束后启动一个互动式的终端。</p><p>最后，可以执行 <code>rails console</code> 来启动一个 VT100 终端。若需要建立或修改测试资料，可以直接从浏览器里执行。</p><h4 id="外键支持">2.5 外键支持</h4><p>迁移 DSL 现在支持新增、移除外键，外键也会导出到 <code>schema.rb</code>。目前只有 <code>mysql</code>、<code>mysql2</code> 以及 <code>postgresql</code> 的适配器支持外键。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # add a foreign key to `articles.author_id` referencing `authors.id`
 add_foreign_key :articles, :authors
