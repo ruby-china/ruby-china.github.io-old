@@ -173,7 +173,7 @@
       <h2>Active Record 数据验证</h2><p>本文介绍如何使用 Active Record 提供的数据验证功能在数据存入数据库之前验证对象的状态。</p><p>读完本文，你将学到：</p>
 <ul>
 <li>如何使用 Active Record 内建的数据验证帮助方法；</li>
-<li>如果编写自定义的数据验证方法；</li>
+<li>如何编写自定义的数据验证方法；</li>
 <li>如何处理验证时产生的错误消息；</li>
 </ul>
 
@@ -403,7 +403,7 @@ end
 </pre>
 </div>
 <h4 id="validates_associated">2.2 <code>validates_associated</code>
-</h4><p>如果模型和其他模型有关联，也要验证关联的模型对象，可以使用这个方法。保存对象是，会在相关联的每个对象上调用 <code>valid?</code> 方法。</p><div class="code_container">
+</h4><p>如果模型和其他模型有关联，也要验证关联的模型对象，可以使用这个方法。保存对象时，会在相关联的每个对象上调用 <code>valid?</code> 方法。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Library &lt; ActiveRecord::Base
   has_many :books
@@ -791,7 +791,7 @@ end
 
 </pre>
 </div>
-<p><code>with_options</code> 代码块中的所有验证都会使用 <code>if: :is_admin?</code> 这个条件。</p><h4 id="联合条件">5.5 联合条件</h4><p>另一方面，如果是否做某个验证要满足多个条件时，可以使用数组。而且，都一个验证可以同时指定 <code>:if</code> 和 <code>:unless</code> 选项。</p><div class="code_container">
+<p><code>with_options</code> 代码块中的所有验证都会使用 <code>if: :is_admin?</code> 这个条件。</p><h4 id="联合条件">5.5 联合条件</h4><p>另一方面，当多个条件规定验证是否应该执行时，可以使用数组。而且，同一个验证可以同时指定 <code>:if</code> 和 <code>:unless</code> 选项。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Computer &lt; ActiveRecord::Base
   validates :mouse, presence: true,
