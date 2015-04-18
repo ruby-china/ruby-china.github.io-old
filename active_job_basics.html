@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-<title>Active Job Basics — Ruby on Rails 指南</title>
+<title>Active Job 基础 — Ruby on Rails 指南</title>
 <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
 <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
@@ -67,7 +67,7 @@
                 <dd><a href="active_support_core_extensions.html">Active Support 核心扩展</a></dd>
                 <dd><a href="i18n.html">Rails 国际化 API</a></dd>
                 <dd><a href="action_mailer_basics.html">Action Mailer 基础</a></dd>
-                <dd><a href="active_job_basics.html">Active Job Basics</a></dd>
+                <dd><a href="active_job_basics.html">Active Job 基础</a></dd>
                 <dd><a href="security.html">Rails 安全指南</a></dd>
                 <dd><a href="debugging_rails_applications.html">调试 Rails 程序</a></dd>
                 <dd><a href="configuring.html">设置 Rails 程序</a></dd>
@@ -127,7 +127,7 @@
                   <option value="active_support_core_extensions.html">Active Support 核心扩展</option>
                   <option value="i18n.html">Rails 国际化 API</option>
                   <option value="action_mailer_basics.html">Action Mailer 基础</option>
-                  <option value="active_job_basics.html">Active Job Basics</option>
+                  <option value="active_job_basics.html">Active Job 基础</option>
                   <option value="security.html">Rails 安全指南</option>
                   <option value="debugging_rails_applications.html">调试 Rails 程序</option>
                   <option value="configuring.html">设置 Rails 程序</option>
@@ -170,49 +170,48 @@
 
   <div id="feature">
     <div class="wrapper">
-      <h2>Active Job Basics</h2><p>This guide provides you with all you need to get started in creating,
-enqueueing and executing background jobs.</p><p>After reading this guide, you will know:</p>
+      <h2>Active Job 基础</h2><p>本文提供开始创建任务、将任务加入队列和后台执行任务的所有知识。</p><p>读完本文，你将学到:</p>
 <ul>
-<li>How to create jobs.</li>
-<li>How to enqueue jobs.</li>
-<li>How to run jobs in the background.</li>
-<li>How to send emails from your application async.</li>
+<li>如何新建任务</li>
+<li>如何将任务加入队列</li>
+<li>如何在后台运行任务</li>
+<li>如何在应用中异步发送邮件</li>
 </ul>
 
 
                 <div id="subCol">
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#the-purpose-of-active-job">The Purpose of Active Job</a></li>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#active-job-%E7%9A%84%E7%9B%AE%E6%A0%87">Active Job 的目标</a></li>
 <li>
-<a href="#creating-a-job">Creating a Job</a>
+<a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%BB%E5%8A%A1">创建一个任务</a>
 
 <ul>
-<li><a href="#create-the-job">Create the Job</a></li>
-<li><a href="#enqueue-the-job">Enqueue the Job</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%BB%BB%E5%8A%A1">创建任务</a></li>
+<li><a href="#%E4%BB%BB%E5%8A%A1%E5%8A%A0%E5%85%A5%E9%98%9F%E5%88%97">任务加入队列</a></li>
 </ul>
 </li>
 <li>
-<a href="#job-execution">Job Execution</a>
+<a href="#%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C">任务执行</a>
 
 <ul>
-<li><a href="#backends">Backends</a></li>
-<li><a href="#setting-the-backend">Setting the Backend</a></li>
+<li><a href="#%E5%90%8E%E5%8F%B0">后台</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%90%8E%E5%8F%B0">设置后台</a></li>
 </ul>
 </li>
-<li><a href="#queues">Queues</a></li>
+<li><a href="#%E9%98%9F%E5%88%97">队列</a></li>
 <li>
-<a href="#callbacks">Callbacks</a>
+<a href="#%E5%9B%9E%E8%B0%83">回调</a>
 
 <ul>
-<li><a href="#available-callbacks">Available callbacks</a></li>
-<li><a href="#usage">Usage</a></li>
+<li><a href="#%E5%8F%AF%E7%94%A8%E7%9A%84%E5%9B%9E%E8%B0%83">可用的回调</a></li>
+<li><a href="#%E7%94%A8%E6%B3%95">用法</a></li>
 </ul>
 </li>
 <li><a href="#action-mailer">Action Mailer</a></li>
 <li><a href="#globalid">GlobalID</a></li>
-<li><a href="#exceptions">Exceptions</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8">异常</a></li>
 </ol>
 
           </div>
@@ -223,16 +222,7 @@ enqueueing and executing background jobs.</p><p>After reading this guide, you wi
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="introduction">1 Introduction</h3><p>Active Job is a framework for declaring jobs and making them run on a variety
-of queueing backends. These jobs can be everything from regularly scheduled
-clean-ups, to billing charges, to mailings. Anything that can be chopped up
-into small units of work and run in parallel, really.</p><h3 id="the-purpose-of-active-job">2 The Purpose of Active Job</h3><p>The main point is to ensure that all Rails apps will have a job infrastructure
-in place, even if it's in the form of an "immediate runner". We can then have
-framework features and other gems build on top of that, without having to
-worry about API differences between various job runners such as Delayed Job
-and Resque. Picking your queuing backend becomes more of an operational concern,
-then. And you'll be able to switch between them without having to rewrite your jobs.</p><h3 id="creating-a-job">3 Creating a Job</h3><p>This section will provide a step-by-step guide to creating a job and enqueuing it.</p><h4 id="create-the-job">3.1 Create the Job</h4><p>Active Job provides a Rails generator to create jobs. The following will create a
-job in <code>app/jobs</code> (with an attached test case under <code>test/jobs</code>):</p><div class="code_container">
+        <h3 id="简介">1 简介</h3><p>Active Job 是用来声明任务，并把任务放到多种多样的队列后台中执行的框架。从定期地安排清理，费用账单到发送邮件，任何事情都可以是任务。任何可以切分为小的单元和并行执行的任务都可以用 Active Job 来执行。</p><h3 id="active-job-的目标">2 Active Job 的目标</h3><p>主要是确保所有的 Rails 程序有一致任务框架，即便是以 “立即执行”的形式存在。然后可以基于 Active Job 来新建框架功能和其他的 RubyGems， 而不用担心多种任务后台，比如 Dalayed Job 和 Resque 之间 API 的差异。之后，选择队列后台更多会变成运维方面的考虑，这样就能切换后台而无需重写任务代码。</p><h3 id="创建一个任务">3 创建一个任务</h3><p>本节将会逐步地创建任务然后把任务加入队列中。</p><h4 id="创建任务">3.1 创建任务</h4><p>Active Job 提供了 Rails 生成器来创建任务。以下代码会在 <code>app/jobs</code> 中新建一个任务,（并且会在 <code>test/jobs</code> 中创建测试用例）：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails generate job guests_cleanup
 invoke  test_unit
@@ -241,14 +231,13 @@ create  app/jobs/guests_cleanup_job.rb
 
 </pre>
 </div>
-<p>You can also create a job that will run on a specific queue:</p><div class="code_container">
+<p>也可以创建运行在一个特定队列上的任务：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails generate job guests_cleanup --queue urgent
 
 </pre>
 </div>
-<p>If you don't want to use a generator, you could create your own file inside of
-<code>app/jobs</code>, just make sure that it inherits from <code>ActiveJob::Base</code>.</p><p>Here's what a job looks like:</p><div class="code_container">
+<p>如果不想使用生成器，需要自己创建文件，并且替换掉 <code>app/jobs</code>。确保任务继承自 <code>ActiveJob::Base</code> 即可。</p><p>以下是一个任务示例:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class GuestsCleanupJob &lt; ActiveJob::Base
   queue_as :default
@@ -260,30 +249,28 @@ end
 
 </pre>
 </div>
-<h4 id="enqueue-the-job">3.2 Enqueue the Job</h4><p>Enqueue a job like so:</p><div class="code_container">
+<h4 id="任务加入队列">3.2 任务加入队列</h4><p>将任务加入到队列中：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-# Enqueue a job to be performed as soon the queueing system is free.
+# 将加入到队列系统中任务立即执行
 MyJob.perform_later record
 
 </pre>
 </div>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-# Enqueue a job to be performed tomorrow at noon.
+# 在明天中午执行加入队列的任务
 MyJob.set(wait_until: Date.tomorrow.noon).perform_later(record)
 
 </pre>
 </div>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-# Enqueue a job to be performed 1 week from now.
+# 一星期后执行加入到队列的任务
 MyJob.set(wait: 1.week).perform_later(record)
 
 </pre>
 </div>
-<p>That's it!</p><h3 id="job-execution">4 Job Execution</h3><p>If no adapter is set, the job is immediately executed.</p><h4 id="backends">4.1 Backends</h4><p>Active Job has built-in adapters for multiple queueing backends (Sidekiq,
-Resque, Delayed Job and others). To get an up-to-date list of the adapters
-see the API Documentation for <a href="http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html">ActiveJob::QueueAdapters</a>.</p><h4 id="setting-the-backend">4.2 Setting the Backend</h4><p>You can easily set your queueing backend:</p><div class="code_container">
+<p>就这么简单！</p><h3 id="任务执行">4 任务执行</h3><p>如果没有设置连接器，任务会立即执行。</p><h4 id="后台">4.1 后台</h4><p>Active Job 内建支持多种队列后台连接器（Sidekiq、Resque、Delayed Job 等）。最新的连接器的列表详见 <a href="http://api.rubyonrails.org/classes/ActiveJob/QueueAdapters.html">ActiveJob::QueueAdapters</a> 的 API 文件。</p><h4 id="设置后台">4.2 设置后台</h4><p>设置队列后台很简单：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 module YourApp
@@ -296,8 +283,7 @@ end
 
 </pre>
 </div>
-<h3 id="queues">5 Queues</h3><p>Most of the adapters support multiple queues. With Active Job you can schedule
-the job to run on a specific queue:</p><div class="code_container">
+<h3 id="队列">5 队列</h3><p>大多数连接器支持多种队列。用 Active Job 可以安排任务运行在特定的队列：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class GuestsCleanupJob &lt; ActiveJob::Base
   queue_as :low_priority
@@ -306,8 +292,7 @@ end
 
 </pre>
 </div>
-<p>You can prefix the queue name for all your jobs using
-<code>config.active_job.queue_name_prefix</code> in <code>application.rb</code>:</p><div class="code_container">
+<p>在 <code>application.rb</code> 中通过  <code>config.active_job.queue_name_prefix</code> 来设置所有任务的队列名称的前缀。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 module YourApp
@@ -328,8 +313,7 @@ end
 
 </pre>
 </div>
-<p>The default queue name prefix delimiter is '_'.  This can be changed by setting
-<code>config.active_job.queue_name_delimiter</code> in <code>application.rb</code>:</p><div class="code_container">
+<p>默认队列名称的前缀是 <code>_</code>。可以设置 <code>config/application.rb</code> 里 <code>config.active_job.queue_name_delimiter</code> 的值来改变：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # config/application.rb
 module YourApp
@@ -351,16 +335,13 @@ end
 
 </pre>
 </div>
-<p>If you want more control on what queue a job will be run you can pass a <code>:queue</code>
-option to <code>#set</code>:</p><div class="code_container">
+<p>如果想要更细致的控制任务的执行，可以传 <code>:queue</code> 选项给 <code>#set</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 MyJob.set(queue: :another_queue).perform_later(record)
 
 </pre>
 </div>
-<p>To control the queue from the job level you can pass a block to <code>#queue_as</code>. The
-block will be executed in the job context (so you can access <code>self.arguments</code>)
-and you must return the queue name:</p><div class="code_container">
+<p>为了在任务级别控制队列，可以传递一个块给 <code>#queue_as</code>。块会在任务的上下文中执行（所以能获得 <code>self.arguments</code>）并且必须返回队列的名字：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class ProcessVideoJob &lt; ActiveJob::Base
   queue_as do
@@ -381,9 +362,7 @@ ProcessVideoJob.perform_later(Video.last)
 
 </pre>
 </div>
-<div class="note"><p>Make sure your queueing backend "listens" on your queue name. For some
-backends you need to specify the queues to listen to.</p></div><h3 id="callbacks">6 Callbacks</h3><p>Active Job provides hooks during the lifecycle of a job. Callbacks allow you to
-trigger logic during the lifecycle of a job.</p><h4 id="available-callbacks">6.1 Available callbacks</h4>
+<div class="note"><p>确认运行的队列后台“监听”队列的名称。某些后台需要明确的指定要“监听”队列的名称。</p></div><h3 id="回调">6 回调</h3><p>Active Job 在一个任务的生命周期里提供了钩子。回调允许在任务的生命周期中触发逻辑。</p><h4 id="可用的回调">6.1 可用的回调</h4>
 <ul>
 <li><code>before_enqueue</code></li>
 <li><code>around_enqueue</code></li>
@@ -392,7 +371,7 @@ trigger logic during the lifecycle of a job.</p><h4 id="available-callbacks">6.1
 <li><code>around_perform</code></li>
 <li><code>after_perform</code></li>
 </ul>
-<h4 id="usage">6.2 Usage</h4><div class="code_container">
+<h4 id="用法">6.2 用法</h4><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class GuestsCleanupJob &lt; ActiveJob::Base
   queue_as :default
@@ -414,9 +393,7 @@ end
 
 </pre>
 </div>
-<h3 id="action-mailer">7 Action Mailer</h3><p>One of the most common jobs in a modern web application is sending emails outside
-of the request-response cycle, so the user doesn't have to wait on it. Active Job
-is integrated with Action Mailer so you can easily send emails asynchronously:</p><div class="code_container">
+<h3 id="action-mailer">7 Action Mailer</h3><p>现代网站应用中最常见的任务之一是，在请求响应周期外发送 Email，这样所有用户不需要焦急地等待邮件的发送。Active Job 集成到 Action Mailer 里了，所以能够简单的实现异步发送邮件：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # If you want to send the email now use #deliver_now
 UserMailer.welcome(@user).deliver_now
@@ -426,9 +403,7 @@ UserMailer.welcome(@user).deliver_later
 
 </pre>
 </div>
-<h3 id="globalid">8 GlobalID</h3><p>Active Job supports GlobalID for parameters. This makes it possible to pass live
-Active Record objects to your job instead of class/id pairs, which you then have
-to manually deserialize. Before, jobs would look like this:</p><div class="code_container">
+<h3 id="globalid">8 GlobalID</h3><p>Active Job 支持 GlobalID 作为参数。这样传递运行中的 Active Record 对象到任务中，来取代通常需要序列化的 class/id 对。之前任务看起来是像这样：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class TrashableCleanupJob &lt; ActiveJob::Base
   def perform(trashable_class, trashable_id, depth)
@@ -439,7 +414,7 @@ end
 
 </pre>
 </div>
-<p>Now you can simply do:</p><div class="code_container">
+<p>现在可以简化为:</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class TrashableCleanupJob &lt; ActiveJob::Base
   def perform(trashable, depth)
@@ -449,11 +424,8 @@ end
 
 </pre>
 </div>
-<p>This works with any class that mixes in <code>GlobalID::Identification</code>, which
-by default has been mixed into Active Model classes.</p><h3 id="exceptions">9 Exceptions</h3><p>Active Job provides a way to catch exceptions raised during the execution of the
-job:</p><div class="code_container">
+<h3 id="异常">9 异常</h3><p>Active Job 提供了在任务执行期间捕获异常的方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-
 class GuestsCleanupJob &lt; ActiveJob::Base
   queue_as :default
 
