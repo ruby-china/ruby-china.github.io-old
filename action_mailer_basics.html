@@ -199,10 +199,13 @@
 </ul>
 </li>
 <li><a href="#%E6%8E%A5%E6%94%B6%E9%82%AE%E4%BB%B6">接收邮件</a></li>
+<li><a href="#action-mailer-%E5%9B%9E%E8%B0%83">Action Mailer 回调</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-action-mailer-%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">使用 Action Mailer 帮助方法</a></li>
 <li>
-<a href="#action-mailer-%E5%9B%9E%E8%B0%83">Action Mailer 回调</a>
+<a href="#%E8%AE%BE%E7%BD%AE-action-mailer">设置 Action Mailer</a>
 
 <ul>
+<li><a href="#action-mailer-%E8%AE%BE%E7%BD%AE%E7%A4%BA%E4%BE%8B">Action Mailer 设置示例</a></li>
 <li><a href="#%E8%AE%BE%E7%BD%AE-action-mailer-%E4%BD%BF%E7%94%A8-gmail">设置 Action Mailer 使用 Gmail</a></li>
 </ul>
 </li>
@@ -344,62 +347,70 @@ end
 </ul>
 <h5 id="添加附件">2.3.1 添加附件</h5><p>在 Action Mailer 中添加附件十分方便。</p>
 <ul>
-<li>  传入文件名和内容，Action Mailer 和 <a href="https://github.com/mikel/mail">Mail</a> gem 会自动猜测附件的 MIME 类型，设置编码并创建附件。</li>
-</ul>
+<li>
+<p>  传入文件名和内容，Action Mailer 和 <a href="https://github.com/mikel/mail">Mail</a> gem 会自动猜测附件的 MIME 类型，设置编码并创建附件。</p>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-    attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
-    ```
+attachments['filename.jpg'] = File.read('/path/to/filename.jpg')
 
-    触发 `mail` 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 `multipart/mixed` 的顶级结构中，其中第一部分的类型为 `multipart/alternative`，包含纯文本和 HTML 格式的邮件内容。
+</pre>
+</div>
+</li>
+</ul>
+<p>  触发 <code>mail</code> 方法后，会发送一个由多部分组成的邮件，附件嵌套在类型为 <code>multipart/mixed</code> 的顶级结构中，其中第一部分的类型为 <code>multipart/alternative</code>，包含纯文本和 HTML 格式的邮件内容。</p><div class="note"><p>Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 <code>attachments</code> 方法。</p></div>
+<ul>
+<li>
+<p>  传入文件名，指定邮件头和内容，Action Mailer 和 Mail gem 会使用传入的参数添加附件。</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+encoded_content = SpecialEncode(File.read('/path/to/filename.jpg'))
+attachments['filename.jpg'] = {mime_type: 'application/x-gzip',
+                               encoding: 'SpecialEncoding',
+                               content: encoded_content }
 
-NOTE: Mail gem 会自动使用 Base64 编码附件。如果想使用其他编码方式，可以先编码好，再把编码后的附件通过 Hash 传给 `attachments` 方法。
+</pre>
+</div>
+</li>
+</ul>
+<div class="note"><p>如果指定了 <code>encoding</code> 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。</p></div><h5 id="使用行间附件">2.3.2 使用行间附件</h5><p>在 Action Mailer 3.0 中使用行间附件比之前版本简单得多。</p>
+<ul>
+<li>
+<p>  首先，在 <code>attachments</code> 方法上调用 <code>inline</code> 方法，告诉 Mail 这是个行间附件：</p>
+<div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+def welcome
+  attachments.inline['image.jpg'] = File.read('/path/to/image.jpg')
+end
 
-*   传入文件名，指定邮件头和内容，Action Mailer 和 Mail gem 会使用传入的参数添加附件。
+</pre>
+</div>
+</li>
+<li>
+<p>  在视图中，可以直接使用 <code>attachments</code> 方法，将其视为一个 Hash，指定想要使用的附件，在其上调用 <code>url</code> 方法，再把结果传给 <code>image_tag</code> 方法：</p>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Hello there, this is our image&lt;/p&gt;
 
-```ruby
-    encoded_content = SpecialEncode(File.read('/path/to/filename.jpg'))
-    attachments['filename.jpg'] = {mime_type: 'application/x-gzip',
-                                   encoding: 'SpecialEncoding',
-                                   content: encoded_content }
-    ```
+&lt;%= image_tag attachments['image.jpg'].url %&gt;
 
-NOTE: 如果指定了 `encoding` 键，Mail 会认为附件已经编码了，不会再使用 Base64 编码附件。
+</pre>
+</div>
+</li>
+<li>
+<p>  因为我们只是简单的调用了 <code>image_tag</code> 方法，所以和其他图片一样，在附件地址之后，还可以传入选项 Hash：</p>
+<div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;p&gt;Hello there, this is our image&lt;/p&gt;
 
-#### 使用行间附件
+&lt;%= image_tag attachments['image.jpg'].url, alt: 'My Photo',
+                                            class: 'photos' %&gt;
 
-在 Action Mailer 3.0 中使用行间附件比之前版本简单得多。
-
-*   首先，在 `attachments` 方法上调用 `inline` 方法，告诉 Mail 这是个行间附件：
-
-```ruby
-    def welcome
-      attachments.inline['image.jpg'] = File.read('/path/to/image.jpg')
-    end
-    ```
-
-*   在视图中，可以直接使用 `attachments` 方法，将其视为一个 Hash，指定想要使用的附件，在其上调用 `url` 方法，再把结果传给 `image_tag` 方法：
-
-```erb
-    &lt;p&gt;Hello there, this is our image&lt;/p&gt;
-
-    &lt;%= image_tag attachments['image.jpg'].url %&gt;
-    ```
-
-*   因为我们只是简单的调用了 `image_tag` 方法，所以和其他图片一样，在附件地址之后，还可以传入选项 Hash：
-
-```erb
-    &lt;p&gt;Hello there, this is our image&lt;/p&gt;
-
-    &lt;%= image_tag attachments['image.jpg'].url, alt: 'My Photo',
-                                                class: 'photos' %&gt;
-    ```
-
-#### 发给多个收件人
-
-要想把一封邮件发送给多个收件人，例如通知所有管理员有新用户注册网站，可以把 `:to` 键的值设为一组邮件地址。这一组邮件地址可以是一个数组；也可以是一个字符串，使用逗号分隔各个地址。
-
-```ruby
+</pre>
+</div>
+</li>
+</ul>
+<h5 id="发给多个收件人">2.3.3 发给多个收件人</h5><p>要想把一封邮件发送给多个收件人，例如通知所有管理员有新用户注册网站，可以把 <code>:to</code> 键的值设为一组邮件地址。这一组邮件地址可以是一个数组；也可以是一个字符串，使用逗号分隔各个地址。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 class AdminMailer &lt; ActionMailer::Base
   default to: Proc.new { Admin.pluck(:email) },
           from: 'notification@example.com'
@@ -412,7 +423,7 @@ end
 
 </pre>
 </div>
-<p>使用类似的方式还可添加抄送和密送，分别设置 <code>:cc</code> 和 <code>:bcc</code> 键即可。</p><h5 id="在邮件中显示名字">2.3.2 在邮件中显示名字</h5><p>有时希望收件人在邮件中看到自己的名字，而不只是邮件地址。实现这种需求的方法是把邮件地址写成 <code>"Full Name &lt;email&gt;"</code> 格式。</p><div class="code_container">
+<p>使用类似的方式还可添加抄送和密送，分别设置 <code>:cc</code> 和 <code>:bcc</code> 键即可。</p><h5 id="在邮件中显示名字">2.3.4 在邮件中显示名字</h5><p>有时希望收件人在邮件中看到自己的名字，而不只是邮件地址。实现这种需求的方法是把邮件地址写成 <code>"Full Name &lt;email&gt;"</code> 格式。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def welcome_email(user)
   @user = user
@@ -568,80 +579,99 @@ end
 <ul>
 <li><p>  和控制器中的回调一样，可以传入代码块，或者方法名的符号形式；</p></li>
 <li><p>  在 <code>before_action</code> 中可以使用 <code>defaults</code> 和 <code>delivery_method_options</code> 方法，或者指定默认邮件头和附件；</p></li>
-<li><p>  <code>after_action</code> 可以实现类似 <code>before_action</code> 的功能，而且在 <code>after_action</code> 中可以使用实例变量；</p></li>
-</ul>
+<li>
+<p>  <code>after_action</code> 可以实现类似 <code>before_action</code> 的功能，而且在 <code>after_action</code> 中可以使用实例变量；</p>
 <div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-    class UserMailer &lt; ActionMailer::Base
-      after_action :set_delivery_options,
-                   :prevent_delivery_to_guests,
-                   :set_business_headers
+class UserMailer &lt; ActionMailer::Base
+  after_action :set_delivery_options,
+               :prevent_delivery_to_guests,
+               :set_business_headers
 
-      def feedback_message(business, user)
-        @business = business
-        @user = user
-        mail
+  def feedback_message(business, user)
+    @business = business
+    @user = user
+    mail
+  end
+
+  def campaign_message(business, user)
+    @business = business
+    @user = user
+  end
+
+  private
+
+    def set_delivery_options
+      # You have access to the mail instance,
+      # @business and @user instance variables here
+      if @business &amp;&amp; @business.has_smtp_settings?
+        mail.delivery_method.settings.merge!(@business.smtp_settings)
       end
-
-      def campaign_message(business, user)
-        @business = business
-        @user = user
-      end
-
-      private
-
-        def set_delivery_options
-          # You have access to the mail instance,
-          # @business and @user instance variables here
-          if @business &amp;&amp; @business.has_smtp_settings?
-            mail.delivery_method.settings.merge!(@business.smtp_settings)
-          end
-        end
-
-        def prevent_delivery_to_guests
-          if @user &amp;&amp; @user.guest?
-            mail.perform_deliveries = false
-          end
-        end
-
-        def set_business_headers
-          if @business
-            headers["X-SMTPAPI-CATEGORY"] = @business.code
-          end
-        end
     end
-    ```
 
-*   如果在回调中把邮件主体设为 `nil` 之外的值，会阻止执行后续操作；
+    def prevent_delivery_to_guests
+      if @user &amp;&amp; @user.guest?
+        mail.perform_deliveries = false
+      end
+    end
 
-使用 Action Mailer 帮助方法
---------------------------
+    def set_business_headers
+      if @business
+        headers["X-SMTPAPI-CATEGORY"] = @business.code
+      end
+    end
+end
 
-Action Mailer 继承自 `AbstractController`，因此为控制器定义的帮助方法都可以在邮件程序中使用。
-
-设置 Action Mailer
-------------------
-
-下述设置选项最好在环境相关的文件（`environment.rb`，`production.rb` 等）中设置。
-
-| 设置项         | 说明        |
-|---------------|-------------|
-| `logger` | 运行邮件程序时生成日志信息。设为 `nil` 禁用日志。可设为 Ruby 自带的 `Logger` 或 `Log4r` 库。|
-| `smtp_settings` | 设置 `:smtp` 发送方式的详情。 |
-| `sendmail_settings` | 设置 `:sendmail` 发送方式的详情。 |
-| `raise_delivery_errors` | 如果邮件发送失败，是否抛出异常。仅当外部邮件服务器设置为立即发送才有效。 |
-| `delivery_method` | 设置发送方式，可设为 `:smtp`（默认）、`:sendmail`、`:file` 和 `:test`。详情参阅 [API 文档](http://api.rubyonrails.org/classes/ActionMailer/Base.html)。 |
-| `perform_deliveries` | 调用 `deliver` 方法时是否真发送邮件。默认情况下会真的发送，但在功能测试中可以不发送。 |
-| `deliveries` | 把通过 Action Mailer 使用 `:test` 方式发送的邮件保存到一个数组中，协助单元测试和功能测试。 |
-| `default_options` | 为 `mail` 方法设置默认选项值（`:from`，`:reply_to` 等）。 |
-
-完整的设置说明参见“设置 Rails 程序”一文中的“[设置 Action Mailer](configuring.html#configuring-action-mailer)”一节。
-
-### Action Mailer 设置示例
-
-可以把下面的代码添加到文件 `config/environments/$RAILS_ENV.rb` 中：
-
-```ruby
+</pre>
+</div>
+</li>
+<li><p>  如果在回调中把邮件主体设为 <code>nil</code> 之外的值，会阻止执行后续操作；</p></li>
+</ul>
+<h3 id="使用-action-mailer-帮助方法">5 使用 Action Mailer 帮助方法</h3><p>Action Mailer 继承自 <code>AbstractController</code>，因此为控制器定义的帮助方法都可以在邮件程序中使用。</p><h3 id="设置-action-mailer">6 设置 Action Mailer</h3><p>下述设置选项最好在环境相关的文件（<code>environment.rb</code>，<code>production.rb</code> 等）中设置。</p>
+<table>
+<thead>
+<tr>
+<th>设置项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td>运行邮件程序时生成日志信息。设为 <code>nil</code> 禁用日志。可设为 Ruby 自带的 <code>Logger</code> 或 <code>Log4r</code> 库。</td>
+</tr>
+<tr>
+<td><code>smtp_settings</code></td>
+<td>设置 <code>:smtp</code> 发送方式的详情。</td>
+</tr>
+<tr>
+<td><code>sendmail_settings</code></td>
+<td>设置 <code>:sendmail</code> 发送方式的详情。</td>
+</tr>
+<tr>
+<td><code>raise_delivery_errors</code></td>
+<td>如果邮件发送失败，是否抛出异常。仅当外部邮件服务器设置为立即发送才有效。</td>
+</tr>
+<tr>
+<td><code>delivery_method</code></td>
+<td>设置发送方式，可设为 <code>:smtp</code>（默认）、<code>:sendmail</code>、<code>:file</code> 和 <code>:test</code>。详情参阅 <a href="http://api.rubyonrails.org/classes/ActionMailer/Base.html">API 文档</a>。</td>
+</tr>
+<tr>
+<td><code>perform_deliveries</code></td>
+<td>调用 <code>deliver</code> 方法时是否真发送邮件。默认情况下会真的发送，但在功能测试中可以不发送。</td>
+</tr>
+<tr>
+<td><code>deliveries</code></td>
+<td>把通过 Action Mailer 使用 <code>:test</code> 方式发送的邮件保存到一个数组中，协助单元测试和功能测试。</td>
+</tr>
+<tr>
+<td><code>default_options</code></td>
+<td>为 <code>mail</code> 方法设置默认选项值（<code>:from</code>，<code>:reply_to</code> 等）。</td>
+</tr>
+</tbody>
+</table>
+<p>完整的设置说明参见“设置 Rails 程序”一文中的“<a href="configuring.html#configuring-action-mailer">设置 Action Mailer</a>”一节。</p><h4 id="action-mailer-设置示例">6.1 Action Mailer 设置示例</h4><p>可以把下面的代码添加到文件 <code>config/environments/$RAILS_ENV.rb</code> 中：</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
 config.action_mailer.delivery_method = :sendmail
 # Defaults to:
 # config.action_mailer.sendmail_settings = {
@@ -654,7 +684,7 @@ config.action_mailer.default_options = {from: 'no-reply@example.com'}
 
 </pre>
 </div>
-<h4 id="设置-action-mailer-使用-gmail">4.1 设置 Action Mailer 使用 Gmail</h4><p>Action Mailer 现在使用 <a href="https://github.com/mikel/mail">Mail</a> gem，针对 Gmail 的设置更简单，把下面的代码添加到文件 <code>config/environments/$RAILS_ENV.rb</code>  中即可：</p><div class="code_container">
+<h4 id="设置-action-mailer-使用-gmail">6.2 设置 Action Mailer 使用 Gmail</h4><p>Action Mailer 现在使用 <a href="https://github.com/mikel/mail">Mail</a> gem，针对 Gmail 的设置更简单，把下面的代码添加到文件 <code>config/environments/$RAILS_ENV.rb</code>  中即可：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
@@ -668,7 +698,7 @@ config.action_mailer.smtp_settings = {
 
 </pre>
 </div>
-<h3 id="测试邮件程序">5 测试邮件程序</h3><p>邮件程序的测试参阅“<a href="%7B%7B%20site.baseurl%7D%7D%E3%80%81testing.html#testing-your-mailers">Rails 程序测试指南</a>”。</p><h3 id="拦截邮件">6 拦截邮件</h3><p>有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。</p><div class="code_container">
+<h3 id="测试邮件程序">7 测试邮件程序</h3><p>邮件程序的测试参阅“<a href="%7B%7B%20site.baseurl%7D%7D%E3%80%81testing.html#testing-your-mailers">Rails 程序测试指南</a>”。</p><h3 id="拦截邮件">8 拦截邮件</h3><p>有时，在邮件发送之前需要做些修改。Action Mailer 提供了相应的钩子，可以拦截每封邮件。你可以注册一个拦截器，在交给发送程序之前修改邮件。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class SandboxEmailInterceptor
   def self.delivering_email(message)
