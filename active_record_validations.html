@@ -599,7 +599,7 @@ end
 </pre>
 </div>
 <p>如果验证 <code>has_one</code> 或 <code>has_many</code> 关联的对象是否为空，会在关联的对象上调用 <code>present?</code> 和 <code>marked_for_destruction?</code> 方法。</p><p>因为 <code>false.present?</code> 的返回值是 <code>false</code>，所以如果要验证布尔值字段是否为空要使用 <code>validates :field_name, exclusion: { in: [true, false] }</code>。</p><p>默认的错误消息是“must be blank”。</p><h4 id="uniqueness">2.11 <code>uniqueness</code>
-</h4><p>这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段所以的详细介绍，参阅 <a href="http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html">MySQL 手册</a>。</p><div class="code_container">
+</h4><p>这个帮助方法会在保存对象之前验证属性值是否是唯一的。该方法不会在数据库中创建唯一性约束，所以有可能两个数据库连接创建的记录字段的值是相同的。为了避免出现这种问题，要在数据库的字段上建立唯一性索引。关于多字段索引的详细介绍，参阅 <a href="http://dev.mysql.com/doc/refman/5.6/en/multiple-column-indexes.html">MySQL 手册</a>。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Account &lt; ActiveRecord::Base
   validates :email, uniqueness: true
