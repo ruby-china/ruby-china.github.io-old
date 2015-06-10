@@ -286,7 +286,7 @@
 <li>
 <strong>多约定，少配置：</strong> Rails 为网页程序的大多数需求都提供了最好的解决方法，而且默认使用这些约定，不用在长长的配置文件中设置每个细节。</li>
 </ul>
-<h3 id="新建-rails-程序">3 新建 Rails 程序</h3><p>阅读本文时，最好跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。完整的源码可以在<a href="https://github.com/rails/docrails/tree/master/guides/code/getting_started">这里</a>获取。</p><p>本文会新建一个名为 <code>blog</code> 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。</p><div class="info"><p>文中的示例代码使用 <code>$</code> 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 <code>c:\source_code&gt;</code>。</p></div><h4 id="安装-rails">3.1 安装 Rails</h4><p>打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 <code>$</code> 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：</p><div class="info"><p>有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 <a href="http://railsinstaller.org">Rails Installer</a>，Mac OS X 用户可以使用 <a href="https://github.com/tokaido/tokaidoapp">Tokaido</a>。</p></div><div class="code_container">
+<h3 id="新建-rails-程序">3 新建 Rails 程序</h3><p>阅读本文时，最佳方式是跟着一步一步操作，如果错过某段代码或某个步骤，程序就可能出错，所以请一步一步跟着做。</p><p>本文会新建一个名为 <code>blog</code> 的 Rails 程序，这是一个非常简单的博客。在开始开发程序之前，要确保已经安装了 Rails。</p><div class="info"><p>文中的示例代码使用 <code>$</code> 表示命令行提示符，你的提示符可能修改过，所以会不一样。在 Windows 中，提示符可能是 <code>c:\source_code&gt;</code>。</p></div><h4 id="安装-rails">3.1 安装 Rails</h4><p>打开命令行：在 Mac OS X 中打开 Terminal.app，在 Windows 中选择“运行”，然后输入“cmd.exe”。下文中所有以 <code>$</code> 开头的代码，都要在命令行中运行。先确认是否安装了 Ruby 最新版：</p><div class="info"><p>有很多工具可以帮助你快速在系统中安装 Ruby 和 Ruby on Rails。Windows 用户可以使用 <a href="http://railsinstaller.org">Rails Installer</a>，Mac OS X 用户可以使用 <a href="https://github.com/tokaido/tokaidoapp">Tokaido</a>。</p></div><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ ruby -v
 ruby 2.1.2p95
@@ -475,7 +475,7 @@ edit_article GET    /articles/:id/edit(.:format) articles#edit
 
 </pre>
 </div>
-<p>下一节，我们会加入新建文章和查看文章的功能。这两个操作分别对应于 CRUD 的 C 和 R，即创建和读取。新建文章的表单如下所示：</p><p><img src="images/getting_started/new_article.png" alt="新建文章表单"></p><p>表单看起来很简陋，不过没关系，后文会加入更多的样式。</p><h4 id="挖地基">5.1 挖地基</h4><p>首先，程序中要有个页面用来新建文章。一个比较好的选择是 <code>/articles/new</code>。这个路由前面已经定义了，可以访问。打开 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a> ，会看到如下的路由错误：</p><p><img src="images/getting_started/routing_error_no_controller.png" alt="路由错误，常量 ArticlesController 未初始化"></p><p>产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单：创建名为 <code>ArticlesController</code> 的控制器。执行下面的命令即可：</p><div class="code_container">
+<p>下一节，我们会加入新建文章和查看文章的功能。这两个操作分别对应于 CRUD 的 C 和 R，即创建和读取。新建文章的表单如下所示：</p><p><img src="images/getting_started/new_article.png" alt="新建文章表单"></p><p>表单看起来很简陋，不过没关系，后文会加入更多的样式。</p><h4 id="挖地基">5.1 挖地基</h4><p>首先，程序中要有个页面用来新建文章。一个比较好的选择是 <code>/articles/new</code>。这个路由前面已经定义了，可以访问。打开 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a> ，会看到如下的路由错误：</p><p><img src="images/getting_started/routing_error_no_controller.png" alt="路由错误，常量 ArticlesController 未初始化"></p><p>产生这个错误的原因是，没有定义用来处理该请求的控制器。解决这个问题的方法很简单，执行下面的命令创建名为 <code>ArticlesController</code> 的控制器即可：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails g controller articles
 
