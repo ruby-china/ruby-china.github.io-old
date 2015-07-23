@@ -333,7 +333,7 @@ render "products/show"
 
 </pre>
 </div>
-<p>因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 <code>:template</code> 选项（Rails 2.2+ 必须这么做）：</p><div class="code_container">
+<p>因为参数中有个斜线，所以 Rails 知道这个视图属于另一个控制器。如果想让代码的意图更明显，可以使用 <code>:template</code> 选项（Rails 2.2 及先前版本必须这么做）：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 render template: "products/show"
 
