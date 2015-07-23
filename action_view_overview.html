@@ -253,7 +253,7 @@ $ rails generate scaffold post
 
 </pre>
 </div>
-<p>在上述代码中，循环使用普通嵌入标签（<code>&lt;% %&gt;</code>），输出名字时使用输出式嵌入标签（<code>&lt;%= %&gt;</code>）。注意，这并不是一种使用建议。常规的输出方法，例如 <code>print</code> 或 <code>puts</code>，无法在 ERB 模板中使用。所以，下面这段代码是错误的：</p><div class="code_container">
+<p>在上述代码中，循环使用普通嵌入标签（<code>&lt;% %&gt;</code>），输出名字时使用输出式嵌入标签（<code>&lt;%= %&gt;</code>）。注意，这并不仅仅是一种使用建议：常规的输出方法，例如 <code>print</code> 或 <code>puts</code>，无法在 ERB 模板中使用。所以，下面这段代码是错误的：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%# WRONG %&gt;
 Hi, Mr. &lt;% puts "Frodo" %&gt;
