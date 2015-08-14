@@ -351,7 +351,7 @@ config.assets.paths &lt;&lt; Rails.root.join("lib", "videoplayer", "flash")
 
 </pre>
 </div>
-<p>Sprockets 会按照搜索路径中各路径出现的顺序进行搜索。默认情况下，这意味着 <code>app/assets</code> 文件夹中的静态资源优先级较高，会遮盖 <code>lib</code> 和 <code>vendor</code> 文件夹中的相应文件。</p><p>有一点要注意，如果静态资源不会在清单文件中引入，就要添加到预编译的文件列表中，否则在生产环境中就无法访问文件。</p><h5 id="使用索引文件">2.2.2 使用索引文件</h5><p>在 Sprockets 中，名为 <code>index</code> 的文件（扩展名各异）有特殊作用。</p><p>例如，程序中使用了 jQuery 代码库和许多模块，都保存在 <code>lib/assets/javascripts/library_name</code> 文件夹中，那么 <code>lib/assets/javascripts/library_name/index.js</code> 文件的作用就是这个代码库的清单。清单文件中可以按顺序列出所需的文件，或者干脆使用 <code>require_tree</code> 指令。</p><p>在清单文件中，可以把这个库作为一个整体引入：</p><div class="code_container">
+<p>Sprockets 会按照搜索路径中各路径出现的顺序进行搜索。默认情况下，这意味着 <code>app/assets</code> 文件夹中的静态资源优先级较高，会遮盖 <code>lib</code> 和 <code>vendor</code> 文件夹中的相应文件。</p><p>有一点要注意，如果静态资源不会在清单文件中引入，就要添加到预编译的文件列表中，否则在生产环境中就无法访问文件。</p><h5 id="使用索引文件">2.2.2 使用索引文件</h5><p>在 Sprockets 中，名为 <code>index</code> 的文件（扩展名各异）有特殊作用。</p><p>例如，程序中使用了 jQuery 代码库和许多模块，都保存在 <code>lib/assets/javascripts/library_name</code> 文件夹中，那么 <code>lib/assets/javascripts/library_name/index.js</code> 文件的作用就是这个代码库的清单。在这个清单中可以按顺序列出所需的文件，或者干脆使用 <code>require_tree</code> 指令。</p><p>在程序的清单文件中，可以把这个库作为一个整体引入：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 //= require library_name
 
