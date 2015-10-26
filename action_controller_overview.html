@@ -905,7 +905,7 @@ response.headers["Content-Type"] = "application/pdf"
 <li>基本认证</li>
 <li>摘要认证</li>
 </ul>
-<h4 id="http-基本身份认证">11.1 HTTP 基本身份认证</h4><p>大多数浏览器和 HTTP 客户端都支持 HTTP 基本身份认证。例如，在浏览器中如果要访问只有管理员才能查看的页面，就出回显一个对话框，要求输入用户名和密码。使用内建的身份认证非常简单，只要使用一个方法，即 <code>http_basic_authenticate_with</code>。</p><div class="code_container">
+<h4 id="http-基本身份认证">11.1 HTTP 基本身份认证</h4><p>大多数浏览器和 HTTP 客户端都支持 HTTP 基本身份认证。例如，在浏览器中如果要访问只有管理员才能查看的页面，就会出现一个对话框，要求输入用户名和密码。使用内建的身份认证非常简单，只要使用一个方法，即 <code>http_basic_authenticate_with</code>。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class AdminsController &lt; ApplicationController
   http_basic_authenticate_with name: "humbaba", password: "5baa61e4"
