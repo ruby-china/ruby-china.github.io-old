@@ -483,12 +483,12 @@ form_for @geocoder, url: geocoder_path do |f|
 <h4 id="控制器命名空间和路由">2.6 控制器命名空间和路由</h4><p>你可能想把一系列控制器放在一个命名空间内，最常见的是把管理相关的控制器放在 <code>Admin::</code> 命名空间内。你需要把这些控制器存在 <code>app/controllers/admin</code> 文件夹中，然后在路由中做如下声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 namespace :admin do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 
 </pre>
 </div>
-<p>上述代码会为 <code>posts</code> 和 <code>comments</code> 控制器生成很多路由。对 <code>Admin::PostsController</code> 来说，Rails 会生成：</p>
+<p>上述代码会为 <code>articles</code> 和 <code>comments</code> 控制器生成很多路由。对 <code>Admin::ArticlesController</code> 来说，Rails 会生成：</p>
 <table>
 <thead>
 <tr>
@@ -501,77 +501,77 @@ end
 <tbody>
 <tr>
 <td>GET</td>
-<td>/admin/posts</td>
-<td>admin/posts#index</td>
-<td>admin_posts_path</td>
+<td>/admin/articles</td>
+<td>admin/articles#index</td>
+<td>admin_articles_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/new</td>
-<td>admin/posts#new</td>
-<td>new_admin_post_path</td>
+<td>/admin/articles/new</td>
+<td>admin/articles#new</td>
+<td>new_admin_article_path</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/admin/posts</td>
-<td>admin/posts#create</td>
-<td>admin_posts_path</td>
+<td>/admin/articles</td>
+<td>admin/articles#create</td>
+<td>admin_articles_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/:id</td>
-<td>admin/posts#show</td>
-<td>admin_post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#show</td>
+<td>admin_article_path(:id)</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/:id/edit</td>
-<td>admin/posts#edit</td>
-<td>edit_admin_post_path(:id)</td>
+<td>/admin/articles/:id/edit</td>
+<td>admin/articles#edit</td>
+<td>edit_admin_article_path(:id)</td>
 </tr>
 <tr>
 <td>PATCH/PUT</td>
-<td>/admin/posts/:id</td>
-<td>admin/posts#update</td>
-<td>admin_post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#update</td>
+<td>admin_article_path(:id)</td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/admin/posts/:id</td>
-<td>admin/posts#destroy</td>
-<td>admin_post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>admin/articles#destroy</td>
+<td>admin_article_path(:id)</td>
 </tr>
 </tbody>
 </table>
-<p>如果想把 <code>/posts</code>（前面没有 <code>/admin</code>）映射到 <code>Admin::PostsController</code> 控制器上，可以这么声明：</p><div class="code_container">
+<p>如果想把 <code>/articles</code>（前面没有 <code>/admin</code>）映射到 <code>Admin::ArticlesController</code> 控制器上，可以这么声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 scope module: 'admin' do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 
 </pre>
 </div>
 <p>如果只有一个资源，还可以这么声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-resources :posts, module: 'admin'
+resources :articles, module: 'admin'
 
 </pre>
 </div>
-<p>如果想把 <code>/admin/posts</code> 映射到 <code>PostsController</code> 控制器（不在 <code>Admin::</code> 命名空间内），可以这么声明：</p><div class="code_container">
+<p>如果想把 <code>/admin/articles</code> 映射到 <code>ArticlesController</code> 控制器（不在 <code>Admin::</code> 命名空间内），可以这么声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 scope '/admin' do
-  resources :posts, :comments
+  resources :articles, :comments
 end
 
 </pre>
 </div>
 <p>如果只有一个资源，还可以这么声明：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-resources :posts, path: '/admin/posts'
+resources :articles, path: '/admin/articles'
 
 </pre>
 </div>
-<p>在上述两种用法中，具名路由没有变化，跟不用 <code>scope</code> 时一样。在后一种用法中，映射到 <code>PostsController</code> 控制器上的路径如下：</p>
+<p>在上述两种用法中，具名路由没有变化，跟不用 <code>scope</code> 时一样。在后一种用法中，映射到 <code>ArticlesController</code> 控制器上的路径如下：</p>
 <table>
 <thead>
 <tr>
@@ -584,45 +584,45 @@ resources :posts, path: '/admin/posts'
 <tbody>
 <tr>
 <td>GET</td>
-<td>/admin/posts</td>
-<td>posts#index</td>
-<td>posts_path</td>
+<td>/admin/articles</td>
+<td>articles#index</td>
+<td>articles_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/new</td>
-<td>posts#new</td>
-<td>new_post_path</td>
+<td>/admin/articles/new</td>
+<td>articles#new</td>
+<td>new_article_path</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/admin/posts</td>
-<td>posts#create</td>
-<td>posts_path</td>
+<td>/admin/articles</td>
+<td>articles#create</td>
+<td>articles_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/:id</td>
-<td>posts#show</td>
-<td>post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>articles#show</td>
+<td>article_path(:id)</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/admin/posts/:id/edit</td>
-<td>posts#edit</td>
-<td>edit_post_path(:id)</td>
+<td>/admin/articles/:id/edit</td>
+<td>articles#edit</td>
+<td>edit_article_path(:id)</td>
 </tr>
 <tr>
 <td>PATCH/PUT</td>
-<td>/admin/posts/:id</td>
-<td>posts#update</td>
-<td>post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>articles#update</td>
+<td>article_path(:id)</td>
 </tr>
 <tr>
 <td>DELETE</td>
-<td>/admin/posts/:id</td>
-<td>posts#destroy</td>
-<td>post_path(:id)</td>
+<td>/admin/articles/:id</td>
+<td>articles#destroy</td>
+<td>article_path(:id)</td>
 </tr>
 </tbody>
 </table>
@@ -719,7 +719,7 @@ end
 </div>
 <p>对应的路由帮助方法是 <code>publisher_magazine_photo_url</code>，要指定三个层级的对象。这种用法很让人困扰，Jamis Buck 在<a href="http://weblog.jamisbuck.org/2007/2/5/nesting-resources">一篇文章</a>中指出了嵌套路由的用法总则，即：</p><div class="info"><p>嵌套资源不可超过一层。</p></div><h5 id="浅层嵌套">2.7.2 浅层嵌套</h5><p>避免深层嵌套的方法之一，是把控制器集合动作放在父级资源中，表明层级关系，但不嵌套成员动作。也就是说，用最少的信息表明资源的路由关系，如下所示：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-resources :posts do
+resources :articles do
   resources :comments, only: [:index, :new, :create]
 end
 resources :comments, only: [:show, :edit, :update, :destroy]
@@ -728,7 +728,7 @@ resources :comments, only: [:show, :edit, :update, :destroy]
 </div>
 <p>这种做法在描述路由和深层嵌套之间做了适当的平衡。上述代码还有简写形式，即使用 <code>:shallow</code> 选项：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-resources :posts do
+resources :articles do
   resources :comments, shallow: true
 end
 
@@ -736,7 +736,7 @@ end
 </div>
 <p>这种形式生成的路由和前面一样。<code>:shallow</code> 选项还可以在父级资源中使用，此时所有嵌套其中的资源都是浅层嵌套：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-resources :posts, shallow: true do
+resources :articles, shallow: true do
   resources :comments
   resources :quotes
   resources :drafts
@@ -747,7 +747,7 @@ end
 <p><code>shallow</code> 方法可以创建一个作用域，其中所有嵌套都是浅层嵌套。如下代码生成的路由和前面一样：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 shallow do
-  resources :posts do
+  resources :articles do
     resources :comments
     resources :quotes
     resources :drafts
@@ -759,7 +759,7 @@ end
 <p><code>scope</code> 方法有两个选项可以定制浅层嵌套路由。<code>:shallow_path</code> 选项在成员路径前加上指定的前缀：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 scope shallow_path: "sekret" do
-  resources :posts do
+  resources :articles do
     resources :comments, shallow: true
   end
 end
@@ -779,21 +779,21 @@ end
 <tbody>
 <tr>
 <td>GET</td>
-<td>/posts/:post_id/comments(.:format)</td>
+<td>/articles/:article_id/comments(.:format)</td>
 <td>comments#index</td>
-<td>post_comments_path</td>
+<td>article_comments_path</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/posts/:post_id/comments(.:format)</td>
+<td>/articles/:article_id/comments(.:format)</td>
 <td>comments#create</td>
-<td>post_comments_path</td>
+<td>article_comments_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/posts/:post_id/comments/new(.:format)</td>
+<td>/articles/:article_id/comments/new(.:format)</td>
 <td>comments#new</td>
-<td>new_post_comment_path</td>
+<td>new_article_comment_path</td>
 </tr>
 <tr>
 <td>GET</td>
@@ -824,7 +824,7 @@ end
 <p><code>:shallow_prefix</code> 选项在具名帮助方法前加上指定的前缀：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 scope shallow_prefix: "sekret" do
-  resources :posts do
+  resources :articles do
     resources :comments, shallow: true
   end
 end
@@ -844,21 +844,21 @@ end
 <tbody>
 <tr>
 <td>GET</td>
-<td>/posts/:post_id/comments(.:format)</td>
+<td>/articles/:article_id/comments(.:format)</td>
 <td>comments#index</td>
-<td>post_comments_path</td>
+<td>article_comments_path</td>
 </tr>
 <tr>
 <td>POST</td>
-<td>/posts/:post_id/comments(.:format)</td>
+<td>/articles/:article_id/comments(.:format)</td>
 <td>comments#create</td>
-<td>post_comments_path</td>
+<td>article_comments_path</td>
 </tr>
 <tr>
 <td>GET</td>
-<td>/posts/:post_id/comments/new(.:format)</td>
+<td>/articles/:article_id/comments/new(.:format)</td>
 <td>comments#new</td>
-<td>new_post_comment_path</td>
+<td>new_article_comment_path</td>
 </tr>
 <tr>
 <td>GET</td>
@@ -902,7 +902,7 @@ end
 <pre class="brush: ruby; gutter: false; toolbar: false">
 resources :messages, concerns: :commentable
 
-resources :posts, concerns: [:commentable, :image_attachable]
+resources :articles, concerns: [:commentable, :image_attachable]
 
 </pre>
 </div>
@@ -912,7 +912,7 @@ resources :messages do
   resources :comments
 end
 
-resources :posts do
+resources :articles do
   resources :comments
   resources :images, only: :index
 end
@@ -921,7 +921,7 @@ end
 </div>
 <p>Concerns 在路由的任何地方都能使用，例如，在作用域或命名空间中：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-namespace :posts do
+namespace :articles do
   concerns :commentable
 end
 
@@ -1088,13 +1088,13 @@ get 'photos/:id', to: 'photos#show', id: /[A-Z]\d{5}/
 </div>
 <p><code>:constraints</code> 选项中的正则表达式不能使用“锚记”。例如，下面的路由是错误的：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/:id', to: 'posts#show', constraints: {id: /^\d/}
+get '/:id', to: 'photos#show', constraints: {id: /^\d/}
 
 </pre>
 </div>
-<p>之所以不能使用锚记，是因为所有正则表达式都从头开始匹配。</p><p>例如，有下面的路由。如果 <code>to_param</code> 方法得到的值以数字开头，例如 <code>1-hello-world</code>，就会把请求交给 <code>posts</code> 控制器处理；如果 <code>to_param</code> 方法得到的值不以数字开头，例如 <code>david</code>，就交给 <code>users</code> 控制器处理。</p><div class="code_container">
+<p>之所以不能使用锚记，是因为所有正则表达式都从头开始匹配。</p><p>例如，有下面的路由。如果 <code>to_param</code> 方法得到的值以数字开头，例如 <code>1-hello-world</code>，就会把请求交给 <code>articles</code> 控制器处理；如果 <code>to_param</code> 方法得到的值不以数字开头，例如 <code>david</code>，就交给 <code>users</code> 控制器处理。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/:id', to: 'posts#show', constraints: { id: /\d.+/ }
+get '/:id', to: 'photos#show', constraints: { id: /\d.+/ }
 get '/:username', to: 'users#show'
 
 </pre>
@@ -1175,30 +1175,30 @@ I&gt;<code>ruby
 NOTE: get '*pages', to: 'pages#show', format: true
 NOTE:</code></p></div><h4 id="重定向">3.12 重定向</h4><p>在路由中可以使用 <code>redirect</code> 帮助方法把一个路径重定向到另一个路径：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/stories', to: redirect('/posts')
+get '/stories', to: redirect('/articles')
 
 </pre>
 </div>
 <p>重定向时还可使用匹配的动态路径片段：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/stories/:name', to: redirect('/posts/%{name}')
+get '/stories/:name', to: redirect('/articles/%{name}')
 
 </pre>
 </div>
 <p><code>redirect</code> 还可使用代码块形式，传入路径参数和 <code>request</code> 对象作为参数：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/stories/:name', to: redirect {|path_params, req| "/posts/#{path_params[:name].pluralize}" }
-get '/stories', to: redirect {|path_params, req| "/posts/#{req.subdomain}" }
+get '/stories/:name', to: redirect {|path_params, req| "/articles/#{path_params[:name].pluralize}" }
+get '/stories', to: redirect {|path_params, req| "/articles/#{req.subdomain}" }
 
 </pre>
 </div>
-<p>注意，<code>redirect</code> 实现的是 301 "Moved Permanently" 重定向，有些浏览器或代理服务器会缓存这种重定向，导致旧的页面不可用。</p><p>如果不指定主机（<code>http://www.example.com</code>），Rails 会从当前请求中获取。</p><h4 id="映射到-rack-程序">3.13 映射到 Rack 程序</h4><p>除了使用字符串，例如 <code>'posts#index'</code>，把请求映射到 <code>PostsController</code> 的 <code>index</code> 动作上之外，还可使用 <a href="rails_on_rack.html">Rack</a> 程序作为端点：</p><div class="code_container">
+<p>注意，<code>redirect</code> 实现的是 301 "Moved Permanently" 重定向，有些浏览器或代理服务器会缓存这种重定向，导致旧的页面不可用。</p><p>如果不指定主机（<code>http://www.example.com</code>），Rails 会从当前请求中获取。</p><h4 id="映射到-rack-程序">3.13 映射到 Rack 程序</h4><p>除了使用字符串，例如 <code>'articles#index'</code>，把请求映射到 <code>ArticlesController</code> 的 <code>index</code> 动作上之外，还可使用 <a href="rails_on_rack.html">Rack</a> 程序作为端点：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 match '/application.js', to: Sprockets, via: :all
 
 </pre>
 </div>
-<p>只要 <code>Sprockets</code> 能响应 <code>call</code> 方法，而且返回 <code>[status, headers, body]</code> 形式的结果，路由器就不知道这是个 Rack 程序还是动作。这里使用 <code>via: :all</code> 是正确的，因为我们想让 Rack 程序自行判断，处理所有 HTTP 方法。</p><div class="note"><p>其实 <code>'posts#index'</code> 的复杂形式是 <code>PostsController.action(:index)</code>，得到的也是个合法的 Rack 程序。</p></div><h4 id="使用-root">3.14 使用 <code>root</code>
+<p>只要 <code>Sprockets</code> 能响应 <code>call</code> 方法，而且返回 <code>[status, headers, body]</code> 形式的结果，路由器就不知道这是个 Rack 程序还是动作。这里使用 <code>via: :all</code> 是正确的，因为我们想让 Rack 程序自行判断，处理所有 HTTP 方法。</p><div class="note"><p>其实 <code>'articles#index'</code> 的复杂形式是 <code>ArticlesController.action(:index)</code>，得到的也是个合法的 Rack 程序。</p></div><h4 id="使用-root">3.14 使用 <code>root</code>
 </h4><p>使用 <code>root</code> 方法可以指定怎么处理 <code>'/'</code> 请求：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 root to: 'pages#main'
@@ -1222,7 +1222,7 @@ get 'こんにちは', to: 'welcome#index'
 
 </pre>
 </div>
-<h3 id="定制资源式路由">4 定制资源式路由</h3><p>虽然 <code>resources :posts</code> 默认生成的路由和帮助方法都满足大多数需求，但有时还是想做些定制。Rails 允许对资源式帮助方法做几乎任何形式的定制。</p><h4 id="指定使用的控制器">4.1 指定使用的控制器</h4><p><code>:controller</code> 选项用来指定资源使用的控制器。例如：</p><div class="code_container">
+<h3 id="定制资源式路由">4 定制资源式路由</h3><p>虽然 <code>resources :articles</code> 默认生成的路由和帮助方法都满足大多数需求，但有时还是想做些定制。Rails 允许对资源式帮助方法做几乎任何形式的定制。</p><h4 id="指定使用的控制器">4.1 指定使用的控制器</h4><p><code>:controller</code> 选项用来指定资源使用的控制器。例如：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 resources :photos, controller: 'images'
 
@@ -1408,12 +1408,12 @@ resources :photos, :accounts
 <p>这段路由会生成 <code>admin_photos_path</code> 和 <code>admin_accounts_path</code> 等帮助方法，分别映射到 <code>/admin/photos</code> 和 <code>/admin/accounts</code> 上。</p><div class="note"><p><code>namespace</code> 作用域会自动添加 <code>:as</code> 以及 <code>:module</code> 和 <code>:path</code> 前缀。</p></div><p>路由帮助方法的前缀还可使用具名参数：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 scope ':username' do
-  resources :posts
+  resources :articles
 end
 
 </pre>
 </div>
-<p>这段路由能识别 <code>/bob/posts/1</code> 这种请求，在控制器、帮助方法和视图中可使用 <code>params[:username]</code> 获取 <code>username</code> 的值。</p><h4 id="限制生成的路由">4.6 限制生成的路由</h4><p>默认情况下，Rails 会为每个 REST 路由生成七个默认动作（<code>index</code>，<code>show</code>，<code>new</code>，<code>create</code>，<code>edit</code>，<code>update</code> 和 <code>destroy</code>）对应的路由。你可以使用 <code>:only</code> 和 <code>:except</code> 选项调整这种行为。<code>:only</code> 选项告知 Rails，只生成指定的路由：</p><div class="code_container">
+<p>这段路由能识别 <code>/bob/articles/1</code> 这种请求，在控制器、帮助方法和视图中可使用 <code>params[:username]</code> 获取 <code>username</code> 的值。</p><h4 id="限制生成的路由">4.6 限制生成的路由</h4><p>默认情况下，Rails 会为每个 REST 路由生成七个默认动作（<code>index</code>，<code>show</code>，<code>new</code>，<code>create</code>，<code>edit</code>，<code>update</code> 和 <code>destroy</code>）对应的路由。你可以使用 <code>:only</code> 和 <code>:except</code> 选项调整这种行为。<code>:only</code> 选项告知 Rails，只生成指定的路由：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 resources :photos, only: [:index, :show]
 

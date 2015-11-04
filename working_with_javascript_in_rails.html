@@ -173,7 +173,7 @@
       <h2>在 Rails 中使用 JavaScript</h2><p>本文介绍 Rails 内建对 Ajax 和 JavaScript 等的支持，使用这些功能可以轻易的开发强大的 Ajax 程序。</p><p>读完本文，你将学到：</p>
 <ul>
 <li>Ajax 基本知识；</li>
-<li>剥离式 JavaScript；</li>
+<li>非侵入式 JavaScript；</li>
 <li>如何使用 Rails 内建的帮助方法；</li>
 <li>如何在服务器端处理 Ajax；</li>
 <li>Turbolinks 简介；</li>
@@ -184,7 +184,7 @@
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li><a href="#ajax-%E7%AE%80%E4%BB%8B">Ajax 简介</a></li>
-<li><a href="#%E5%89%A5%E7%A6%BB%E5%BC%8F-javascript">剥离式 JavaScript</a></li>
+<li><a href="#%E9%9D%9E%E4%BE%B5%E5%85%A5%E5%BC%8F-javascript">非侵入式 JavaScript</a></li>
 <li>
 <a href="#%E5%86%85%E5%BB%BA%E7%9A%84%E5%B8%AE%E5%8A%A9%E6%96%B9%E6%B3%95">内建的帮助方法</a>
 
@@ -228,7 +228,7 @@ $.ajax(url: "/test").done (html) -&gt;
 
 </pre>
 </div>
-<p>这段代码从 <code>/test</code> 地址上获取数据，然后把结果附加到 <code>div#results</code>。</p><p>Rails 内建了很多使用这种技术开发程序的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种程序提供帮助，不过都构建在这种简单的技术之上。</p><h3 id="剥离式-javascript">2 剥离式 JavaScript</h3><p>Rails 使用一种叫做“剥离式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。剥离式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。</p><p>下面是编写 JavaScript 最简单的方式，你可能见过，这叫做“行间 JavaScript”：</p><div class="code_container">
+<p>这段代码从 <code>/test</code> 地址上获取数据，然后把结果附加到 <code>div#results</code>。</p><p>Rails 内建了很多使用这种技术开发程序的功能，基本上无需自己动手编写上述代码。后文介绍 Rails 如何为开发这种程序提供帮助，不过都构建在这种简单的技术之上。</p><h3 id="非侵入式-javascript">2 非侵入式 JavaScript</h3><p>Rails 使用一种叫做“非侵入式 JavaScript”（Unobtrusive JavaScript）的技术把 JavaScript 应用到 DOM 上。非侵入式 JavaScript 是前端开发社区推荐使用的方法，但有些教程可能会使用其他方式。</p><p>下面是编写 JavaScript 最简单的方式，你可能见过，这叫做“行间 JavaScript”：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;a href="#" onclick="this.style.backgroundColor='#990000'"&gt;Paint it red&lt;/a&gt;
 
@@ -286,7 +286,7 @@ $ -&gt;
 
 </pre>
 </div>
-<p>我们把这种方法称为“剥离式 JavaScript”，因为 JavaScript 代码不再和 HTML 混用。我们把两中代码完全分开，这么做易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 <code>data</code> 属性就行。所有 JavaScript 代码都可以放在一个文件中，进行压缩，每个页面都使用这个 JavaScript 文件，因此只在第一次请求时加载，后续请求会直接从缓存中读取。“剥离式 JavaScript”带来的好处太多了。</p><p>Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，而且你会发现很多代码库都沿用了这种方式。</p><h3 id="内建的帮助方法">3 内建的帮助方法</h3><p>Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。</p><p>因为使用的是剥离式 JavaScript，所以 Ajax 相关的帮助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。</p><p><a href="https://github.com/rails/jquery-ujs/blob/master/src/rails.js">rails.js</a> 提供 JavaScript 代码，常规的 Ruby 视图帮助方法用来生成 DOM 标签。rails.js 中的 CoffeeScript 会监听这些属性，执行相应的处理程序。</p><h4 id="form_for">3.1 <code>form_for</code>
+<p>我们把这种方法称为“非侵入式 JavaScript”，因为 JavaScript 代码不再和 HTML 混用。我们把两中代码完全分开，这么做易于修改功能。我们可以轻易地把这种效果应用到其他链接上，只要添加相应的 <code>data</code> 属性就行。所有 JavaScript 代码都可以放在一个文件中，进行压缩，每个页面都使用这个 JavaScript 文件，因此只在第一次请求时加载，后续请求会直接从缓存中读取。“非侵入式 JavaScript”带来的好处太多了。</p><p>Rails 团队极力推荐使用这种方式编写 CoffeeScript 和 JavaScript，而且你会发现很多代码库都沿用了这种方式。</p><h3 id="内建的帮助方法">3 内建的帮助方法</h3><p>Rails 提供了很多视图帮助方法协助你生成 HTML，如果想在元素上实现 Ajax 效果也没问题。</p><p>因为使用的是非侵入式 JavaScript，所以 Ajax 相关的帮助方法其实分成两部分，一部分是 JavaScript 代码，一部分是 Ruby 代码。</p><p><a href="https://github.com/rails/jquery-ujs/blob/master/src/rails.js">rails.js</a> 提供 JavaScript 代码，常规的 Ruby 视图帮助方法用来生成 DOM 标签。rails.js 中的 CoffeeScript 会监听这些属性，执行相应的处理程序。</p><h4 id="form_for">3.1 <code>form_for</code>
 </h4><p><a href="http://api.rubyonrails.org/classes/ActionView/Helpers/FormHelper.html#method-i-form_for"><code>form_for</code></a> 方法协助编写表单，可指定 <code>:remote</code> 选项，用法如下：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= form_for(@post, remote: true) do |f| %&gt;
