@@ -183,7 +183,7 @@
             <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
             <ol class="chapters">
 <li>
-<a href="#%E5%90%AF%E5%8A%A8-bang">启动!</a>
+<a href="#%E5%90%AF-%E5%8A%A8--bang">启 动 !</a>
 
 <ul>
 <li><a href="#railties/bin/rails"><code>railties/bin/rails</code></a></li>
@@ -194,7 +194,7 @@
 <li><a href="#rails/commands/command_tasks.rb"><code>rails/commands/command_tasks.rb</code></a></li>
 <li><a href="#actionpack/lib/action_dispatch.rb"><code>actionpack/lib/action_dispatch.rb</code></a></li>
 <li><a href="#rails/commands/server.rb"><code>rails/commands/server.rb</code></a></li>
-<li><a href="#%E5%90%AF%E5%8A%A8-bang-rack:-lib/rack/server.rb">Rack: <code>lib/rack/server.rb</code></a></li>
+<li><a href="#%E5%90%AF-%E5%8A%A8--bang-rack:-lib/rack/server.rb">Rack: <code>lib/rack/server.rb</code></a></li>
 <li><a href="#config/application"><code>config/application</code></a></li>
 <li><a href="#rails::server#start"><code>Rails::Server#start</code></a></li>
 <li><a href="#config/environment.rb"><code>config/environment.rb</code></a></li>
@@ -221,22 +221,22 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <p>本章节通过介绍一个基于Ruby on Rails框架默认配置的 Rails 4 应用程序启动过程中的方法调用，详细介绍了每个调用的细节。通过本章节，我们将了解当你执行<code>rails server</code>命令启动你的应用时， 背后究竟都发生了什么。</p><p>提示：本章节中的路径如果没有特别说明都是指Rails应用程序下的路径。</p><p>提示：如果你想浏览Rails的源代码<a href="https://github.com/rails/rails">sourcecode</a>，强烈建议您使用快捷键 <code>t</code>快速查找Github中的文件。</p><h3 id="启动-bang">1 启动!</h3><p>我们们现在准备启动和初始化一个Rails 应用。 一个Rails 应用 经常是以运行命令 <code>rails console</code> 或者 <code>rails server</code> 开始的。</p><h4 id="railties/bin/rails">1.1 <code>railties/bin/rails</code>
-</h4><p>Rails 中的 <code>rails server</code> 是一个你rails应用程序所在文件中的一个 ruby 的可执行程序，该程序包含如下操作：</p><div class="code_container">
+        <p>本章节通过介绍一个基于Ruby on Rails框架默认配置的 Rails 4 应用程序启动过程中的方法调用，详细介绍了每个调用的细节。通过本章节，我们将了解当你执行<code>rails server</code>命令启动你的Rails应用时，背后究竟都发生了什么。</p><p>提示：本章节中的路径如果没有特别说明都是指Rails应用程序下的路径。</p><p>提示：如果你想浏览Rails的源代码<a href="https://github.com/rails/rails">sourcecode</a>，强烈建议您使用快捷键 <code>t</code>快速查找Github中的文件。</p><h3 id="启-动--bang">1 启 动 !</h3><p>我们现在准备启动和初始化一个Rails 应用。 一个Rails 应用经常是以运行命令 <code>rails console</code> 或者 <code>rails server</code> 开始的。</p><h4 id="railties/bin/rails">1.1 <code>railties/bin/rails</code>
+</h4><p>Rails应用中的 <code>rails server</code>命令是Rails应用程序所在文件中的一个Ruby的可执行程序，该程序包含如下操作：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 version = "&gt;= 0"
 load Gem.bin_path('railties', 'rails', version)
 
 </pre>
 </div>
-<p>如果你在Rails 控制台中使用上述命令，你将会看到载入<code>railties/bin/rails</code>这个路径。作为 <code>railties/bin/rails.rb</code>的一部分， 包含如下代码：</p><div class="code_container">
+<p>如果你在Rails 控制台中使用上述命令，你将会看到载入<code>railties/bin/rails</code>这个路径。作为 <code>railties/bin/rails.rb</code>的一部分，包含如下代码：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require "rails/cli"
 
 </pre>
 </div>
 <p>模块<code>railties/lib/rails/cli</code> 会调用<code>Rails::AppRailsLoader.exec_app_rails</code>方法.</p><h4 id="railties/lib/rails/app_rails_loader.rb">1.2 <code>railties/lib/rails/app_rails_loader.rb</code>
-</h4><p><code>exec_app_rails</code>模块的主要功能是去执行你的Rails应用中<code>bin/rails</code>文件夹下的指令。如果当前文件夹下没有<code>bin/rails</code>文件，它会到父级目录去搜索，直到找到为止（windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，这将会触发一个<code>rails</code>的指令。</p><p>因为<code>rails server</code>命令和下面的操作是等价的：</p><div class="code_container">
+</h4><p><code>exec_app_rails</code>模块的主要功能是去执行你的Rails应用中<code>bin/rails</code>文件夹下的指令。如果当前文件夹下没有<code>bin/rails</code>文件，它会到父级目录去搜索，直到找到为止（Windows下应该会去搜索环境变量中的路径），在Rails应用程序目录下的任意位置(命令行模式下)，都可以执行<code>rails</code>的命令。</p><p>因为<code>rails server</code>命令和下面的操作是等价的：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ exec ruby bin/rails server
 
@@ -262,7 +262,7 @@ require 'bundler/setup' if File.exist?(ENV['BUNDLE_GEMFILE'])
 
 </pre>
 </div>
-<p>在一个标准的Rails应用中，一个<code>Gemfile</code>文件配置会配置它所有依赖项。<code>config/boot.rb</code>文件会根据<code>ENV['BUNDLE_GEMFILE']</code>中的值来查找<code>Gemfile</code>的路径。如果Gemfile文件存在，那么<code>bundler/setup</code>操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。</p><p>一个标准的Rails应用会依赖若干gem包，特别是下面这些：</p>
+<p>在一个标准的Rails应用中的<code>Gemfile</code>文件会配置它的所有依赖项。<code>config/boot.rb</code>文件会根据<code>ENV['BUNDLE_GEMFILE']</code>中的值来查找<code>Gemfile</code>文件的路径。如果<code>Gemfile</code>文件存在，那么<code>bundler/setup</code>操作会被执行，Bundler执行该操作是为了配置Gemfile依赖项的加载路径。</p><p>一个标准的Rails应用会包含若干Gem包，特别是下面这些：</p>
 <ul>
 <li>actionmailer</li>
 <li>actionpack</li>
@@ -313,7 +313,7 @@ Rails::CommandsTasks.new(ARGV).run_command!(command)
 
 </pre>
 </div>
-<p>提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项 。</p><p>如果我们使用<code>s</code>缩写代替 <code>server</code>，Rails系统会和<code>aliases</code>组中的项查找匹配的命令。</p><h4 id="rails/commands/command_tasks.rb">1.6 <code>rails/commands/command_tasks.rb</code>
+<p>提示： 如你所见，一个空的ARGV数组将会让系统显示相关的帮助项。</p><p>如果我们使用<code>s</code>缩写代替 <code>server</code>，Rails系统会从<code>aliases</code>中查找匹配的命令。</p><h4 id="rails/commands/command_tasks.rb">1.6 <code>rails/commands/command_tasks.rb</code>
 </h4><p>当你键入一个错误的rails命令，<code>run_command</code>函数会抛出一个错误信息。如果命令正确，一个与命令同名的方法会被调用。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 COMMAND_WHITELIST = %(plugin generate destroy console server dbconsole application runner new version help)
@@ -368,7 +368,7 @@ module Rails
 </div>
 <p><code>fileutils</code> 和 <code>optparse</code> 是Ruby标准库中帮助操作文件和解析选项的函数。</p><h4 id="actionpack/lib/action_dispatch.rb">1.7 <code>actionpack/lib/action_dispatch.rb</code>
 </h4><p>动作分发(Action Dispatch)是Rails框架中的路径组件。它增强了路径，会话和中间件的功能。</p><h4 id="rails/commands/server.rb">1.8 <code>rails/commands/server.rb</code>
-</h4><p>这个文件中定义的<code>Rails::Server</code> 类是继承自 <code>Rack::Server</code>类的。当<code>Rails::Server.new</code> 被调用时，会在 <code>rails/commands/server.rb</code>中调用一个<code>initialize</code>方法：</p><div class="code_container">
+</h4><p>这个文件中定义的<code>Rails::Server</code>类是继承自<code>Rack::Server</code>类的。当<code>Rails::Server.new</code>被调用时，会在 <code>rails/commands/server.rb</code>中调用一个<code>initialize</code>方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def initialize(*)
   super
@@ -377,8 +377,8 @@ end
 
 </pre>
 </div>
-<p>首先，<code>super</code>会调用父类<code>Rack::Server</code>中的<code>initialize</code>方法。</p><h4 id="启动-bang-rack:-lib/rack/server.rb">1.9 Rack: <code>lib/rack/server.rb</code>
-</h4><p><code>Rack::Server</code>会为所以基于Rack的应用提供一般的服务接口，现在它已经是Rails框架的一部分了。</p><p><code>Rack::Server</code>中的<code>initialize</code> 方法会简单的设置一对变量：</p><div class="code_container">
+<p>首先，<code>super</code>会调用父类<code>Rack::Server</code>中的<code>initialize</code>方法。</p><h4 id="启-动--bang-rack:-lib/rack/server.rb">1.9 Rack: <code>lib/rack/server.rb</code>
+</h4><p><code>Rack::Server</code>会为所有基于Rack的应用提供服务接口，现在它已经是Rails框架的一部分了。</p><p><code>Rack::Server</code>中的<code>initialize</code> 方法会简单的设置一对变量：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def initialize(options = nil)
   @options = options
@@ -387,7 +387,7 @@ end
 
 </pre>
 </div>
-<p>在这种情况下，<code>options</code> 的值是 <code>nil</code>，所以在这个方法中相当于什么都没做。</p><p>当<code>Rack::Server</code>中的<code>super</code>方法执行完毕后。我们会回到<code>rails/commands/server.rb</code>，此时此刻，<code>Rails::Server</code>对象会调用 <code>set_environment</code> 方法，貌似这个方法看上去什么也没干： </p><div class="code_container">
+<p>在这种情况下，<code>options</code> 的值是 <code>nil</code>，所以在这个方法中相当于什么都没做。</p><p>当<code>Rack::Server</code>中的<code>super</code>方法执行完毕后。我们回到<code>rails/commands/server.rb</code>，此时此刻，<code>Rails::Server</code>对象会调用 <code>set_environment</code> 方法，这个方法貌似看上去什么也没干： </p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def set_environment
   ENV["RAILS_ENV"] ||= options[:environment]
@@ -403,7 +403,7 @@ end
 
 </pre>
 </div>
-<p>接着<code>parse_options</code>被定义成这样：</p><div class="code_container">
+<p>接着<code>parse_options</code>方法部分代码如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def parse_options(args)
   options = default_options
@@ -420,7 +420,7 @@ end
 
 </pre>
 </div>
-<p><code>default_options</code> 的配置如下：</p><div class="code_container">
+<p><code>default_options</code>方法的代码如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def default_options
   environment  = ENV['RACK_ENV'] || 'development'
@@ -460,8 +460,8 @@ def parse!(args)
 </pre>
 </div>
 <p>这个方法为<code>options</code>建立一些配置选项，以便给Rails决定如何运行服务提供支持。<code>initialize</code>方法执行完毕后。我们将回到<code>rails/server</code>目录下，就是<code>APP_PATH</code>中的路径。</p><h4 id="config/application">1.10 <code>config/application</code>
-</h4><p>当<code>require APP_PATH</code>操作执行完毕后。<code>config/application.rb</code> 被载入了 (重新调用<code>bin/rails</code>中的<code>APP_PATH</code>), 这个文件存在于你的应用中，你可以根据你的需求进行配置。</p><h4 id="rails::server#start">1.11 <code>Rails::Server#start</code>
-</h4><p><code>config/application</code> 载入后，<code>server.start</code>方法被调用了。这个方法定义如下：</p><div class="code_container">
+</h4><p>当<code>require APP_PATH</code>操作执行完毕后。<code>config/application.rb</code> 被载入了 (重新调用<code>bin/rails</code>中的<code>APP_PATH</code>), 在你的应用中，你可以根据需求对该文件进行配置。</p><h4 id="rails::server#start">1.11 <code>Rails::Server#start</code>
+</h4><p><code>config/application</code>载入后，<code>server.start</code>方法被调用了。这个方法定义如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def start
   print_boot_information
@@ -500,7 +500,7 @@ private
 
 </pre>
 </div>
-<p>这个是Rails初始化过程中的第一次控制台输出。这个方法创建了一个<code>INT</code>中断信号，所以当你在服务端按下<code>CTRL-C</code>后，这将终止Server的运行。我们可以看到，它创建了<code>tmp/cache</code>,<code>tmp/pids</code>, <code>tmp/sessions</code>和<code>tmp/sockets</code>等目录。在创建和声明<code>ActiveSupport::Logger</code>之前，会调用 <code>wrapped_app</code>方法来创建一个Rake 应用程序。</p><p><code>super</code>会调用<code>Rack::Server.start</code> 方法，该方法定义如下：</p><div class="code_container">
+<p>这是Rails初始化过程中的第一次控制台输出。这个方法创建了一个<code>INT</code>中断信号，所以当你在服务端控制台按下<code>CTRL-C</code>键后，这将终止Server的运行。我们可以看到，它创建了<code>tmp/cache</code>,<code>tmp/pids</code>, <code>tmp/sessions</code>和<code>tmp/sockets</code>等目录。在创建和声明<code>ActiveSupport::Logger</code>之前，会调用 <code>wrapped_app</code>方法来创建一个Rake 应用程序。</p><p><code>super</code>会调用<code>Rack::Server.start</code> 方法，该方法定义如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def start &amp;blk
   if options[:warn]
@@ -552,7 +552,7 @@ end
 
 </pre>
 </div>
-<p>这里的<code>app</code> 方法定义如下：</p><div class="code_container">
+<p>这里的<code>app</code>方法定义如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def app
   @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
@@ -604,7 +604,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 </pre>
 </div>
 <h4 id="config/environment.rb">1.12 <code>config/environment.rb</code>
-</h4><p>这是<code>config.ru</code> (<code>rails server</code>)和信使(Passenger)都要用到的文件，是为两者交流的媒介。之前的操作都是为了创建Rack和Rails。</p><p>这个文件是以引用 <code>config/application.rb</code>开始的：</p><div class="code_container">
+</h4><p>这是<code>config.ru</code> (<code>rails server</code>)和信使(Passenger)都要用到的文件，是两者交流的媒介。之前的操作都是为了创建Rack和Rails。</p><p>这个文件是以引用 <code>config/application.rb</code>开始的：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require File.expand_path('../application', __FILE__)
 
@@ -617,7 +617,7 @@ require File.expand_path('../boot', __FILE__)
 
 </pre>
 </div>
-<p>如果之前在<code>rails server</code>中没有引用上述的依赖项，那么它<strong>将不会</strong>也和信使(Passenger)发生联系。</p><p>那么，有趣的部分要开始了！</p><h3 id="加载-rails">2 加载 Rails</h3><p><code>config/application.rb</code>中的下一行是这样的：</p><div class="code_container">
+<p>如果之前在<code>rails server</code>中没有引用上述的依赖项，那么它<strong>将不会</strong>和信使(Passenger)发生联系。</p><p>现在，有趣的部分要开始了！</p><h3 id="加载-rails">2 加载 Rails</h3><p><code>config/application.rb</code>中的下一行是这样的：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'rails/all'
 
@@ -669,7 +669,7 @@ end
 
 </pre>
 </div>
-<p><code>run_initializers</code>代码本身是有点投机取巧的，Rails在这里要做的是遍历所有的祖先，查找一个<code>initializers</code>方法，之后根据名字进行排序，并执行它们。举个例子，<code>Engine</code>类将调用自己和祖先中名为<code>initializers</code>的方法。</p><p><code>Rails::Application</code> 类是在<code>railties/lib/rails/application.rb</code>定义的。定义了<code>bootstrap</code>, <code>railtie</code>, and <code>finisher</code>模块的初始化器。<code>bootstrap</code>的初始化器在应用被加载以前就预加载了。(类似初始化中的日志记录器)，<code>finisher</code>的初始化器则是最后加载的。<code>railtie</code>初始化器被定义在<code>Rails::Application</code>中，执行是在<code>bootstrap</code> and <code>finishers</code>之间。</p><p>这些完成后，我们将回到<code>Rack::Server</code> 。</p><h4 id="加载-rails-rack:-lib/rack/server.rb">2.4 Rack: lib/rack/server.rb</h4><p>上次我们离开的时候，<code>app</code> 方法代码如下：</p><div class="code_container">
+<p><code>run_initializers</code>代码本身是有点投机取巧的，Rails在这里要做的是遍历所有的祖先，查找一个<code>initializers</code>方法，之后根据名字进行排序，并依次执行它们。举个例子，<code>Engine</code>类将调用自己和祖先中名为<code>initializers</code>的方法。</p><p><code>Rails::Application</code> 类是在<code>railties/lib/rails/application.rb</code>定义的。定义了<code>bootstrap</code>, <code>railtie</code>和 <code>finisher</code>模块的初始化器。<code>bootstrap</code>的初始化器在应用被加载以前就预加载了。(类似初始化中的日志记录器)，<code>finisher</code>的初始化器则是最后加载的。<code>railtie</code>初始化器被定义在<code>Rails::Application</code>中，执行是在<code>bootstrap</code>和 <code>finishers</code>之间。</p><p>这些完成后，我们将回到<code>Rack::Server</code> 。</p><h4 id="加载-rails-rack:-lib/rack/server.rb">2.4 Rack: lib/rack/server.rb</h4><p>上次我们离开的时候，<code>app</code> 方法代码如下：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def app
   @app ||= options[:builder] ? build_app_from_string : build_app_and_options_from_config
