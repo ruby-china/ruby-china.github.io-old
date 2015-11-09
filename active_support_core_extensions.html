@@ -393,7 +393,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="如何加载核心扩展">1 如何加载核心扩展</h3><h4 id="单独的-active-support">1.1 单独的 Active Support</h4><p>为了使初始空间尽可能干净，默认情况下 Active Support 什么都不加载。它被拆分成许多小组建，这样一来你便可以只加载自己需要的那部分，同时它也提供了一系列便捷入口使你很容易加载相关的扩展，甚至把全部扩展都加载进来。</p><p>因而，像下面这样只简单用一个 require：</p><div class="code_container">
+        <h3 id="如何加载核心扩展">1 如何加载核心扩展</h3><h4 id="单独的-active-support">1.1 单独的 Active Support</h4><p>为了使初始空间尽可能干净，默认情况下 Active Support 什么都不加载。它被拆分成许多小组件，这样一来你便可以只加载自己需要的那部分，同时它也提供了一系列便捷入口使你很容易加载相关的扩展，甚至把全部扩展都加载进来。</p><p>因而，像下面这样只简单用一个 require：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 require 'active_support'
 
@@ -500,7 +500,7 @@ duplicate = array.dup
 
 duplicate.push 'another-string'
 
-# 对象被复制了，所以只有 duplicate 的数组元素有所增加 
+# 对象被复制了，所以只有 duplicate 的数组元素有所增加
 array     # =&gt; ['string']
 duplicate # =&gt; ['string', 'another-string']
 
@@ -745,7 +745,7 @@ silence_warnings { Object.const_set "RAILS_DEFAULT_LOGGER", logger }
 在通过<code>silence_stream</code>执行的代码块里，可以使任意流安静的运行：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 silence_stream(STDOUT) do
-  # 这里的代码不会输出到 STDOUT 
+  # 这里的代码不会输出到 STDOUT
 end
 
 </pre>
@@ -939,7 +939,7 @@ X::Y.local_constants # =&gt; [:Y1, :X1]
 
 </pre>
 </div>
-<p>常量名会作为符号被返回。</p><div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="限定常量名">3.4.1 限定常量名</h5><p>标准方法<code>const_defined?</code>、<code>const_get</code>和<code>const_set</code>接受裸常量名。<br>
+<p>常量名会作为符号被返回。</p><div class="note"><p>定义于 <code>active_support/core_ext/module/introspection.rb</code>.</p></div><h5 id="限定常量名">3.4.1 限定常量名</h5><p>标准方法<code>const_defined?</code>、<code>const_get</code>和<code>const_set</code>接受裸常量名。
 Active Support 扩展了这些API使其可以接受相对限定常量名。</p><p>新的方法名是<code>qualified_const_defined?</code>，<code>qualified_const_get</code>和<code>qualified_const_set</code>。
 它们的参数被假定为相对于其接收者的限定常量名：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">

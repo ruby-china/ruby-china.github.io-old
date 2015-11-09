@@ -528,7 +528,7 @@ end
 
 </pre>
 </div>
-<p>这段代码删除了 <code>description</code> 和 <code>name</code> 字段，创建 <code>part_number</code> 字符串字段，并建立索引，最后重命名 <code>upccode</code> 字段。</p><h4 id="如果帮助方法不够用">3.4 如果帮助方法不够用</h4><p>如果 Active Record 提供的帮助方法不够用，可以使用 <code>excute</code> 方法，执行任意的 SQL 语句：</p><div class="code_container">
+<p>这段代码删除了 <code>description</code> 和 <code>name</code> 字段，创建 <code>part_number</code> 字符串字段，并建立索引，最后重命名 <code>upccode</code> 字段。</p><h4 id="如果帮助方法不够用">3.4 如果帮助方法不够用</h4><p>如果 Active Record 提供的帮助方法不够用，可以使用 <code>execute</code> 方法，执行任意的 SQL 语句：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 Product.connection.execute('UPDATE `products` SET `price`=`free` WHERE 1')
 
