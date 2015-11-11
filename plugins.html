@@ -183,7 +183,7 @@
 </ul>
 <p>本指南将叙述如何通过测试驱动的方式开发插件：</p>
 <ul>
-<li><p>扩展核心类库功能，比如<code>Hash</code>和<code>String</code>； </p></li>
+<li><p>扩展核心类库功能，比如<code>Hash</code>和<code>String</code>；</p></li>
 <li><p>给<code>ActiveRecord::Base</code>添加<code>acts_as</code>插件功能；</p></li>
 <li><p>提供创建自定义插件必需的信息；</p></li>
 </ul>
@@ -228,7 +228,7 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="准备工作">1 准备工作</h3><p>目前，Rails插件是被当作gem来使用的(gem化的插件)。不同Rails应用可以通过RubyGems和Bundler命令来使用他们。</p><h4 id="生成一个gem化的插件">1.1 生成一个gem化的插件</h4><p>Rails使用<code>rails plugin new</code>命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下： </p><div class="code_container">
+        <h3 id="准备工作">1 准备工作</h3><p>目前，Rails插件是被当作gem来使用的(gem化的插件)。不同Rails应用可以通过RubyGems和Bundler命令来使用他们。</p><h4 id="生成一个gem化的插件">1.1 生成一个gem化的插件</h4><p>Rails使用<code>rails plugin new</code>命令为开发者创建各种Rails扩展，以确保它能使用一个简单Rails应用进行测试。创建插件的命令如下：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rails plugin new yaffle
 
@@ -341,13 +341,27 @@ end
 
 </pre>
 </div>
-<h4 id="添加一个类方法">4.1 添加一个类方法</h4><p>假如插件的模块中有一个名为<code>last_squawk</code>的方法，与此同时，插件的使用者在其他模块也定义了一个名为<code>last_squawk</code> 的方法，那么插件允许你添加一个类方法<code>yaffle_text_field</code>来改变插件内的<code>last_squawk</code>方法的名称。</p><p>开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为。
-```ruby</p><h2>yaffle/test/acts_as_yaffle_test.rb</h2><p>require 'test_helper'</p><p>class ActsAsYaffleTest &lt; ActiveSupport::TestCase</p><p>  def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
+<h4 id="添加一个类方法">4.1 添加一个类方法</h4><p>假如插件的模块中有一个名为 <code>last_squawk</code> 的方法，与此同时，插件的使用者在其他模块也定义了一个名为 <code>last_squawk</code> 的方法，那么插件允许你添加一个类方法 <code>yaffle_text_field</code> 来改变插件内的 <code>last_squawk</code> 方法的名称。</p><p>开始之前，可以先写一些测试用例来保证函数拥有符合预期的行为。</p><div class="code_container">
+<pre class="brush: ruby; gutter: false; toolbar: false">
+# yaffle/test/acts_as_yaffle_test.rb
+
+require 'test_helper'
+
+class ActsAsYaffleTest &lt; ActiveSupport::TestCase
+
+  def test_a_hickwalls_yaffle_text_field_should_be_last_squawk
     assert_equal "last_squawk", Hickwall.yaffle_text_field
-  end</p><p>  def test_a_wickwalls_yaffle_text_field_should_be_last_tweet
+  end
+
+  def test_a_wickwalls_yaffle_text_field_should_be_last_tweet
     assert_equal "last_tweet", Wickwall.yaffle_text_field
-  end</p><p>end
-```</p><p>运行<code>rake</code>命令，你将看到如下结果：</p><div class="code_container">
+  end
+
+end
+
+</pre>
+</div>
+<p>运行<code>rake</code>命令，你将看到如下结果：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
     1) Error:
   test_a_hickwalls_yaffle_text_field_should_be_last_squawk(ActsAsYaffleTest):
@@ -363,7 +377,7 @@ end
 
 </pre>
 </div>
-<p>上述内容告诉我们，我们没有提供必要的模块(Hickwall and Wickwall)进行测试。我们可以在test/dummy目录下使用命令生成必要的模块： </p><div class="code_container">
+<p>上述内容告诉我们，我们没有提供必要的模块（Hickwall and Wickwall）进行测试。我们可以在 test/dummy 目录下使用命令生成必要的模块：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ cd test/dummy
 $ bin/rails generate model Hickwall last_squawk:string
@@ -532,7 +546,7 @@ ActiveRecord::Base.send :include, Yaffle::ActsAsYaffle
 <p>运行<code>rake</code>命令后，你将看到如下结果：
 <code>
   7 tests, 7 assertions, 0 failures, 0 errors, 0 skips
-</code></p><p>提示： 使用<code>write_attribute</code>方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现： 
+</code></p><p>提示： 使用<code>write_attribute</code>方法写入字段只是举例说明插件如何与模型交互，并非推荐的使用方法，你也可以用如下方法实现：
 <code>ruby
 send("#{self.class.yaffle_text_field}=", string.to_squawk)
 </code></p><h3 id="生成器">5 生成器</h3><p>插件可以方便的引用和创建生成器。关于创建生成器的更多信息，可以参考<a href="generators.html">Generators Guide</a></p><h3 id="发布gem">6 发布Gem</h3><p>Gem插件可以通过Git代码托管库方便的在开发者之间分享。如果你希望分享Yaffle插件，那么可以将Yaffle放在Git代码托管库上。如果你希望在你的应用中使用Yaffle插件，那么可以在Rails应用的Gem文件中添加如下代码：</p><div class="code_container">
@@ -548,7 +562,7 @@ gem 'yaffle', git: 'git://github.com/yaffle_watcher/yaffle.git'
 <li>如何安装gem到应用中(一些使用例子)</li>
 <li>警告,使用插件时需要注意的地方，这将为用户提供方便。</li>
 </ul>
-<p>当你的README文件写好以后，为用户提供所有与插件方法相关的rdoc注释。通常我们使用'#:nodoc:'来注释不包含在公共API中的代码。 </p><p>当你的注释编写好以后，可以到你的插件目录下运行如下命令：</p><div class="code_container">
+<p>当你的README文件写好以后，为用户提供所有与插件方法相关的rdoc注释。通常我们使用'#:nodoc:'来注释不包含在公共API中的代码。</p><p>当你的注释编写好以后，可以到你的插件目录下运行如下命令：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rake rdoc
 
