@@ -212,14 +212,14 @@
   <div id="container">
     <div class="wrapper">
       <div id="mainCol">
-        <h3 id="模版应用简介">1 模版应用简介</h3><p>为了使用一个模版，你需要为Rails应用生成器在生成新应用时提供供一个'-m'选项来配置模版的路径。该路径可以是一个本地文件路径也可以是一个URL地址。</p><div class="code_container">
+        <h3 id="模版应用简介">1 模版应用简介</h3><p>为了使用一个模版，你需要为Rails应用生成器在生成新应用时提供一个'-m'选项来配置模版的路径。该路径可以是本地文件路径也可以是URL地址。</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ rails new blog -m ~/template.rb
 $ rails new blog -m http://example.com/template.rb
 
 </pre>
 </div>
-<p>你可以使用rake的任务命令<code>rails:template</code>为一个Rails应用配置一个模版。模版的文件路径需要通过名为'LOCATION'的环境变量设定。再次强调，这个路径可以是一个本地文件路径也可以是一个URL地址。</p><div class="code_container">
+<p>你可以使用rake的任务命令<code>rails:template</code>为Rails应用配置模版。模版的文件路径需要通过名为'LOCATION'的环境变量设定。再次强调，这个路径可以是本地文件路径也可以是URL地址：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rake rails:template LOCATION=~/template.rb
 $ bin/rake rails:template LOCATION=http://example.com/template.rb
@@ -239,7 +239,7 @@ git commit: %Q{ -m 'Initial commit' }
 
 </pre>
 </div>
-<p>下面的章节将详细介绍模版API的主要方法：</p><h4 id="gem(*args)">2.1 gem(*args)</h4><p>向一个应用文件的<code>Gemfile</code>配置文件添加一个'gem'实体。
+<p>下面的章节将详细介绍模版API的主要方法：</p><h4 id="gem(*args)">2.1 gem(*args)</h4><p>向一个Rails应用的<code>Gemfile</code>配置文件添加一个'gem'实体。
 举个例子，如果你的应用的依赖项包含<code>bj</code> 和 <code>nokogiri</code>等gem ： </p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 gem "bj"
@@ -261,7 +261,7 @@ end
 
 </pre>
 </div>
-<h4 id="add_source(source,-options-=-{})">2.3 add_source(source, options = {})</h4><p>为应用<code>Gemfile</code>文件指定数据源。</p><p>举个例子。如果你需要从<code>"http://code.whytheluckystiff.net"</code>下载一个gem： </p><div class="code_container">
+<h4 id="add_source(source,-options-=-{})">2.3 add_source(source, options = {})</h4><p>为Rails应用的<code>Gemfile</code>文件指定数据源。</p><p>举个例子。如果你需要从<code>"http://code.whytheluckystiff.net"</code>下载一个gem： </p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 add_source "http://code.whytheluckystiff.net"
 
@@ -273,7 +273,7 @@ environment 'config.action_mailer.default_url_options = {host: "http://yourwebsi
 
 </pre>
 </div>
-<p>可以使用一个 'block'标志代替<code>data</code>参数。</p><h4 id="vendor/lib/file/initializer(filename,-data-=-nil,-&amp;block)">2.5 vendor/lib/file/initializer(filename, data = nil, &amp;block)</h4><p>为一个应用的<code>config/initializers</code>目录添加初始化器。</p><p>假如你喜欢使用<code>Object#not_nil?</code> and <code>Object#not_blank?</code>：</p><div class="code_container">
+<p>可以使用一个 'block'标志代替<code>data</code>参数。</p><h4 id="vendor/lib/file/initializer(filename,-data-=-nil,-&amp;block)">2.5 vendor/lib/file/initializer(filename, data = nil, &amp;block)</h4><p>为一个应用的<code>config/initializers</code>目录添加初始化器。</p><p>假如你喜欢使用<code>Object#not_nil?</code> 和 <code>Object#not_blank?</code>：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 initializer 'bloatlol.rb', &lt;&lt;-CODE
   class Object
@@ -289,7 +289,7 @@ CODE
 
 </pre>
 </div>
-<p>一般来说，<code>lib()</code>方法会在 <code>lib/</code> 目录下创建一个文件，而<code>vendor()</code>方法会在<code>vendor/</code>目录下创建一个文件。</p><p>甚至有来自<code>Rails.root</code>的<code>file()</code>方法创建所有Rails应用必须的文件和目录。</p><div class="code_container">
+<p>一般来说，<code>lib()</code>方法会在 <code>lib/</code> 目录下创建一个文件，而<code>vendor()</code>方法会在<code>vendor/</code>目录下创建一个文件。</p><p>甚至可以用<code>Rails.root</code>的<code>file()</code>方法创建所有Rails应用必须的文件和目录。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 file 'app/components/foo.rb', &lt;&lt;-CODE
   class Foo
@@ -336,7 +336,7 @@ rake "db:migrate", env: 'production'
 
 </pre>
 </div>
-<h4 id="route(routing_code)">2.10 route(routing_code)</h4><p>在<code>config/routes.rb</code>文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 <code>README.rdoc</code>删除了。现在我们可以为把应用的<code>PeopleController#index</code>设置为默认页面：</p><div class="code_container">
+<h4 id="route(routing_code)">2.10 route(routing_code)</h4><p>在<code>config/routes.rb</code>文件中添加一个路径实体。比如我们之前为某个人生成了一些简单的页面并且把 <code>README.rdoc</code>删除了。现在我们可以把应用的<code>PeopleController#index</code>设置为默认页面：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 route "root to: 'person#index'"
 
