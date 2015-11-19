@@ -547,7 +547,7 @@ end
 <code>:even</code>：如果设为 <code>true</code>，属性值必须是偶数。该选项默认的错误消息是“must be even”；</li>
 </ul>
 <p>默认的错误消息是“is not a number”。</p><h4 id="presence">2.9 <code>presence</code>
-</h4><p>这个帮助方法检查指定的属性是否为非空值，调用 <code>blank?</code> 方法检查只是否为 <code>nil</code> 或空字符串，即空字符串或只包含空白的字符串。</p><div class="code_container">
+</h4><p>这个帮助方法检查指定的属性是否为非空值，调用 <code>blank?</code> 方法检查值是否为 <code>nil</code> 或空字符串，即空字符串或只包含空白的字符串。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Person &lt; ActiveRecord::Base
   validates :name, :login, :email, presence: true
@@ -555,7 +555,7 @@ end
 
 </pre>
 </div>
-<p>如果要确保关联对象存在，需要测试关联的对象本身是够存在，而不是用来映射关联的外键。</p><div class="code_container">
+<p>如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class LineItem &lt; ActiveRecord::Base
   belongs_to :order
@@ -581,7 +581,7 @@ end
 
 </pre>
 </div>
-<p>如果要确保关联对象为空，需要测试关联的对象本身是够为空，而不是用来映射关联的外键。</p><div class="code_container">
+<p>如果要确保关联对象为空，需要测试关联的对象本身是否为空，而不是用来映射关联的外键。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class LineItem &lt; ActiveRecord::Base
   belongs_to :order
