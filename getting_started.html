@@ -624,7 +624,7 @@ end
 
 </pre>
 </div>
-<p>在 Rails 中，每个模型可以使用各自的属性初始化，自动映射到数据库字段上。<code>create</code> 动作中的第一行就是这个目的（还记得吗，<code>params[:article]</code> 就是我们要获取的属性）。<code>@article.save</code> 的作用是把模型保存到数据库中。保存完后转向 <code>show</code> 动作。稍后再编写 <code>show</code> 动作。</p><div class="info"><p>后文会看到，<code>@article.save</code> 返回一个布尔值，表示保存是否成功。</p></div><p>再次访问 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>，填写表单，还差一步就能创建文章了，会看到一个错误页面：</p><p><img src="images/getting_started/forbidden_attributes_for_new_article.png" alt="新建文章时禁止使用属性"></p><p>Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 <code>title</code> 和 <code>text</code> 参数。请把 <code>create</code> 动作修成成：</p><div class="code_container">
+<p>在 Rails 中，每个模型可以使用各自的属性初始化，自动映射到数据库字段上。<code>create</code> 动作中的第一行就是这个目的（还记得吗，<code>params[:article]</code> 就是我们要获取的属性）。<code>@article.save</code> 的作用是把模型保存到数据库中。保存完后转向 <code>show</code> 动作。稍后再编写 <code>show</code> 动作。</p><div class="info"><p>后文会看到，<code>@article.save</code> 返回一个布尔值，表示保存是否成功。</p></div><p>再次访问 <a href="http://localhost:3000/articles/new">http://localhost:3000/articles/new</a>，填写表单，还差一步就能创建文章了，会看到一个错误页面：</p><p><img src="images/getting_started/forbidden_attributes_for_new_article.png" alt="新建文章时禁止使用属性"></p><p>Rails 提供了很多安全防范措施保证程序的安全，你所看到的错误就是因为违反了其中一个措施。这个防范措施叫做“健壮参数”，我们要明确地告知 Rails 哪些参数可在控制器中使用。这里，我们想使用 <code>title</code> 和 <code>text</code> 参数。请把 <code>create</code> 动作修改成：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 def create
   @article = Article.new(article_params)
@@ -1338,7 +1338,7 @@ end
 
 </pre>
 </div>
-<p>第二个 <code>render</code> 方法的参数就是要渲染的局部视图，即 <code>comments/form</code>。Rails 很智能，能解析其中的斜线，知道要渲染 <code>app/views/comments</code> 文件夹中的 <code>_form.html.erb</code> 模板。</p><p><code>@article</code> 变量在所有局部视图中都可使用，因为它是实例变量。</p><h3 id="删除评论">8 删除评论</h3><p>博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个连接，并在 <code>CommentsController</code> 中定义 <code>destroy</code> 动作。</p><p>先在 <code>app/views/comments/_comment.html.erb</code> 局部视图中加入删除评论的链接：</p><div class="code_container">
+<p>第二个 <code>render</code> 方法的参数就是要渲染的局部视图，即 <code>comments/form</code>。Rails 很智能，能解析其中的斜线，知道要渲染 <code>app/views/comments</code> 文件夹中的 <code>_form.html.erb</code> 模板。</p><p><code>@article</code> 变量在所有局部视图中都可使用，因为它是实例变量。</p><h3 id="删除评论">8 删除评论</h3><p>博客还有一个重要的功能是删除垃圾评论。为了实现这个功能，要在视图中添加一个链接，并在 <code>CommentsController</code> 中定义 <code>destroy</code> 动作。</p><p>先在 <code>app/views/comments/_comment.html.erb</code> 局部视图中加入删除评论的链接：</p><div class="code_container">
 <pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;p&gt;
   &lt;strong&gt;Commenter:&lt;/strong&gt;
@@ -1421,7 +1421,7 @@ class CommentsController &lt; ApplicationController
 
 </pre>
 </div>
-<p>现在，如果想新建文章，会看到一个 HTTP 基本认证对话框。</p><p><img src="images/getting_started/challenge.png" alt="HTTP 基本认证对话框"></p><p>其他的身份认证方法也可以在 Rails 程序中使用。其中两个比较流行的是 <a href="https://github.com/plataformatec/devise">Devise</a> 引擎和 <a href="https://github.com/binarylogic/authlogic">Authlogic</a> gem。</p><h4 id="其他安全注意事项">9.2 其他安全注意事项</h4><p>安全，尤其是在网页程序中，是个很宽泛和值得深入研究的领域。Rails 程序的安全措施，在“<a href="/security.html">Ruby on Rails 安全指南</a>”中有更深入的说明。</p><h3 id="接下来做什么">10 接下来做什么</h3><p>至此，我们开发了第一个 Rails 程序，请尽情的修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：</p>
+<p>现在，如果想新建文章，会看到一个 HTTP 基本认证对话框。</p><p><img src="images/getting_started/challenge.png" alt="HTTP 基本认证对话框"></p><p>其他的身份认证方法也可以在 Rails 程序中使用。其中两个比较流行的是 <a href="https://github.com/plataformatec/devise">Devise</a> 引擎和 <a href="https://github.com/binarylogic/authlogic">Authlogic</a> gem。</p><h4 id="其他安全注意事项">9.2 其他安全注意事项</h4><p>安全，尤其是在网页程序中，是个很宽泛和值得深入研究的领域。Rails 程序的安全措施，在“<a href="/security.html">Ruby on Rails 安全指南</a>”中有更深入的说明。</p><h3 id="接下来做什么">10 接下来做什么</h3><p>至此，我们开发了第一个 Rails 程序，请尽情地修改、试验。在开发过程中难免会需要帮助，如果使用 Rails 时需要协助，可以使用这些资源：</p>
 <ul>
 <li><a href="http://guides.ruby-china.org/index.html">Ruby on Rails 指南</a></li>
 <li><a href="http://railstutorial-china.org">Ruby on Rails 教程</a></li>

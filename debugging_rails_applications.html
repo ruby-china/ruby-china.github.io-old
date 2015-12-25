@@ -333,7 +333,7 @@ Rails.logger.level = 0 # at any time
 
 </pre>
 </div>
-<p>这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。</p><div class="info"><p>Rails 为生产环境设置的默认日志等级是 <code>info</code>，生产环境和测试环境的默认日志等级是 <code>debug</code>。</p></div><h4 id="写日志">2.3 写日志</h4><p>把消息写入日志文件可以在控制器、模型或邮件发送程序中调用 <code>logger.(debug|info|warn|error|fatal)</code> 方法。</p><div class="code_container">
+<p>这么设置在开发环境和交付准备环境中很有用，在生产环境中则不会写入大量不必要的信息。</p><div class="info"><p>Rails 所有环境的默认日志等级是 <code>debug</code>。</p></div><h4 id="写日志">2.3 写日志</h4><p>把消息写入日志文件可以在控制器、模型或邮件发送程序中调用 <code>logger.(debug|info|warn|error|fatal)</code> 方法。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 logger.debug "Person attributes hash: #{@person.attributes.inspect}"
 logger.info "Processing the request..."

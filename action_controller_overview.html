@@ -595,26 +595,30 @@ redirect_to root_url, flash: { referral_code: 1234 }
 
 </pre>
 </div>
-<p>上例中，<code>destroy</code> 动作转向程序的 <code>root_url</code>，然后显示 Flash 消息。注意，只有下一个动作才能处理前一个动作中设置的 Flash 消息。一般都会在程序的布局中加入显示警告或提醒 Flash 消息的代码：</p><p>{:lang="erb"}
-```
-
-  &lt;!-- </p>
+<p>上例中，<code>destroy</code> 动作转向程序的 <code>root_url</code>，然后显示 Flash 消息。注意，只有下一个动作才能处理前一个动作中设置的 Flash 消息。一般都会在程序的布局中加入显示警告或提醒 Flash 消息的代码：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
+&lt;html&gt;
+  &lt;!-- &lt;head/&gt; --&gt;
+  &lt;body&gt;
     &lt;% flash.each do |name, msg| -%&gt;
       &lt;%= content_tag :div, msg, class: name %&gt;
-    &lt;% end -%&gt;<div class="code_container">
-<pre class="brush: plain; gutter: false; toolbar: false">
-&lt;!-- more content --&gt;
+    &lt;% end -%&gt;
+
+    &lt;!-- more content --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
 
 </pre>
 </div>
-<p>  
-
-```</p><p>如此一來，如果动作中设置了警告或提醒消息，就会出现在布局中。</p><p>Flash 不局限于警告和提醒，可以设置任何可在会话中存储的内容：</p><p>{:lang="erb"}
-<code>
+<p>如此一來，如果动作中设置了警告或提醒消息，就会出现在布局中。</p><p>Flash 不局限于警告和提醒，可以设置任何可在会话中存储的内容：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;% if flash[:just_signed_up] %&gt;
   &lt;p class="welcome"&gt;Welcome to our site!&lt;/p&gt;
 &lt;% end %&gt;
-</code></p><p>如果希望 Flash 消息保留到其他请求，可以使用 <code>keep</code> 方法：</p><div class="code_container">
+
+</pre>
+</div>
+<p>如果希望 Flash 消息保留到其他请求，可以使用 <code>keep</code> 方法：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class MainController &lt; ApplicationController
   # Let's say this action corresponds to root_url, but you want
@@ -781,13 +785,16 @@ end
 
 </pre>
 </div>
-<p>这种方法也不是定义 <code>require_login</code> 过滤器的理想方式，因为和控制器不在同一作用域，要把控制器作为参数传入。定义过滤器的类，必须有一个和过滤器种类同名的方法。对于 <code>before_action</code> 过滤器，类中必须定义 <code>before</code> 方法。其他类型的过滤器以此类推。<code>around</code> 方法必须调用 <code>yield</code> 方法执行动作。</p><h3 id="防止请求伪造">9 防止请求伪造</h3><p>跨站请求伪造（CSRF）是一种工具方式，A 网站的用户伪装成 B 网站的用户发送请求，在 B 站中添加、修改或删除数据，而 B 站的用户绝然不知。</p><p>防止这种攻击的第一步是，确保所有析构动作（<code>create</code>，<code>update</code> 和 <code>destroy</code>）只能通过 GET 之外的请求方法访问。如果遵从 REST 架构，已经完成了这一步。不过，恶意网站还是可以很轻易地发起非 GET 请求，这时就要用到其他防止跨站攻击的方法了。</p><p>我们添加一个只有自己的服务器才知道的难以猜测的令牌。如果请求中没有该令牌，就会禁止访问。</p><p>如果使用下面的代码生成一个表单：</p><p>{:lang="erb"}
-<code>
+<p>这种方法也不是定义 <code>require_login</code> 过滤器的理想方式，因为和控制器不在同一作用域，要把控制器作为参数传入。定义过滤器的类，必须有一个和过滤器种类同名的方法。对于 <code>before_action</code> 过滤器，类中必须定义 <code>before</code> 方法。其他类型的过滤器以此类推。<code>around</code> 方法必须调用 <code>yield</code> 方法执行动作。</p><h3 id="防止请求伪造">9 防止请求伪造</h3><p>跨站请求伪造（CSRF）是一种工具方式，A 网站的用户伪装成 B 网站的用户发送请求，在 B 站中添加、修改或删除数据，而 B 站的用户绝然不知。</p><p>防止这种攻击的第一步是，确保所有析构动作（<code>create</code>，<code>update</code> 和 <code>destroy</code>）只能通过 GET 之外的请求方法访问。如果遵从 REST 架构，已经完成了这一步。不过，恶意网站还是可以很轻易地发起非 GET 请求，这时就要用到其他防止跨站攻击的方法了。</p><p>我们添加一个只有自己的服务器才知道的难以猜测的令牌。如果请求中没有该令牌，就会禁止访问。</p><p>如果使用下面的代码生成一个表单：</p><div class="code_container">
+<pre class="brush: ruby; html-script: true; gutter: false; toolbar: false">
 &lt;%= form_for @user do |f| %&gt;
   &lt;%= f.text_field :username %&gt;
   &lt;%= f.text_field :password %&gt;
 &lt;% end %&gt;
-</code></p><p>会看到 Rails 自动添加了一个隐藏字段：</p><div class="code_container">
+
+</pre>
+</div>
+<p>会看到 Rails 自动添加了一个隐藏字段：</p><div class="code_container">
 <pre class="brush: xml; gutter: false; toolbar: false">
 &lt;form accept-charset="UTF-8" action="/users/1" method="post"&gt;
 &lt;input type="hidden"

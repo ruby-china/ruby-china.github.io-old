@@ -342,13 +342,13 @@ end
 
 </pre>
 </div>
-<h3 id="crud：读写数据">5 CRUD：读写数据</h3><p>CURD 是四种数据操作的简称：C 表示创建，R 表示读取，U 表示更新，D 表示删除。Active Record 自动创建了处理数据表中数据的方法。</p><h4 id="创建">5.1 创建</h4><p>Active Record 对象可以使用 Hash 创建，在块中创建，或者创建后手动设置属性。<code>new</code> 方法创建一个新对象，<code>create</code> 方法创建新对象，并将其存入数据库。</p><p>例如，<code>User</code> 模型中有两个属性，<code>name</code> 和 <code>occupation</code>。调用 <code>create</code> 方法会创建一个新纪录，并存入数据库：</p><div class="code_container">
+<h3 id="crud：读写数据">5 CRUD：读写数据</h3><p>CURD 是四种数据操作的简称：C 表示创建，R 表示读取，U 表示更新，D 表示删除。Active Record 自动创建了处理数据表中数据的方法。</p><h4 id="创建">5.1 创建</h4><p>Active Record 对象可以使用 Hash 创建，在块中创建，或者创建后手动设置属性。<code>new</code> 方法会实例化一个对象，<code>create</code> 方法实例化一个对象，并将其存入数据库。</p><p>例如，<code>User</code> 模型中有两个属性，<code>name</code> 和 <code>occupation</code>。调用 <code>create</code> 方法会实例化一个对象，并把该对象对应的记录存入数据库：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 user = User.create(name: "David", occupation: "Code Artist")
 
 </pre>
 </div>
-<p>使用 <code>new</code> 方法，可以实例化一个新对象，但不会保存：</p><div class="code_container">
+<p>使用 <code>new</code> 方法，可以实例化一个对象，但不会保存：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 user = User.new
 user.name = "David"
@@ -356,7 +356,7 @@ user.occupation = "Code Artist"
 
 </pre>
 </div>
-<p>调用 <code>user.save</code> 可以把记录存入数据库。</p><p>如果在 <code>create</code> 和 <code>new</code> 方法中使用块，会把新创建的对象拉入块中：</p><div class="code_container">
+<p>调用 <code>user.save</code> 可以把记录存入数据库。</p><p><code>create</code> 和 <code>new</code> 方法从结果来看，都实现了下面代码的功能：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 user = User.new do |u|
   u.name = "David"

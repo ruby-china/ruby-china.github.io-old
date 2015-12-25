@@ -217,7 +217,7 @@
 </ul>
 </li>
 <li>
-<a href="#%E5%BC%95%E6%93%8E%E5%8A%9F%E8%83%BD%E4%BC%98%E5%8C%96-">引擎功能优化 </a>
+<a href="#%E5%BC%95%E6%93%8E%E4%BC%98%E5%8C%96-">引擎优化 </a>
 
 <ul>
 <li><a href="#%E9%87%8D%E8%BD%BD%E6%A8%A1%E5%9E%8B%E5%92%8C%E6%8E%A7%E5%88%B6%E5%99%A8">重载模型和控制器</a></li>
@@ -784,7 +784,7 @@ end
 
 </pre>
 </div>
-<p>上诉操作也同时保证了引擎的url助手方法在你的测试中正常使用。</p><h3 id="引擎功能优化-">6 引擎功能优化 </h3><p>本章节将介绍在Rails应用中如何添加或重载引擎的MVC功能。</p><h4 id="重载模型和控制器">6.1 重载模型和控制器</h4><p>应用中的公共类可以扩展引擎的模型和控制器的功能。(因为模型和控制器类都继承了Rails应用的特定功能)应用中的公共类和引擎只是对模型和控制器根据需要进行了扩展。这种模式通常被称为装饰模式。</p><p>举个例子，<code>ActiveSupport::Concern</code>类使用<code>Class#class_eval</code>方法扩展了他的功能。</p><h5 id="装饰器的特点以及加载代码">6.1.1 装饰器的特点以及加载代码</h5><p>因为装饰器不是引用Rails应用本身，Rails自动载入系统不会识别和载入你的装饰器。这意味着你需要用代码声明他们。</p><p>这是一个简单的例子：</p><div class="code_container">
+<p>上诉操作也同时保证了引擎的url助手方法在你的测试中正常使用。</p><h3 id="引擎优化-">6 引擎优化 </h3><p>本章节将介绍在Rails应用中如何添加或重载引擎的MVC功能。</p><h4 id="重载模型和控制器">6.1 重载模型和控制器</h4><p>应用中的公共类可以扩展引擎的模型和控制器的功能。(因为模型和控制器类都继承了Rails应用的特定功能)应用中的公共类和引擎只是对模型和控制器根据需要进行了扩展。这种模式通常被称为装饰模式。</p><p>举个例子，<code>ActiveSupport::Concern</code>类使用<code>Class#class_eval</code>方法扩展了他的功能。</p><h5 id="装饰器的特点以及加载代码">6.1.1 装饰器的特点以及加载代码</h5><p>因为装饰器不是引用Rails应用本身，Rails自动载入系统不会识别和载入你的装饰器。这意味着你需要用代码声明他们。</p><p>这是一个简单的例子：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 # lib/blorgh/engine.rb
 module Blorgh
@@ -967,7 +967,7 @@ end
 </pre>
 </div>
 <p>提示： 如果你使用的是Sass或CoffeeScript语言，那么需要在你的引擎的<code>.gemspec</code>文件中设定相对路径。</p><h4 id="页面资源文件分组和预编译">6.5 页面资源文件分组和预编译</h4><p>在某些情况下，你的引擎内部用到的资源文件，在Rails应用宿主中是不会用到的。举个例子，你为引擎创建了一个管理页面，它只在引擎内部使用，在这种情况下，Rails应用宿主并不需要用到<code>admin.css</code> 和<code>admin.js</code>文件，只是gem内部的管理页面需要用到它们。那么应用宿主就没必要添加<code>"blorgh/admin.css"</code>到他的样式表文件中
-，这种情况下，你可以显示声明预编译这些文件。这会在你的引擎内部添加一个<code>rake assets:precompile</code>任务。</p><p>你可以在引擎的<code>engine.rb</code>中定义需要预编译的资源文件：</p><div class="code_container">
+，这种情况下，你可以预编译这些文件。这会在你的引擎内部添加一个<code>rake assets:precompile</code>任务。</p><p>你可以在引擎的<code>engine.rb</code>中定义需要预编译的资源文件：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 initializer "blorgh.assets.precompile" do |app|
   app.config.assets.precompile += %w(admin.css admin.js)
