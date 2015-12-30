@@ -1094,7 +1094,7 @@ get '/:id', to: 'photos#show', constraints: {id: /^\d/}
 </div>
 <p>之所以不能使用锚记，是因为所有正则表达式都从头开始匹配。</p><p>例如，有下面的路由。如果 <code>to_param</code> 方法得到的值以数字开头，例如 <code>1-hello-world</code>，就会把请求交给 <code>articles</code> 控制器处理；如果 <code>to_param</code> 方法得到的值不以数字开头，例如 <code>david</code>，就交给 <code>users</code> 控制器处理。</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
-get '/:id', to: 'photos#show', constraints: { id: /\d.+/ }
+get '/:id', to: 'articles#show', constraints: { id: /\d.+/ }
 get '/:username', to: 'users#show'
 
 </pre>
