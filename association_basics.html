@@ -804,7 +804,7 @@ c.first_name == o.customer.first_name # =&gt; false
 
 </pre>
 </div>
-<p>之所以会发生这种情况，是因为 <code>c</code> 和 <code>o.customer</code> 在内存中是同一数据的两钟表示，修改其中一个并不会刷新另一个。Active Record 提供了 <code>:inverse_of</code> 选项，可以告知 Rails 两者之间的关系：</p><div class="code_container">
+<p>之所以会发生这种情况，是因为 <code>c</code> 和 <code>o.customer</code> 在内存中是同一数据的两种表示，修改其中一个并不会刷新另一个。Active Record 提供了 <code>:inverse_of</code> 选项，可以告知 Rails 两者之间的关系：</p><div class="code_container">
 <pre class="brush: ruby; gutter: false; toolbar: false">
 class Customer &lt; ActiveRecord::Base
   has_many :orders, inverse_of: :customer

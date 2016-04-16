@@ -286,7 +286,7 @@
 
 </pre>
 </div>
-<p>你会发现 HTML 中多了一个 <code>div</code> 元素，其中有两个隐藏的 <code>input</code> 元素。这个 <code>div</code> 元素很重要，没有就无法提交表单。第一个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>utf8</code>，其作用是强制浏览器使用指定的编码处理表单，不管是 GET 还是 POST。第二个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>authenticity_token</code>，这是 Rails 的一项安全措施，称为“跨站请求伪造保护”。<code>form_tag</code> 帮助方法会为每个非 POST 表单生成这个元素（表明启用了这项安全保护措施）。详情参阅“<a href="security.html#cross-site-request-forgery-csrf">Rails 安全指南</a>”。</p><div class="note"><p>为了行文简洁，后续代码没有包含这个 <code>div</code> 元素。</p></div><h4 id="普通的搜索表单">1.1 普通的搜索表单</h4><p>在网上见到最多的表单是搜索表单，搜索表单包含以下元素：</p>
+<p>你会发现 HTML 中多了一个 <code>div</code> 元素，其中有两个隐藏的 <code>input</code> 元素。这个 <code>div</code> 元素很重要，没有就无法提交表单。第一个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>utf8</code>，其作用是强制浏览器使用指定的编码处理表单，不管是 GET 还是 POST。第二个 <code>input</code> 元素的 <code>name</code> 属性值为 <code>authenticity_token</code>，这是 Rails 的一项安全措施，称为“跨站请求伪造保护”。<code>form_tag</code> 帮助方法会为每个非 GET 表单生成这个元素（表明启用了这项安全保护措施）。详情参阅“<a href="security.html#cross-site-request-forgery-csrf">Rails 安全指南</a>”。</p><div class="note"><p>为了行文简洁，后续代码没有包含这个 <code>div</code> 元素。</p></div><h4 id="普通的搜索表单">1.1 普通的搜索表单</h4><p>在网上见到最多的表单是搜索表单，搜索表单包含以下元素：</p>
 <ul>
 <li>
 <code>form</code> 元素，<code>action</code> 属性值为 <code>GET</code>；</li>
