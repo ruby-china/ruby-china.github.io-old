@@ -598,7 +598,7 @@ end
 
 </pre>
 </div>
-<p>在这个迁移中定义了一个名为 <code>change</code> 的方法，在运行迁移时执行。<code>change</code> 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 <code>articles</code> 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。</p><div class="info"><p>关于迁移的详细说明，请参阅“<a href="/migrations.html">Active Record 数据库迁移</a>”一文。</p></div><p>然后，使用 rake 命令运行迁移：</p><div class="code_container">
+<p>在这个迁移中定义了一个名为 <code>change</code> 的方法，在运行迁移时执行。<code>change</code> 方法中定义的操作都是可逆的，Rails 知道如何撤销这次迁移操作。运行迁移后，会创建 <code>articles</code> 表，以及一个字符串字段和文本字段。同时还会创建两个时间戳字段，用来跟踪记录的创建时间和更新时间。</p><div class="info"><p>关于迁移的详细说明，请参阅“<a href="active_record_migrations.html">Active Record 数据库迁移</a>”一文。</p></div><p>然后，使用 rake 命令运行迁移：</p><div class="code_container">
 <pre class="brush: plain; gutter: false; toolbar: false">
 $ bin/rake db:migrate
 

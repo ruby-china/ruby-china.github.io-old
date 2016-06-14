@@ -540,7 +540,7 @@ Database schema version   20110805173523
 </div>
 <h4 id="assets">2.2 <code>assets</code>
 </h4><p><code>rake assets:precompile</code> 任务会预编译 <code>app/assets</code> 文件夹中的静态资源文件。<code>rake assets:clean</code> 任务会把编译好的静态资源文件删除。</p><h4 id="db">2.3 <code>db</code>
-</h4><p>Rake 命名空间 <code>db:</code> 中最常用的任务是 <code>migrate</code> 和 <code>create</code>，这两个任务会尝试运行所有迁移相关的 Rake 任务（<code>up</code>，<code>down</code>，<code>redo</code>，<code>reset</code>）。<code>rake db:version</code> 在排查问题时很有用，会输出数据库的当前版本。</p><p>关于数据库迁移的更多介绍，参阅“<a href="migrations.html">Active Record 数据库迁移</a>”一文。</p><h4 id="doc">2.4 <code>doc</code>
+</h4><p>Rake 命名空间 <code>db:</code> 中最常用的任务是 <code>migrate</code> 和 <code>create</code>，这两个任务会尝试运行所有迁移相关的 Rake 任务（<code>up</code>，<code>down</code>，<code>redo</code>，<code>reset</code>）。<code>rake db:version</code> 在排查问题时很有用，会输出数据库的当前版本。</p><p>关于数据库迁移的更多介绍，参阅“<a href="active_record_migrations.html">Active Record 数据库迁移</a>”一文。</p><h4 id="doc">2.4 <code>doc</code>
 </h4><p><code>doc:</code> 命名空间中的任务可以生成程序的文档，Rails API 文档和 Rails 指南。生成的文档可以随意分割，减少程序的大小，适合在嵌入式平台使用。</p>
 <ul>
 <li>
